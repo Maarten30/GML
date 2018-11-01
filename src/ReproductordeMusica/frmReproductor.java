@@ -1,5 +1,9 @@
 package ReproductordeMusica;
 
-public class frmReproductor {
 
+public class frmReproductor 
+{
+	
 }
+
+
