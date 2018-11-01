@@ -17,6 +17,8 @@ public class BD
 	    try
 	    {
 	    	connection = DriverManager.getConnection("jdbc:sqlite:BaseDatosUsuarios.db");
+	    	Statement statement = connection.createStatement();
+	    	statement.setQueryTimeout(30);
 	    }
 	    catch(SQLException e) 
 	    {

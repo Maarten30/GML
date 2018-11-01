@@ -6,14 +6,14 @@ import java.util.ArrayList;
 import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
 
-public class ListasdeReproduccion implements ListModel<String>
+public class ListadeReproduccion implements ListModel<String>
 {
 	ArrayList<File> ficheros;
 	
 	/**
 	 * Constructor para iniciar una lista vacia
 	 */
-	public ListasdeReproduccion()
+	public ListadeReproduccion()
 	{
 		super();
 		ficheros = new ArrayList<File>();
