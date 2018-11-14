@@ -31,29 +31,29 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		frame = new JFrame(); 
 		frame.setSize(400,500);
 		frame.setTitle("Inicio de sesión");
+		frame.setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		ImageIcon img = new ImageIcon("C:/imagenSpoti.png");
-		JLabel fondo = new JLabel(img); 
-		frame.add(fondo); 
-		frame.setVisible(true);
+//		ImageIcon img = new ImageIcon("C:/imagenSpoti.png");
+//		JLabel fondo = new JLabel(img); 
+//		frame.add(fondo); 
 		frame.setResizable(false); //impedimos que se pueda ampliar la ventana, solo se puede mover de sitio
-		
+	
 	    panel1 = new JPanel();
-	    BoxLayout disenyo = new BoxLayout(panel1,BoxLayout.X_AXIS); 
-	    panel1.setLayout(disenyo);
-//		frame.getContentPane().add(panel1, BorderLayout.SOUTH);; 
+//	    BoxLayout disenyo = new BoxLayout(panel1,BoxLayout.X_AXIS); 
+//	    panel1.setLayout(disenyo);
+		frame.getContentPane().add(panel1, BorderLayout.CENTER);
 		
 //		panel2 = new JPanel(); 
 //		frame.getContentPane().add(panel2, BorderLayout.CENTER);
 		
 		btnEntrar = new JButton("INICIAR SESIÓN");
 		panel1.add(btnEntrar);
-		panel1.add(btnEntrar);
 		
 		btnSalir = new JButton("SALIR");
 		panel1.add(btnSalir);
 		btnSalir.addActionListener(new ActionListener() {
+					@SuppressWarnings("unused")
 					public void actionExit(ActionEvent salir){
 						System.exit(0);
 					}
@@ -61,7 +61,6 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					@Override
 					public void actionPerformed(ActionEvent arg0){
 						// TODO Auto-generated method stub
-						
 					}
 					}
 					);
