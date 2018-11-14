@@ -1,69 +1,95 @@
 package Usuario;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-
-
 public class frmInicioSesion extends JFrame implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 	
-	JTextField txt1,txt2;
-	JButton boton1, boton2;
-	JPanel panel;
-	JLabel usuario,contra;
+	JFrame frame; 
+	
+	JTextField txtUsuario,txtContra;
+	JButton btnEntrar, btnSalir;
+	JPanel panel1, panel2;
+	JLabel lblUsuario,lblContra;
+	ImageIcon img;
+	JLabel fondo; 
 
 	public frmInicioSesion() 
 	{	
-		setBounds(200, 200, 500, 500);
-	    setVisible(true);
-		
-	    panel = new JPanel();
-		panel.setBackground(Color.gray); 
-		setContentPane(panel);
-		panel.setLayout(null);
+		frame = new JFrame(); 
+		frame.setSize(400,500);
+		frame.setTitle("Inicio de sesión");
+		frame.setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		txt1 = new JTextField();
-		txt2 = new JTextField();
+//		ImageIcon img = new ImageIcon("C:/imagenSpoti.png");
+//		JLabel fondo = new JLabel(img); 
+//		frame.add(fondo); 
+		frame.setResizable(false); //impedimos que se pueda ampliar la ventana, solo se puede mover de sitio
 	
-		boton1 = new JButton();
-		boton2 = new JButton();
+	    panel1 = new JPanel();
+//	    BoxLayout disenyo = new BoxLayout(panel1,BoxLayout.X_AXIS); 
+//	    panel1.setLayout(disenyo);
+		frame.getContentPane().add(panel1, BorderLayout.CENTER);
 		
-		usuario = new JLabel("Usuario:");
-		contra = new JLabel("Contraseña:");
+//		panel2 = new JPanel(); 
+//		frame.getContentPane().add(panel2, BorderLayout.CENTER);
 		
-		txt1.setBounds(190, 150, 160, 25);
-		panel.add(txt1);
-		txt1.setColumns(10);
+		btnEntrar = new JButton("INICIAR SESIÓN");
+		panel1.add(btnEntrar);
 		
-		usuario.setBounds(190, 120, 160, 25);
-		panel.add(usuario);
+		btnSalir = new JButton("SALIR");
+		panel1.add(btnSalir);
+		btnSalir.addActionListener(new ActionListener() {
+					@SuppressWarnings("unused")
+					public void actionExit(ActionEvent salir){
+						System.exit(0);
+					}
+
+					@Override
+					public void actionPerformed(ActionEvent arg0){
+						// TODO Auto-generated method stub
+					}
+					}
+					);
+
+		txtUsuario = new JTextField();
+//		txt1.setBackground(Color.WHITE);
+//		panel2.add(txt1,BorderLayout.CENTER);
+//		txt1.setColumns(10);
 		
-		txt2.setBounds(190, 210, 160, 25);
-		panel.add(txt2);
-		txt2.setColumns(10);
+		txtContra = new JTextField();
+//		txt2.setBounds(190, 210, 160, 25);
+//		txt1.setBackground(Color.WHITE);
+//		panel.add(txt2);
+//		txt2.setVisible(true);
+//		txt2.setColumns(10);
 		
-		contra.setBounds(190, 180, 160, 25);
-		panel.add(contra);
+		lblUsuario = new JLabel("Usuario:");
+//		usuario.setBounds(190, 120, 160, 25);
+//		usuario.setHorizontalAlignment(JLabel.CENTER);
+//		panel.add(usuario);
 		
-		boton1.setBounds(190, 250, 160, 25);
-		panel.add(boton1);
-		boton1.setText("Entrar");
-	 
-	 
-		}
+		lblContra = new JLabel("Contraseña:");
+//		contra.setBounds(190, 180, 160, 25);
+//		panel.add(contra);
+	}
+
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent arg0) 
+	{
 		// TODO Auto-generated method stub
 		
 	}
