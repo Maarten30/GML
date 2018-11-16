@@ -35,6 +35,10 @@ public class ListadeReproduccion implements ListModel<String>
 		ficheros.remove(posi);
 	}
 	
+	public File PosFichero ( int posi ) 
+	{
+		return ficheros.get( posi );
+	}
 
 	@Override
 	public void addListDataListener(ListDataListener l) {
