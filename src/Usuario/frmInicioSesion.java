@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -67,6 +69,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		JPasswordField contraField = new JPasswordField();
 		contraField.setBounds(200, 140, 150, 25);
 		contraField.setFont(f2);
+		contraField.requestFocus();
 		panel.add(contraField);
 		
 		InputMap map = new InputMap(); 
@@ -74,6 +77,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		map.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0,false),"pressed");
 		map.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, true), "released");
 		JButton btnEntrar = new JButton ("Entrar"); 
+		btnEntrar.setToolTipText("Pulse este botón si desea entrar al reproductor de música");
 		btnEntrar.setInputMap(0, map);
 		btnEntrar.setFont(f5);
 		btnEntrar.setBounds(225, 180, 100, 30);
@@ -144,9 +148,54 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		
 		JButton btnRegistrar = new JButton ("Registrar"); 
 		btnRegistrar.setFont(f5);
+		btnEntrar.setToolTipText("Pulse este botón si desea crearse una cuenta");
 		btnRegistrar.setBounds(220, 410, 100, 30);
 		btnRegistrar.setBackground(Color.WHITE);
-		panel.add(btnRegistrar);	
+		panel.add(btnRegistrar);
+		btnRegistrar.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				String nombre = "" ;
+				String apellido = "" ;
+				String email = "" ;
+				String nombreUsu = "" ;
+				String contra = "" ;
+				clsUsuario usu = new clsUsuario(); 
+				
+				if(txtNombre.getText().isEmpty() || txtApellido.getText().isEmpty() || txtCorreo.getText().isEmpty() || txtUsuario.getText().isEmpty() || txtContraseña.getText().isEmpty() )
+				{
+					JOptionPane.showMessageDialog(null,"Te faltan campos de información por rellenar","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+				}
+				else
+				{
+					nombre = txtNombre.getText();
+					apellido = txtApellido.getText();
+						
+					String emailPattern = "^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@" +  "[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$";
+					Pattern pattern = Pattern.compile(emailPattern);
+				
+					if (txtCorreo.getText() != null)
+					{
+						Matcher matcher = pattern.matcher(email);
+						if (matcher.matches())
+						{
+							email = txtCorreo.getText();
+						}
+						else
+						{
+						JOptionPane.showMessageDialog(null,"Introduzca un email válido");
+						}
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null,"Introduzca un email");
+					}
+					nombreUsu = txtUsuario.getText();
+					contra = txtContraseña.getText();
+				}
+			}
+		});
 	}
 
 	@Override

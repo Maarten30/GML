@@ -27,6 +27,8 @@ public class BD
 	    	statement.executeUpdate("create table listaCanciones(idCancion integer,titulo string, cantante string, grupo string)");
 	    	statement.executeUpdate("insert into listaCanciones values(11,'Hello','Adele','null')");
 	    	statement.executeUpdate("insert into cantante values(1,'Marta','Fernández','La Oreja')"); 
+	    	
+	    	statement.executeUpdate("create table usuario(nombre string, apellido string, email string, nombreUs string, contraseña string)");
 
 	    	ResultSet rs1 = statement.executeQuery("select * from cantante");
 	    	ResultSet rs2 = statement.executeQuery("select * from listaCanciones");
@@ -67,5 +69,7 @@ public class BD
 	        }
 	      }
 	}
+	
+	 
 
 }
