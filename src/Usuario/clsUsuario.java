@@ -19,46 +19,80 @@ public class clsUsuario
 	}
 
 
-	public String getNombre() {
+	public clsUsuario() 
+	{
+		nombre = null; 
+		apellido = null;
+		nombreUs = null;
+		contraseña = null; 
+	}
+
+
+	public String getNombre() 
+	{
 		return nombre;
 	}
 
 
-	public void setNombre(String nombre) {
+	public void setNombre(String nombre) 
+	{
 		this.nombre = nombre;
 	}
 
 
-	public String getApellido() {
+	public String getApellido() 
+	{
 		return apellido;
 	}
 
 
-	public void setApellido(String apellido) {
+	public void setApellido(String apellido) 
+	{
 		this.apellido = apellido;
 	}
 
 
-	public String getNombreUs() {
+	public String getNombreUs() 
+	{
 		return nombreUs;
 	}
 
 
-	public void setNombreUs(String nombreUs) {
+	public void setNombreUs(String nombreUs) 
+	{
 		this.nombreUs = nombreUs;
 	}
 
 
-	public String getContraseña() {
+	public String getContraseña() 
+	{
 		return contraseña;
 	}
 
 
-	public void setContraseña(String contraseña) {
+	public void setContraseña(String contraseña) 
+	{
 		this.contraseña = contraseña;
+	}
+
+
+	@Override
+	public String toString() {
+		return "clsUsuario Nombre" + nombre
+				+ "Apellido: " + apellido + ""
+						+ "Nombre de usuario: " + nombreUs + "";
 	}
 	
 	
-	
-	
+	public boolean ValidarUsuario(String usuario, String contraseña)
+	{
+		if(usuario.equals("1234")&& contraseña.equals("ejemplo"))
+		{
+			return true;
+		}
+		else
+		{
+			return false; 
+		}
+	}
 }

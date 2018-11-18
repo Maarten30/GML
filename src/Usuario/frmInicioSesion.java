@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -70,6 +71,19 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		btnEntrar.setBounds(140, 180, 100, 30);
 		btnEntrar.setBackground(Color.WHITE);
 		panel.add(btnEntrar);
+		btnEntrar.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent arg0)
+					{
+						clsUsuario usu = new clsUsuario(); 
+						if(!usu.ValidarUsuario(txtUsu.getText(), txtContra.getText()))
+						{
+							JOptionPane.showMessageDialog(null, "Usuario o contraseña no válidos");
+							txtContra.setText("");
+							txtUsu.setText("");
+						}
+					}
+				});
 		
 		JLabel lblRegistro = new JLabel("REGISTRARSE"); 
 		lblRegistro.setFont(f4);
@@ -138,6 +152,8 @@ public class frmInicioSesion extends JFrame implements ActionListener
 
 		frame.setVisible(true);
 	}
+	
+	
 	
 
 }
