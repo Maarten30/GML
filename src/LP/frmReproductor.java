@@ -1,4 +1,4 @@
-package ReproductordeMusica;
+package LP;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

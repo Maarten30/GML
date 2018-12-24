@@ -1,75 +1,126 @@
-package BaseDeDatos;
+package LD;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.*;
+import javax.swing.JOptionPane;
 
 public class BD 
 {
-	public static void main (String[] args) throws ClassNotFoundException
-	{
-	    Class.forName("org.sqlite.JDBC"); 
-	    
-	    Connection connection = null;
-	    try
-	    {
-	    	connection = DriverManager.getConnection("jdbc:sqlite:BaseDatosUsuarios.db");
-	    	System.out.println("Se ha establecido la conexión");
-	    	Statement statement = connection.createStatement(); //el statement es para meter todo lo que queramos en la BD
-	    	statement.setQueryTimeout(30); 
-	    	
-	    	//SINTAXIS SQL
-	    	statement.executeUpdate("drop table if exists cantante");
-	    	statement.executeUpdate("drop table if exists listaCanciones");
-	    	statement.executeUpdate("create table cantante(idCantante integer, nombre string, apellido string, grupo string)"); 
-	    	statement.executeUpdate("create table listaCanciones(idCancion integer,titulo string, cantante string, grupo string)");
-	    	statement.executeUpdate("insert into listaCanciones values(11,'Hello','Adele','null')");
-	    	statement.executeUpdate("insert into cantante values(1,'Marta','Fernández','La Oreja')"); 
-	    	
-	    	statement.executeUpdate("create table usuario(nombre string, apellido string, email string, nombreUs string, contraseña string)");
+	private static Logger logger = Logger.getLogger(BD.class.getName());
+	
+	private static Connection connection = null;
+	private static Statement statement = null;
+	private static ResultSet rs=null;
 
-	    	ResultSet rs1 = statement.executeQuery("select * from cantante");
-	    	ResultSet rs2 = statement.executeQuery("select * from listaCanciones");
-	    	 
-	    	 while(rs1.next()) 
-	         {					
-	           // Leer el resultset
-	           System.out.println("idCantante: " + rs1.getInt("idCantante")); 
-	           System.out.println("Nombre: " + rs1.getString("nombre")); 
-	           System.out.println("Apellido: " + rs1.getString("apellido"));
-	           System.out.println("Grupo: " + rs1.getString("grupo"));
-	         }
-	    	 
-	    	 while(rs2.next())
-	         {					
-	           // Leer el resultset
-	           System.out.println("idCancion: " + rs2.getInt("idCancion")); 
-	           System.out.println("Titulo: " + rs2.getString("titulo")); 
-	           System.out.println("Cantante: " + rs2.getString("cantante"));
-	           System.out.println("Grupo: " + rs2.getString("grupo"));
-	         }
-	    }
-	    catch(SQLException e) 
-	    {
-	    	 System.err.println(e.getMessage());
-	    }
-	    finally 
-	    {
-	        try
-	        {
-	          if(connection != null)
-	            connection.close();
-	        }
-	        catch(SQLException e)
-	        {
-	          // Cierre de conexión fallido
-	          System.err.println(e);
-	        }
-	      }
+
+	/** Inicializa una base de datos y devuelve una conexión con ella.
+	 * @param nombreBD	Nombre de fichero de la base de datos.
+	 * @return	Conexión con la base de datos indicada. Si hay algún error, se devuelve null
+	 */
+	public static Connection initBD ( String nombreBD ) 
+	{		
+		try
+		{
+		    Class.forName("org.sqlite.JDBC");
+		    connection = DriverManager.getConnection("jdbc:sqlite:" + nombreBD );
+			statement = connection.createStatement();
+			statement.setQueryTimeout(30);  // poner timeout 30 msg
+		    return connection;
+		} 
+		
+		catch (ClassNotFoundException | SQLException e) 
+		{
+			logger.log( Level.SEVERE, e.getMessage(), e );
+
+			JOptionPane.showMessageDialog( null, "Error de conexión, no se ha podido conectar con " + nombreBD , "ERROR", JOptionPane.ERROR_MESSAGE );
+			System.out.println( "Error de conexión, no se ha podido conectar con " + nombreBD );
+			return null;
+		}
 	}
 	
-	 
+	/** Cierre de la conexión.
+	 */
+	public static void close() 
+	{
+		try 
+		{
+			statement.close();
+			connection.close();
+		} 
+		catch (SQLException e)
+		{
+			logger.log( Level.SEVERE, e.getMessage(), e );
 
+			e.printStackTrace();
+		}
+	}
+	
+	/** Devuelve la conexión si ha sido establecida.
+	 * @return	Conexión con la base de datos, null si no se ha establecido correctamente.
+	 */
+	public static Connection getConnection() 
+	{
+		return connection;
+	}
+	
+	/** Devuelve una sentencia para trabajar con la base de datos, si la conexión si ha sido establecida previamente.
+	 * @return	Sentencia de trabajo con la base de datos, null si no se ha establecido correctamente.
+	 */
+	public static Statement getStatement() 
+	{
+		return statement;
+	}
+	
+	//Crear tablas 
+	
+	/** Crea una tabla de usuarios en una base de datos, si no existía ya.
+	 */
+	public static void crearTablaUsuarios() 
+	{
+		if (statement==null) return;
+		try
+		{ 
+			logger.log( Level.INFO, "Creando tabla");
+			
+			statement.executeUpdate("create table usuarios " +
+					"("
+					+ "nomUsu string,"
+					+ "apeUsu string,"
+					+ "emailUsu string,"
+					+ "contraseñaUsu string,"
+					+ "idUsu string,"
+					+ "primary key(idUsu)"
+					+ ")");
+			
+			logger.log( Level.INFO, "Tabla creada");
+		} 
+		
+		catch (SQLException e) 
+		{
+			logger.log( Level.INFO, "La tabla ya estaba creada"+e.getMessage(), e ); //si hay excepción es que la tabla está creada
+		}
+	}
+	
+	public static boolean añadirUsuario (String contraseña, int idUsu)
+	{
+		try 
+		{
+			String sentSQL = "insert into ficheroUsu values(" +
+					"'" + idUsu + "', " +
+					"'" + contraseña + "')";
+			int val = statement.executeUpdate( sentSQL );
+			if (val!=1) return false; 
+			return true;
+		} 
+		catch (SQLException e) 
+		{
+			logger.log( Level.WARNING, e.getMessage(), e );
+			return false;
+		}
+	}
 }

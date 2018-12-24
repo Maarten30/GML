@@ -1,4 +1,4 @@
-package Usuario;
+package LN;
 
 public class JTextObject extends javax.swing.JTextField {
 

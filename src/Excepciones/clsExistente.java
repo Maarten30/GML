@@ -1,6 +1,6 @@
 package Excepciones;
 
-import Usuario.clsUsuario;
+import LN.clsUsuario;
 
 
 public class clsExistente extends Exception

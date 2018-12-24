@@ -1,10 +1,11 @@
-package Usuario;
+package LP;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseListener;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,12 +22,27 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-import ReproductordeMusica.frmReproductor;
+import com.sun.glass.events.MouseEvent;
+
+import LN.JTextObject;
+import LN.clsUsuario;
 
 public class frmInicioSesion extends JFrame implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
-
+	
+	static JLabel lblInicio;
+	static JTextArea txtInfor;
+	static JTextObject txtUsu;
+	static JPasswordField contraField; 
+	static JLabel lblRegistro; 
+	static JTextArea txtInfReg; 
+	static JTextObject txtNombre;
+	static JTextObject txtApellido;
+	static JTextObject txtCorreo; 
+	static JTextObject txtUsuario;
+	static JPasswordField contraField2; 
+	static JButton btnRegistrar; 
 
 	public static void frmInicioSesion(JPanel panel) 
 	{	
@@ -45,12 +61,12 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		Font f4 = new Font("Lucida Bright",1,18);
 		Font f5 = new Font("Segoe UI Semibold",Font.BOLD,13); 
 		
-		JLabel lblInicio = new JLabel("INICIAR SESIÓN"); 
+		lblInicio = new JLabel("INICIAR SESIÓN"); 
 		lblInicio.setFont(f1);
 		lblInicio.setBounds(180,30,220,40);
 		panel.add(lblInicio);
 		
-		JTextArea txtInfor = new JTextArea("Introduzca su nombre de usuario y su contraseña para poder acceder.");
+		txtInfor = new JTextArea("Introduzca su nombre de usuario y su contraseña para poder acceder.");
 		txtInfor.setBounds(170,70,260,100);
 		txtInfor.setFont(f3);
 		txtInfor.setEditable(false);
@@ -60,17 +76,85 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		txtInfor.setWrapStyleWord(true); 
 		panel.add(txtInfor);	
 		
-		JTextObject txtUsu = new JTextObject("Usuario", 20);
+		txtUsu = new JTextObject("Usuario", 20);
 		txtUsu.setBounds(200, 110, 150, 25);
 		txtUsu.setFont(f2);
 		txtUsu.requestFocus();
 		panel.add(txtUsu);
+		txtUsu.addMouseListener(new MouseListener()
+				{
+
+					@Override
+					public void mouseClicked(java.awt.event.MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseEntered(java.awt.event.MouseEvent e) {
+						// TODO Auto-generated method stub
+						e.getSource();
+					}
+
+					@Override
+					public void mouseExited(java.awt.event.MouseEvent e) {
+						// TODO Auto-generated method stub
+						e.getSource();
+					}
+
+					@Override
+					public void mousePressed(java.awt.event.MouseEvent e) {
+						// TODO Auto-generated method stub
+						e.getSource();
+					}
+
+					@Override
+					public void mouseReleased(java.awt.event.MouseEvent e) {
+						// TODO Auto-generated method stub
+						e.getSource(); 
+					}
+					
+				});
 		
-		JPasswordField contraField = new JPasswordField();
+		contraField = new JPasswordField();
 		contraField.setBounds(200, 140, 150, 25);
 		contraField.setFont(f2);
 		contraField.requestFocus();
 		panel.add(contraField);
+		contraField.addMouseListener(new MouseListener()
+		{
+
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(java.awt.event.MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(java.awt.event.MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(java.awt.event.MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(java.awt.event.MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		
 		InputMap map = new InputMap(); 
 		
@@ -106,12 +190,12 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					}
 				});
 		
-		JLabel lblRegistro = new JLabel("REGISTRARSE"); 
+		lblRegistro = new JLabel("REGISTRARSE"); 
 		lblRegistro.setFont(f4);
 		lblRegistro.setBounds(210,220,180,40);
 		panel.add(lblRegistro);
 		
-		JTextArea txtInfReg = new JTextArea("Si todavía no tiene cuenta, puede hacerla de manera sencilla introduciendo los datos solicitados a continuación.");
+		txtInfReg = new JTextArea("Si todavía no tiene cuenta, puede hacerla de manera sencilla introduciendo los datos solicitados a continuación.");
 		txtInfReg.setBounds(140,260,270,100);
 		txtInfReg.setFont(f3);
 		txtInfReg.setEditable(false);
@@ -121,32 +205,33 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		txtInfReg.setWrapStyleWord(true); 
 		panel.add(txtInfReg);
 		
-		JTextObject txtNombre = new JTextObject("Nombre", 20);
+		txtNombre = new JTextObject("Nombre", 20);
 		txtNombre.setFont(f2);
 		txtNombre.setBounds(100,315, 150,20);
 		panel.add(txtNombre);
 		
-		JTextObject txtApellido = new JTextObject("Apellido", 20);
+		txtApellido = new JTextObject("Apellido", 20);
 		txtApellido.setFont(f2);
 		txtApellido.setBounds(280,315,150,20);
 		panel.add(txtApellido);
 		
-		JTextObject txtCorreo = new JTextObject("Correo electrónico", 20);
+		txtCorreo = new JTextObject("Correo electrónico", 20);
 		txtCorreo.setFont(f2);
 		txtCorreo.setBounds(100,345,280,20);
 		panel.add(txtCorreo);
 		
-		JTextObject txtUsuario = new JTextObject("Nombre usuario", 20);
+		txtUsuario = new JTextObject("Nombre usuario", 20);
 		txtUsuario.setFont(f2);
 		txtUsuario.setBounds(100,375,150,20);
 		panel.add(txtUsuario);
 		
-		JTextObject txtContraseña = new JTextObject("Contraseña", 20);
-		txtContraseña.setFont(f2);
-		txtContraseña.setBounds(280,375,150,20);
-		panel.add(txtContraseña);
+		contraField2 = new JPasswordField();
+		contraField2.setBounds(280,375,150,20);
+		contraField2.setFont(f2);
+		contraField2.requestFocus();
+		panel.add(contraField2);
 		
-		JButton btnRegistrar = new JButton ("Registrar"); 
+		btnRegistrar = new JButton ("Registrar"); 
 		btnRegistrar.setFont(f5);
 		btnEntrar.setToolTipText("Pulse este botón si desea crearse una cuenta");
 		btnRegistrar.setBounds(220, 410, 100, 30);
@@ -160,10 +245,10 @@ public class frmInicioSesion extends JFrame implements ActionListener
 				String apellido = "" ;
 				String email = "" ;
 				String nombreUsu = "" ;
-				String contra = "" ;
+				char[] contra ;
 				clsUsuario usu = new clsUsuario(); 
 				
-				if(txtNombre.getText().isEmpty() || txtApellido.getText().isEmpty() || txtCorreo.getText().isEmpty() || txtUsuario.getText().isEmpty() || txtContraseña.getText().isEmpty() )
+				if(txtNombre.getText().isEmpty() || txtApellido.getText().isEmpty() || txtCorreo.getText().isEmpty() || txtUsuario.getText().isEmpty() || contraField2.getPassword()==null )
 				{
 					JOptionPane.showMessageDialog(null,"Te faltan campos de información por rellenar","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
 				}
@@ -192,7 +277,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 						JOptionPane.showMessageDialog(null,"Introduzca un email");
 					}
 					nombreUsu = txtUsuario.getText();
-					contra = txtContraseña.getText();
+					contra = contraField2.getPassword();
 				}
 			}
 		});
@@ -204,7 +289,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		// TODO Auto-generated method stub
 		
 	}
-	
+
 	public static void main(String[] args)
 	{
 		JFrame frame = new JFrame("Inicio de sesión");
