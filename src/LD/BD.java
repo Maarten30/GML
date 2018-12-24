@@ -106,6 +106,35 @@ public class BD
 		}
 	}
 	
+	/**
+	 * Crea tabla de canciones en base de datos si no existia ya
+	 */
+	public static void crearTablaCanciones() 
+	{
+		if (statement==null) return;
+		try
+		{ 
+			logger.log( Level.INFO, "Creando tabla");
+			
+			statement.executeUpdate("create table canciones " +
+					"("
+					+ "nomCa string,"
+					+ "autorCa string,"
+					+ "Anio String,"
+					+ "duracion String,"
+					+ "idCa string,"
+					+ "primary key(idCa)"
+					+ ")");
+			
+			logger.log( Level.INFO, "Tabla creada");
+		} 
+		
+		catch (SQLException e) 
+		{
+			logger.log( Level.INFO, "La tabla ya estaba creada"+e.getMessage(), e ); //si hay excepción es que la tabla está creada
+		}
+	}
+	
 	public static boolean añadirUsuario (String contraseña, int idUsu)
 	{
 		try 
