@@ -6,10 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.util.logging.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
@@ -22,8 +23,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-import com.sun.glass.events.MouseEvent;
-
 import LN.JTextObject;
 import LN.clsUsuario;
 
@@ -31,6 +30,8 @@ public class frmInicioSesion extends JFrame implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 	
+	private static Logger logger = Logger.getLogger(frmInicioSesion.class.getName());
+
 	static JLabel lblInicio;
 	static JTextArea txtInfor;
 	static JTextObject txtUsu;
@@ -170,7 +171,9 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		btnEntrar.addActionListener(new ActionListener()
 				{
 					public void actionPerformed(ActionEvent arg0)
-					{
+					{				
+						logger.log(Level.INFO, "Comienzo inicio sesión");
+						
 						char[] clave = contraField.getPassword();
 						String claveFinal = new String(clave); 
 						clsUsuario usu = new clsUsuario(); 
@@ -289,7 +292,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	public static void main(String[] args)
 	{
 		JFrame frame = new JFrame("Inicio de sesión");

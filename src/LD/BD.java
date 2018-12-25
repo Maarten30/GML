@@ -28,8 +28,8 @@ public class BD
 		{
 		    Class.forName("org.sqlite.JDBC");
 		    connection = DriverManager.getConnection("jdbc:sqlite:" + nombreBD );
-			statement = connection.createStatement();
-			statement.setQueryTimeout(30);  // poner timeout 30 msg
+			statement = connection.createStatement(); //este statement es para meter todo lo que queramos a la BD 
+			statement.setQueryTimeout(30);// poner timeout 30 msg, esto se pone para el tiempo a esperar aunque no dará problemas 
 		    return connection;
 		} 
 		
@@ -102,7 +102,7 @@ public class BD
 		
 		catch (SQLException e) 
 		{
-			logger.log( Level.INFO, "La tabla ya estaba creada"+e.getMessage(), e ); //si hay excepción es que la tabla está creada
+			logger.log( Level.INFO, "La tabla ya estaba creada"+ e.getMessage(), e ); //si hay excepción es que la tabla está creada
 		}
 	}
 	
@@ -131,9 +131,11 @@ public class BD
 		
 		catch (SQLException e) 
 		{
-			logger.log( Level.INFO, "La tabla ya estaba creada"+e.getMessage(), e ); //si hay excepción es que la tabla está creada
+			logger.log( Level.INFO, "La tabla ya estaba creada"+ e.getMessage(), e ); //si hay excepción es que la tabla está creada
 		}
 	}
+	
+	//Añadir filas
 	
 	public static boolean añadirUsuario (String contraseña, int idUsu)
 	{
@@ -152,4 +154,114 @@ public class BD
 			return false;
 		}
 	}
+	
+	public static boolean añadirCancion (String nombre, String autor, int anio, float duracion,String[] ListaReproduccion, int idCa)
+	{
+		try 
+		{
+			String sentSQL = "insert into ficheroUsu values(" +
+					"'" + nombre + "', " +
+					"'" + autor + "'," + 
+					"'" + anio + "', " +
+					"'" + duracion + "', " +
+					"'" + ListaReproduccion + "', " +
+					"'" + idCa + "')";
+			
+			int val = statement.executeUpdate( sentSQL );
+			if (val!=1) return false; 
+			return true;
+		} 
+		catch (SQLException e) 
+		{
+			logger.log( Level.WARNING, e.getMessage(), e );
+			return false;
+		}
+	}
+	
+	//Borrar filas
+	
+	public static boolean borrarUsuario (Object ident, String tabla)
+	{
+		logger.log( Level.INFO, tabla);
+		
+		try 
+		{
+			int idUsu=(Integer)ident;
+			String sentSQL = "DELETE FROM ficheroUsuario WHERE codUsu = "+idUsu;
+			int val = statement.executeUpdate( sentSQL );
+			if (val!=1) return false;   
+			//Borrado satisfactorio
+			return true;
+		}
+		catch (SQLException e) 
+		{
+			logger.log( Level.WARNING, e.getMessage(), e );
+			return false;
+		}
+		
+	}
+	
+	public static boolean borrarCancion (Object ident, String tabla)
+	{
+		logger.log( Level.INFO, tabla);
+		
+		try 
+		{
+			int idCa=(Integer)ident;
+			String sentSQL = "DELETE FROM ficheroCancion WHERE codUsu = "+idCa;
+			int val = statement.executeUpdate( sentSQL );
+			if (val!=1) return false;   
+			//Borrado satisfactorio
+			return true;
+		}
+		catch (SQLException e) 
+		{
+			logger.log( Level.WARNING, e.getMessage(), e );
+			return false;
+		}
+		
+	}
+	
+	//Borrado de tablas
+	
+	public static boolean borrarTablaUsuarios (String tabla)
+	{
+		logger.log(Level.INFO,tabla);
+		
+		try
+		{
+			logger.log( Level.INFO,"borrar tabla usuario");
+			String sentSQL = "drop table ficheroUsu";
+			logger.log( Level.INFO, sentSQL);
+			int val = statement.executeUpdate( sentSQL );
+			return true;
+		} 
+		catch (SQLException e) 
+		{
+			logger.log( Level.WARNING, e.getMessage(), e );
+			return false;
+		}
+	
+	}
+	
+	public static boolean borrarTablaCancion (String tabla)
+	{
+		logger.log(Level.INFO,tabla);
+		
+		try
+		{
+			logger.log( Level.INFO,"borrar tabla cancion");
+			String sentSQL = "drop table ficheroCancion";
+			logger.log( Level.INFO, sentSQL);
+			int val = statement.executeUpdate( sentSQL );
+			return true;
+		} 
+		catch (SQLException e) 
+		{
+			logger.log( Level.WARNING, e.getMessage(), e );
+			return false;
+		}
+	
+	}
+	
 }
