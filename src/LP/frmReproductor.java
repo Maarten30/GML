@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.sound.sampled.AudioFormat;
@@ -21,6 +22,7 @@ import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,6 +30,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 
 
 
@@ -37,12 +41,17 @@ public class frmReproductor implements LineListener, ActionListener
 	private JFrame ventanita;
 	private JPanel panelBajo;
 	private JPanel Botonera;
-	private JPanel panelLista;
+	private JSplitPane splitpanel;
+	private JScrollPane panelListas;
+	private JScrollPane panelCanciones;
+
+	
 	
 	private JButton play;
 	private JButton stop;
 	private JButton pausar;
 	private JList<String> listas= null;
+	private JList<String> listaCanciones= null;
 	private JProgressBar BarraProgreso;
 	
 	boolean playCompleted;
@@ -50,7 +59,8 @@ public class frmReproductor implements LineListener, ActionListener
 	
 	private File audioFile;
 	public Clip audioClip;
-	private String audioFilePath = "C:/Demi Lovato - Stone Cold (Official Video).wav";
+	//private String audioFilePath = "C:/Demi Lovato - Stone Cold (Official Video).wav";
+	private String audioFilePath = "test/res/Demi Lovato - Stone Cold (Official Video).wav";
 	long clipTime = 0;
 
 
@@ -68,8 +78,34 @@ public class frmReproductor implements LineListener, ActionListener
 		
 		panelBajo = new JPanel();
 		Botonera = new JPanel();
-		panelLista = new JPanel();
-		listas = new JList();
+		
+		String nombre = "maarten";
+		String nombre2 = "4";
+		String nombre3 = "lucia";
+		String nombre4 = "gab";
+		
+		DefaultListModel<String> model = new DefaultListModel<>();
+		
+
+		model.addElement(nombre);
+		model.addElement(nombre2);
+		model.addElement(nombre3);
+		model.addElement(nombre4);
+		
+		listas = new JList<>(model);
+		
+		DefaultListModel<String> model2 = new DefaultListModel<>();
+		
+
+		model2.addElement(nombre);
+		model2.addElement(nombre2);
+		model2.addElement(nombre3);
+		model2.addElement(nombre4);
+		
+		listaCanciones = new JList<>(model2);
+		
+		panelListas = new JScrollPane(listas);
+		panelCanciones = new JScrollPane(listaCanciones);
 		
 		Botonera.setLayout( new FlowLayout( FlowLayout.CENTER ));
 		panelBajo.setLayout( new BorderLayout() );
@@ -81,6 +117,7 @@ public class frmReproductor implements LineListener, ActionListener
 		pausar = new JButton("Pausar");
 		play = new JButton("Play");
 		BarraProgreso = new JProgressBar(0, 1000);
+		BarraProgreso.setStringPainted(true);
 		
 		
 		play.addActionListener(this);
@@ -92,16 +129,60 @@ public class frmReproductor implements LineListener, ActionListener
 		Botonera.add(stop);
 		Botonera.add(BarraProgreso);
 		
-		panelLista.add(listas);
+		splitpanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelListas, panelCanciones);
+		splitpanel.setResizeWeight(0.5);
 		
 		panelBajo.add(Botonera, BorderLayout.NORTH );
 		panelBajo.add(BarraProgreso, BorderLayout.SOUTH );
 		
 		ventanita.getContentPane().add(panelBajo, BorderLayout.SOUTH);
-		ventanita.getContentPane().add(panelLista, BorderLayout.WEST);
+		ventanita.getContentPane().add(splitpanel);
 		
 		ventanita.setVisible(true);
 		Botonera.setVisible(true);
+		
+	    
+//	    audioClip.addLineListener(new LineListener() {
+//	        public void update(LineEvent event) {
+//	            if (audioClip.isRunning()) {
+//	                AvanceBP();
+//	            }
+//	        }
+//	    });
+	    
+		BarraProgreso.addMouseListener( new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (audioClip.isOpen()) {
+//					// Seek en el vídeo
+//					float porcentajeSalto = (float)e.getX() / BarraProgreso.getWidth();
+//					mediaPlayer.setPosition( porcentajeSalto );
+//			    	visualizaTiempoRep();
+//					// Otra manera de hacerlo con los milisegundos:
+//					// long milisegsSalto = mediaPlayer.getLength();
+//					// milisegsSalto = Math.round( milisegsSalto * porcentajeSalto );
+//					// mediaPlayer.setTime( milisegsSalto );
+					
+					float porcentajeSalto = (float)e.getX() / BarraProgreso.getWidth();
+//					System.out.println((long)e.getX());
+//					System.out.println(BarraProgreso.getWidth());
+//					System.out.println(porcentajeSalto);
+//					System.out.println(audioClip.getMicrosecondLength());
+					long Salto = Math.round(audioClip.getMicrosecondLength()*porcentajeSalto);
+//					System.out.println(Salto);
+					audioClip.setMicrosecondPosition( Salto );
+					//BarraProgreso.setValue( (int) (10000.0 * audioClip.getLongFramePosition() / audioClip.getFrameLength()) );
+					//BarraProgreso.repaint();
+				    AvanceBP();
+					// Otra manera de hacerlo con los milisegundos:
+					// long milisegsSalto = mediaPlayer.getLength();
+					// milisegsSalto = Math.round( milisegsSalto * porcentajeSalto );
+					// mediaPlayer.setTime( milisegsSalto );
+					
+					
+				}
+			}
+		});
 	
 	}
 	
@@ -110,6 +191,7 @@ public class frmReproductor implements LineListener, ActionListener
 		{
 			play();
 			playing = true;
+			System.out.println(audioClip.getLongFramePosition());
 			AvanceBP();
 			
 		}
@@ -123,30 +205,17 @@ public class frmReproductor implements LineListener, ActionListener
 		{
 			playing = false;
 			audioClip.stop();
+			clipTime = 0;
+			System.out.println(clipTime);
 			audioClip.close();
-			audioClip.setMicrosecondPosition(0);
+			
 		}
 	}
 	
-	
-	
-	public void mouseClicked(MouseEvent e) {
-		if (audioClip.isOpen()) 
-		{
-			// Seek en el vídeo
-			long porcentajeSalto = (long)e.getX() / BarraProgreso.getWidth();
-			audioClip.setMicrosecondPosition( porcentajeSalto );
-		    AvanceBP();
-			// Otra manera de hacerlo con los milisegundos:
-			// long milisegsSalto = mediaPlayer.getLength();
-			// milisegsSalto = Math.round( milisegsSalto * porcentajeSalto );
-			// mediaPlayer.setTime( milisegsSalto );
-		}
-	}
 	
 	public void AvanceBP()
 	{
-		BarraProgreso.setValue( (int) (10000.0 * audioClip.getLongFramePosition() / audioClip.getFrameLength()) );
+		BarraProgreso.setValue( (int) (1000.0 * audioClip.getLongFramePosition() / audioClip.getFrameLength()) );
 		BarraProgreso.repaint();
 		
 		//lMensaje2.setText( formatoHora.format( new Date(mediaPlayer.getTime()-3600000L) ) );
@@ -155,7 +224,7 @@ public class frmReproductor implements LineListener, ActionListener
 	
    
 	
-	void play()//String audioFilePath
+	public void play()//String audioFilePath
     {
     	
         audioFile = new File(audioFilePath);
@@ -177,15 +246,10 @@ public class frmReproductor implements LineListener, ActionListener
             audioClip.setMicrosecondPosition(clipTime);
 			
             audioClip.start();
+            
+            
              
-//            while (!playCompleted) {
-//                // wait for the playback completes
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException ex) {
-//                    ex.printStackTrace();
-//                }
-//            }
+
             
             if(audioClip.getMicrosecondPosition()==audioClip.getMicrosecondLength())
 			{
@@ -204,12 +268,29 @@ public class frmReproductor implements LineListener, ActionListener
             System.out.println("Error playing the audio file.");
             ex.printStackTrace();
         }
+        
+        audioClip.addLineListener(new LineListener() {
+	        public void update(LineEvent event) {
+	            if (audioClip.isRunning()) {
+	                AvanceBP();
+	            }
+	        }
+	    });
          
     }
+	
+	public void CargarPath()
+	{
+		
+		
+		
+		
+	}
      
     @Override
     public void update(LineEvent event) 
     {
+    	
         LineEvent.Type type = event.getType();
          
         if (type == LineEvent.Type.START) 
@@ -221,8 +302,14 @@ public class frmReproductor implements LineListener, ActionListener
             playCompleted = true;
             System.out.println("Song paused.");
         }
+        
+        while(audioClip.isRunning())
+        {
+        	AvanceBP();
+        }
  
     }
+    
     
     public static void main(String[] args) 
     {
