@@ -6,9 +6,12 @@ import java.util.ArrayList;
 import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
 
+import LD.BD;
+
+
 public class ListadeReproduccion implements ListModel<String>
 {
-	ArrayList<File> ficheros;
+	ArrayList<clsCancion> ficheros;
 	
 	/**
 	 * Constructor para iniciar una lista vacia
@@ -16,12 +19,15 @@ public class ListadeReproduccion implements ListModel<String>
 	public ListadeReproduccion()
 	{
 		super();
-		ficheros = new ArrayList<File>();
+		ficheros = new ArrayList<clsCancion>();
 	}
 	
-	public void añadir (File f)
+	public void añadir (File f, boolean cargarBD)
 	{
-		ficheros.add(f);
+		clsCancion cancion = new clsCancion( f );
+		ficheros.add( cancion );
+		//Anyadido( ficheros.size()-1 );  --> Hay que hacerlo con escuchadores pero no tenemos aún
+		if (cargarBD) cancion.cargarFicdeTabla( BD.getStatement() );
 
 	}
 	
@@ -35,7 +41,7 @@ public class ListadeReproduccion implements ListModel<String>
 		ficheros.remove(posi);
 	}
 	
-	public File PosFichero ( int posi ) 
+	public clsCancion PosFichero ( int posi ) 
 	{
 		return ficheros.get( posi );
 	}
@@ -49,7 +55,7 @@ public class ListadeReproduccion implements ListModel<String>
 	@Override
 	public String getElementAt(int index) 
 	{
-		return ficheros.get(index).getName();
+		return ficheros.get(index).getNombre();
 	}
 
 	@Override

@@ -48,8 +48,9 @@ public class clsCancion implements itfProperty, Serializable
 		
 	}
 	
-	public clsCancion()
+	public clsCancion(File fl)
 	{
+		file = fl;
 		nombre = "";
 		autor = "";
 		anio = 0;
@@ -131,6 +132,31 @@ public class clsCancion implements itfProperty, Serializable
 			return false;
 		}
 	}
+	
+	//Cargar fichero de la tabla
+	public void cargarFicdeTabla( Statement st ) 
+	{
+		try {
+			String sentSQL = "select * from canciones " +
+					"where (fichero = '" + this.file.getAbsolutePath() + "')";
+			System.out.println( sentSQL );  
+			ResultSet rs = st.executeQuery( sentSQL );
+			if (rs.next()) {  
+				this.nombre = rs.getString( "nombre" );
+				this.autor = rs.getString( "autor" );
+				this.anio = rs.getInt( "anio" );
+				this.duracion = rs.getFloat( "duracion" );
+			//	this.ListaReproduccion = rs.getArray("Lista");
+				this.idCa = rs.getInt("IdCancion");
+				rs.close();
+			}
+			// else No hay ninguno en la tabla
+		} catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+	}
+
 
 
 	public String getNombre() {
