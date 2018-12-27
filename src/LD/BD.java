@@ -141,7 +141,7 @@ public class BD
 	{
 		try 
 		{
-			String sentSQL = "insert into ficheroUsu values(" +
+			String sentSQL = "insert into usuarios values(" +
 					"'" + idUsu + "', " +
 					"'" + contraseña + "')";
 			int val = statement.executeUpdate( sentSQL );
@@ -155,17 +155,19 @@ public class BD
 		}
 	}
 	
-	public static boolean añadirCancion (String nombre, String autor, int anio, float duracion,String[] ListaReproduccion, int idCa)
+	//CREO QUE ESTE MÉTODO AL IGUAL QUE EL DE USUARIO, VAN EN SU PROPIA CLASS, NO AQUÍ
+	public static boolean añadirCancion (File file, String nombre, String autor, int anio, float duracion,String[] ListaReproduccion, int idCa)
 	{
 		try 
 		{
-			String sentSQL = "insert into ficheroUsu values(" +
+			String sentSQL = "insert into canciones values(" +
+					"'" + file.getAbsolutePath() + "', " +
 					"'" + nombre + "', " +
 					"'" + autor + "'," + 
-					"'" + anio + "', " +
-					"'" + duracion + "', " +
+					 + anio + ", " +
+					 + duracion + ", " +
 					"'" + ListaReproduccion + "', " +
-					"'" + idCa + "')";
+					 + idCa + ")";
 			
 			int val = statement.executeUpdate( sentSQL );
 			if (val!=1) return false; 

@@ -1,6 +1,10 @@
 package LN;
 
+import java.io.File;
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import Excepciones.clsPropertyException;
 import static LN.clsConstantes.Anio;
@@ -18,10 +22,12 @@ public class clsCancion implements itfProperty, Serializable
 	private String[] ListaReproduccion;
 	private int idCa;
 	private int siguienteIdCa;
+	private File file;  
 	
 	
-	public clsCancion(String nombre, String autor, int anio, float duracion,String[] ListaReproduccion, int idCa, boolean leerBD, int idBD)
+	public clsCancion(File file, String nombre, String autor, int anio, float duracion,String[] ListaReproduccion, int idCa, boolean leerBD, int idBD)
 	{
+		this.file = file;
 		this.nombre= nombre;
 		this.autor = autor;
 		this.anio = anio;
@@ -52,6 +58,80 @@ public class clsCancion implements itfProperty, Serializable
 	}
 	
 	
+	//Comprobar si ese fichero ya existe en la BD
+	public boolean existente ( Statement st ) 
+	{
+		try {
+			String sentSQL = "select * from canciones " +
+					"where (fichero = '" + file.getAbsolutePath() + "')";
+			System.out.println( sentSQL );  
+			ResultSet rs = st.executeQuery( sentSQL );
+			if (rs.next()) 
+			{  
+				rs.close();
+				return true;
+			}
+			return false;
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	
+	//Una vez comprobado, si no esta repetido podemos añadir ese fichero 
+	public boolean anyadirFichero( Statement st ) 
+	{
+		if (existente(st)) 
+		{  
+			return modificarFila(st);
+		}
+		try 
+		{
+			String sentSQL = "insert into canciones values(" +
+					"'" + file.getAbsolutePath() + "', " +
+					"'" + nombre + "', " +
+					"'" + autor + "', " +
+					 + anio + ","  +
+					 + duracion + ", " +
+					"'" + ListaReproduccion + "', " +
+					 + idCa + ")";
+			
+			System.out.println( sentSQL ); 
+			int val = st.executeUpdate( sentSQL );
+			if (val!=1) return false; 
+			return true;
+		} catch (SQLException e) 
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	
+	public boolean modificarFila( Statement st ) 
+	{
+		try {
+			String sentSQL = "update canciones set " +
+					"nombre = '" + nombre + "', " +
+					"autor = '" + autor + "', " +
+					"anio = " + anio + ","  +
+					"duracion = " + duracion + 
+					"Lista = '" + ListaReproduccion + "'," +
+					"idCancion =" + idCa +
+					"where (fichero = '" + file.getAbsolutePath() + "')";
+			System.out.println( sentSQL );  
+			int val = st.executeUpdate( sentSQL );
+			if (val!=1) return false;  
+			return true;
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 
 	public String getNombre() {
 		return nombre;
