@@ -24,7 +24,7 @@ public class ListadeReproduccionTest
 	{
 		lista1 = new ListadeReproduccion();
 		lista2 = new ListadeReproduccion();
-		lista2.añadir( STONE);
+		lista2.añadir( STONE, true);
 		
 	}
 	
@@ -37,7 +37,7 @@ public class ListadeReproduccionTest
 	@Test
 	public void TestAñadir() 
 	{
-		lista2.añadir( null ); 
+		lista2.añadir( null, true ); 
 		assertEquals( lista2.PosFichero(1), null );
 
 	}

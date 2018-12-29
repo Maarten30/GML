@@ -178,7 +178,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 						String claveFinal = new String(clave); 
 						clsUsuario usu = new clsUsuario(); 
 						
-						if(txtUsu.getText().equals(usu.getNombre())&& claveFinal.equals(usu.getContraseña()))
+						if(txtUsu.getText().equals(usu.getNombre())&& claveFinal.equals(usu.getContrasena()))
 						{
 							JOptionPane.showMessageDialog(null, "Bienvenido a GML music","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
 //							frmReproductor pagina = new frmReproductor(); //LLEVAR A LA PANTALLA PRINCIPAL

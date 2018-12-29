@@ -8,8 +8,14 @@ import static LN.clsConstantes.Nombre;
 import static LN.clsConstantes.NombreUs;
 
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
+
+
+
 
 
 
@@ -22,19 +28,19 @@ public class clsUsuario implements itfProperty, Serializable
 	private String nombre;
 	private String apellido;
 	private String nombreUs;
-	private String contraseña;
+	private String contrasena;
 	private String email;
 	private int idUs;
 	private int siguienteIdUs;
 	
 	
-	public clsUsuario(String nombre, String apellido, String email, String nombreUs, String contraseña, int idUs, boolean leerBD, int idBD) 
+	public clsUsuario(String nombre, String apellido, String email, String nombreUs, String contrasena, int idUs, boolean leerBD, int idBD) 
 	{
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
 		this.nombreUs = nombreUs;
-		this.contraseña = contraseña;
+		this.contrasena = contrasena;
 		this.idUs = idUs;
 		
 		if(leerBD)
@@ -55,7 +61,77 @@ public class clsUsuario implements itfProperty, Serializable
 		apellido = "";
 		email = "";
 		nombreUs = "";
-		contraseña = ""; 
+		contrasena = ""; 
+	}
+	
+	public boolean existenteUs ( Statement st ) 
+	{
+		try {
+			String sentSQL = "select * from usuarios " +
+					"where (idUs = '" + idUs + "')";
+			System.out.println( sentSQL );  
+			ResultSet rs = st.executeQuery( sentSQL );
+			if (rs.next()) 
+			{  
+				rs.close();
+				return true;
+			}
+			return false;
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean anyadirUsuario( Statement st ) 
+	{
+		if (existenteUs(st)) 
+		{  
+			return modificarUsuario(st);
+		}
+		try 
+		{
+			String sentSQL = "insert into usuarios values(" +
+					"'" + nombre + "', " +
+					"'" + apellido + "', " +
+					"'" + nombreUs + "', " +
+					"'" + contrasena + "', " +
+					"'" + email + "', " +
+					idUs + "," +
+					 ")";
+			
+			System.out.println( sentSQL ); 
+			int val = st.executeUpdate( sentSQL );
+			if (val!=1) return false; 
+			return true;
+		} catch (SQLException e) 
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean modificarUsuario( Statement st ) 
+	{
+		try {
+			String sentSQL = "update canciones set " +
+					"nombre = '" + nombre + "', " +
+					"apellido = '" + apellido + "', " +
+					"nombreUs = " + nombreUs + ","  +
+					"contrasena = '" + contrasena + "', " +
+					"email = " + email + ","  +
+					"idUsuario =" + idUs +
+					"where (idUs = '" + idUs + "')";
+			System.out.println( sentSQL );  
+			int val = st.executeUpdate( sentSQL );
+			if (val!=1) return false;  
+			return true;
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	public String getNombre() 
@@ -105,15 +181,15 @@ public class clsUsuario implements itfProperty, Serializable
 	}
 
 
-	public String getContraseña() 
+	public String getContrasena() 
 	{
-		return contraseña;
+		return contrasena;
 	}
 
 
-	public void setContraseña(String contraseña) 
+	public void setContrasena(String contraseña) 
 	{
-		this.contraseña = contraseña;
+		this.contrasena = contraseña;
 	}
 	
 	public int getIdUs() 
@@ -193,7 +269,7 @@ public class clsUsuario implements itfProperty, Serializable
 			case Apellido : return getApellido(); 
 			case Email : return getEmail(); 
 			case NombreUs : return getNombreUs(); 
-			case Contraseña : return getContraseña(); 
+			case Contraseña : return getContrasena(); 
 			default: throw new clsPropertyException(propiedad); 
 		}
 	}
