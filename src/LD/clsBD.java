@@ -10,7 +10,8 @@ import java.util.HashSet;
 import java.util.logging.*;
 import javax.swing.JOptionPane;
 
-import LN.clsArchivo;
+import LN.clsCancion;
+import LN.clsUsuario;
 
 public class clsBD 
 {
@@ -79,11 +80,18 @@ public class clsBD
 		return statement;
 	}
 	
-	public static HashSet <clsArchivo> leerArchivos()
-	{
-		return null;
-		
-	}
+//	//Lectura de ficheros de base de datos
+//	public static HashSet <clsUsuario> leerUsuarios()
+//	{
+//		return null;
+//	
+//	}
+//	
+//	public static HashSet <clsCancion> leerCanciones()
+//	{
+//		return null;
+//	
+//	}
 	
 	//Crear tablas 
 	
@@ -98,12 +106,12 @@ public class clsBD
 			
 			statement.executeUpdate("create table usuarios " +
 					"("
-					+ "nomUsu string,"
-					+ "apeUsu string,"
-					+ "emailUsu string,"
-					+ "contraseñaUsu string,"
-					+ "idUsu string,"
-					+ "primary key(idUsu)"
+					+ "nom_usu string,"
+					+ "ape_usu string,"
+					+ "email_usu string,"
+					+ "contra_usu string,"
+					+ "id_usu string,"
+					+ "primary key(id_usu)"
 					+ ")");
 			
 			logger.log( Level.INFO, "Tabla creada");
@@ -127,12 +135,12 @@ public class clsBD
 			
 			statement.executeUpdate("create table canciones " +
 					"("
-					+ "nomCa string,"
-					+ "autorCa string,"
-					+ "Anio String,"
-					+ "duracion String,"
-					+ "idCa string,"
-					+ "primary key(idCa)"
+					+ "nom_cancion string,"
+					+ "autor_cancion string,"
+					+ "anio_cancion String,"
+					+ "duracion_cancion String,"
+					+ "id_cancion string,"
+					+ "primary key(id_cancion)"
 					+ ")");
 			
 			logger.log( Level.INFO, "Tabla creada");

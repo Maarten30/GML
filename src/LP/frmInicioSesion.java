@@ -106,40 +106,6 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		contraField.setFont(f2);
 		contraField.requestFocus();
 		panel.add(contraField);
-		contraField.addMouseListener(new MouseListener()
-		{
-
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(java.awt.event.MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(java.awt.event.MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(java.awt.event.MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(java.awt.event.MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
 		
 		map = new InputMap(); 
 		map.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0,false),"pressed");
@@ -282,10 +248,13 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		});
 	}
 	
-	public static void comprobarUsuario(String usuario) throws clsNoExistente, clsExistente
-    {
-		
-    }
+//	public static void comprobarUsuario(String usuario) throws clsNoExistente, clsExistente
+//    {
+//		boolean existe; 
+//		
+//		HashSet <clsUsuario> usu = clsBD.leerUsuarios; 
+//		
+//    }
 	
 
 	@Override
