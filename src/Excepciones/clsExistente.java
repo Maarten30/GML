@@ -1,13 +1,13 @@
 package Excepciones;
 
-import LN.clsUsuario;
-
 
 public class clsExistente extends Exception
 {
-	public String clsExistente(clsUsuario a) 
+	private String usuario; 
+	
+	public clsExistente(String usuario) 
 	{
-		return "No se puede acceder a la aplicación";
+		this.usuario = usuario; 
 	}
 
 	/**

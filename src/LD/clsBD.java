@@ -6,12 +6,15 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashSet;
 import java.util.logging.*;
 import javax.swing.JOptionPane;
 
-public class BD 
+import LN.clsArchivo;
+
+public class clsBD 
 {
-	private static Logger logger = Logger.getLogger(BD.class.getName());
+	private static Logger logger = Logger.getLogger(clsBD.class.getName());
 	
 	private static Connection connection = null;
 	private static Statement statement = null;
@@ -20,7 +23,7 @@ public class BD
 
 	/** Inicializa una base de datos y devuelve una conexión con ella.
 	 * @param nombreBD	Nombre de fichero de la base de datos.
-	 * @return	Conexión con la base de datos indicada. Si hay algún error, se devuelve null
+	 * @return	Conexión con la base de datos indicada, null si hay algún error 
 	 */
 	public static Connection initBD ( String nombreBD ) 
 	{		
@@ -60,7 +63,7 @@ public class BD
 		}
 	}
 	
-	/** Devuelve la conexión si ha sido establecida.
+	/** Devuelve la conexión.
 	 * @return	Conexión con la base de datos, null si no se ha establecido correctamente.
 	 */
 	public static Connection getConnection() 
@@ -68,17 +71,23 @@ public class BD
 		return connection;
 	}
 	
-	/** Devuelve una sentencia para trabajar con la base de datos, si la conexión si ha sido establecida previamente.
-	 * @return	Sentencia de trabajo con la base de datos, null si no se ha establecido correctamente.
+	/** Devuelve una sentencia para la base de datos. 
+	 * @return	Sentencia, null si no se ha establecido correctamente.
 	 */
 	public static Statement getStatement() 
 	{
 		return statement;
 	}
 	
+	public static HashSet <clsArchivo> leerArchivos()
+	{
+		return null;
+		
+	}
+	
 	//Crear tablas 
 	
-	/** Crea una tabla de usuarios en una base de datos, si no existía ya.
+	/** Crea una tabla de usuarios en una base de datos.
 	 */
 	public static void crearTablaUsuarios() 
 	{
@@ -137,6 +146,12 @@ public class BD
 	
 	//Añadir filas
 	
+	/**
+	 * Crea un usuario si no existe ya. 
+	 * @param contraseña que introduce el usuario al registrarse.
+	 * @param idUsu del  usuario para comprobar si existen o no en la BD. 
+	 * @return usuario, si no existía. 
+	 */
 	public static boolean añadirUsuario (String contraseña, int idUsu)
 	{
 		try 
@@ -156,6 +171,17 @@ public class BD
 	}
 	
 	//CREO QUE ESTE MÉTODO AL IGUAL QUE EL DE USUARIO, VAN EN SU PROPIA CLASS, NO AQUÍ
+	/**
+	 * Añade una canción si no existía previamente. 
+	 * @param file 
+	 * @param nombre
+	 * @param autor
+	 * @param anio
+	 * @param duracion
+	 * @param ListaReproduccion
+	 * @param idCa
+	 * @return
+	 */
 	public static boolean añadirCancion (File file, String nombre, String autor, int anio, float duracion,String[] ListaReproduccion, int idCa)
 	{
 		try 
@@ -182,6 +208,12 @@ public class BD
 	
 	//Borrar filas
 	
+	/**
+	 * Borra un usuario de la BD. 
+	 * @param ident
+	 * @param tabla
+	 * @return
+	 */
 	public static boolean borrarUsuario (Object ident, String tabla)
 	{
 		logger.log( Level.INFO, tabla);
@@ -203,6 +235,12 @@ public class BD
 		
 	}
 	
+	/**
+	 * Borra una canción de la BD. 
+	 * @param ident
+	 * @param tabla
+	 * @return
+	 */
 	public static boolean borrarCancion (Object ident, String tabla)
 	{
 		logger.log( Level.INFO, tabla);
@@ -225,7 +263,11 @@ public class BD
 	}
 	
 	//Borrado de tablas
-	
+	/**
+	 * Borra la tabla de usuarios. 
+	 * @param tabla
+	 * @return
+	 */
 	public static boolean borrarTablaUsuarios (String tabla)
 	{
 		logger.log(Level.INFO,tabla);
@@ -246,6 +288,11 @@ public class BD
 	
 	}
 	
+	/**
+	 * Borra la tabla de canciones. 
+	 * @param tabla
+	 * @return
+	 */
 	public static boolean borrarTablaCancion (String tabla)
 	{
 		logger.log(Level.INFO,tabla);

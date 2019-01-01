@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
 
-import LD.BD;
+import LD.clsBD;
 
 
 public class ListadeReproduccion implements ListModel<String>
@@ -27,7 +27,7 @@ public class ListadeReproduccion implements ListModel<String>
 		clsCancion cancion = new clsCancion( f );
 		ficheros.add( cancion );
 		//Anyadido( ficheros.size()-1 );  --> Hay que hacerlo con escuchadores pero no tenemos aún
-		if (cargarBD) cancion.cargarFicdeTabla( BD.getStatement() );
+		if (cargarBD) cancion.cargarFicdeTabla( clsBD.getStatement() );
 
 	}
 	

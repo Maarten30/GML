@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.logging.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,11 +20,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-import LN.JTextObject;
+import Excepciones.clsExistente;
+import Excepciones.clsNoExistente;
 import LN.clsUsuario;
 
 public class frmInicioSesion extends JFrame implements ActionListener
@@ -33,92 +34,75 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	private static Logger logger = Logger.getLogger(frmInicioSesion.class.getName());
 
 	static JLabel lblInicio;
-	static JTextArea txtInfor;
-	static JTextObject txtUsu;
+	static JLabel lblUsu; 
+	static JLabel lblRegistro;
+	static JLabel lblContra; 
+	static JLabel lblNombre;
+	static JLabel lblApe;
+	static JLabel lblCorreo;
+	static JLabel lblUsu2;
+	static JLabel lblContra2;
+	
+	static JTextField txtUsu;
+	static JTextField txtNombre;
+	static JTextField txtApe;
+	static JTextField txtCorreo;
+	static JTextField txtUsu2;
+	
 	static JPasswordField contraField; 
-	static JLabel lblRegistro; 
-	static JTextArea txtInfReg; 
-	static JTextObject txtNombre;
-	static JTextObject txtApellido;
-	static JTextObject txtCorreo; 
-	static JTextObject txtUsuario;
 	static JPasswordField contraField2; 
+	
+	static JButton btnEntrar;
 	static JButton btnRegistrar; 
+	
+	static InputMap map; 
 
 	public static void frmInicioSesion(JPanel panel) 
 	{	
 		panel.setLayout(null);
-		panel.setBackground(Color.white);
-		
-		ImageIcon img = new ImageIcon("C:/logoGML.png");
+		panel.setBackground(Color.WHITE);
+				
+		ImageIcon img = new ImageIcon("C:/logo.png");
 		JLabel fondo = new JLabel(img);	
-		fondo.setBounds(0,0,150,150);
+		JLabel fondo2 = new JLabel(img); 
+		JLabel fondo3 = new JLabel (img);
+		JLabel fondo4 = new JLabel (img);
+		fondo.setBounds(-10,-20,100,100);
+		fondo2.setBounds(-10, 440, 100, 100);
+		fondo3.setBounds(360, -20, 100, 100);
+		fondo4.setBounds(360,440,100,100);
 		panel.add(fondo);
+		panel.add(fondo2); 
+		panel.add(fondo3);
+		panel.add(fondo4);
 		fondo.setVisible(true);
 		
-		Font f1 = new Font("Lucida Bright",Font.BOLD,25);
-		Font f2 = new Font("Segoe UI Semibold",1,12); 
-		Font f3 = new Font("Segoe UI Semibold",1,12);
-		Font f4 = new Font("Lucida Bright",1,18);
-		Font f5 = new Font("Segoe UI Semibold",Font.BOLD,13); 
+		Font f1 = new Font("Century Gothic",Font.BOLD,20);
+		Font f2 = new Font("Century Gothic",1,13); 
+		Font f3 = new Font("Century Gothic",1,13); 
 		
 		lblInicio = new JLabel("INICIAR SESIÓN"); 
 		lblInicio.setFont(f1);
-		lblInicio.setBounds(180,30,220,40);
+		lblInicio.setBounds(160,10,220,40);
 		panel.add(lblInicio);
+				
+		lblUsu = new JLabel("Usuario");
+		lblUsu.setFont(f2);
+		lblUsu.setBounds(20,50,100,50);
+		panel.add(lblUsu); 
 		
-		txtInfor = new JTextArea("Introduzca su nombre de usuario y su contraseña para poder acceder.");
-		txtInfor.setBounds(170,70,260,100);
-		txtInfor.setFont(f3);
-		txtInfor.setEditable(false);
-		txtInfor.setOpaque(false);
-		txtInfor.setFocusable(false);
-		txtInfor.setLineWrap(true);
-		txtInfor.setWrapStyleWord(true); 
-		panel.add(txtInfor);	
-		
-		txtUsu = new JTextObject("Usuario", 20);
-		txtUsu.setBounds(200, 110, 150, 25);
-		txtUsu.setFont(f2);
-		txtUsu.requestFocus();
+		txtUsu = new JTextField(); 
+		txtUsu.setBounds(110, 65, 300, 25);
+		txtUsu.setFont(f3);
 		panel.add(txtUsu);
-		txtUsu.addMouseListener(new MouseListener()
-				{
-
-					@Override
-					public void mouseClicked(java.awt.event.MouseEvent e) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void mouseEntered(java.awt.event.MouseEvent e) {
-						// TODO Auto-generated method stub
-						e.getSource();
-					}
-
-					@Override
-					public void mouseExited(java.awt.event.MouseEvent e) {
-						// TODO Auto-generated method stub
-						e.getSource();
-					}
-
-					@Override
-					public void mousePressed(java.awt.event.MouseEvent e) {
-						// TODO Auto-generated method stub
-						e.getSource();
-					}
-
-					@Override
-					public void mouseReleased(java.awt.event.MouseEvent e) {
-						// TODO Auto-generated method stub
-						e.getSource(); 
-					}
-					
-				});
+		
+		lblContra = new JLabel ("Contraseña"); 
+		lblContra.setFont(f2);
+		lblContra.setBounds(20,100,300,30);
+		panel.add(lblContra);
 		
 		contraField = new JPasswordField();
-		contraField.setBounds(200, 140, 150, 25);
+		contraField.setBounds(110, 105, 300, 25);
 		contraField.setFont(f2);
 		contraField.requestFocus();
 		panel.add(contraField);
@@ -157,16 +141,14 @@ public class frmInicioSesion extends JFrame implements ActionListener
 			
 		});
 		
-		InputMap map = new InputMap(); 
-		
+		map = new InputMap(); 
 		map.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0,false),"pressed");
 		map.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, true), "released");
-		JButton btnEntrar = new JButton ("Entrar"); 
+		btnEntrar = new JButton ("Entrar"); 
 		btnEntrar.setToolTipText("Pulse este botón si desea entrar al reproductor de música");
 		btnEntrar.setInputMap(0, map);
-		btnEntrar.setFont(f5);
-		btnEntrar.setBounds(225, 180, 100, 30);
-		btnEntrar.setBackground(Color.WHITE);
+		btnEntrar.setFont(f2);
+		btnEntrar.setBounds(200, 150, 100, 30);
 		panel.add(btnEntrar);
 		btnEntrar.addActionListener(new ActionListener()
 				{
@@ -191,54 +173,68 @@ public class frmInicioSesion extends JFrame implements ActionListener
 							txtUsu.requestFocus(); 
 						}
 					}
-				});
-		
+				});	
+
 		lblRegistro = new JLabel("REGISTRARSE"); 
-		lblRegistro.setFont(f4);
-		lblRegistro.setBounds(210,220,180,40);
+		lblRegistro.setFont(f1);
+		lblRegistro.setBounds(185,200,180,40);
 		panel.add(lblRegistro);
 		
-		txtInfReg = new JTextArea("Si todavía no tiene cuenta, puede hacerla de manera sencilla introduciendo los datos solicitados a continuación.");
-		txtInfReg.setBounds(140,260,270,100);
-		txtInfReg.setFont(f3);
-		txtInfReg.setEditable(false);
-		txtInfReg.setOpaque(false);
-		txtInfReg.setFocusable(false);
-		txtInfReg.setLineWrap(true);
-		txtInfReg.setWrapStyleWord(true); 
-		panel.add(txtInfReg);
+		lblNombre = new JLabel ("Nombre");
+		lblNombre.setFont(f2);
+		lblNombre.setBounds(20,240,100,50);
+		panel.add(lblNombre); 
 		
-		txtNombre = new JTextObject("Nombre", 20);
-		txtNombre.setFont(f2);
-		txtNombre.setBounds(100,315, 150,20);
+		txtNombre = new JTextField(); 
+		txtNombre.setBounds(110, 255, 300, 25);
+		txtNombre.setFont(f3);
 		panel.add(txtNombre);
 		
-		txtApellido = new JTextObject("Apellido", 20);
-		txtApellido.setFont(f2);
-		txtApellido.setBounds(280,315,150,20);
-		panel.add(txtApellido);
+		lblApe = new JLabel ("Apellido");
+		lblApe.setFont(f2);
+		lblApe.setBounds(20,280,100,50);
+		panel.add(lblApe);
 		
-		txtCorreo = new JTextObject("Correo electrónico", 20);
-		txtCorreo.setFont(f2);
-		txtCorreo.setBounds(100,345,280,20);
+		txtApe = new JTextField(); 
+		txtApe.setBounds(110, 295, 300, 25);
+		txtApe.setFont(f3);
+		panel.add(txtApe);
+		
+		lblCorreo = new JLabel ("Correo");
+		lblCorreo.setFont(f2);
+		lblCorreo.setBounds(20,320,100,50);
+		panel.add(lblCorreo);
+		
+		txtCorreo = new JTextField(); 
+		txtCorreo.setBounds(110, 335, 300, 25);
+		txtCorreo.setFont(f3);
 		panel.add(txtCorreo);
 		
-		txtUsuario = new JTextObject("Nombre usuario", 20);
-		txtUsuario.setFont(f2);
-		txtUsuario.setBounds(100,375,150,20);
-		panel.add(txtUsuario);
+		lblUsu2 = new JLabel ("Usuario");
+		lblUsu2.setFont(f2);
+		lblUsu2.setBounds(20,360,100,50);
+		panel.add(lblUsu2);
+		
+		txtUsu2 = new JTextField(); 
+		txtUsu2.setBounds(110, 375, 300, 25);
+		txtUsu2.setFont(f3);
+		panel.add(txtUsu2);
+		
+		lblContra2 = new JLabel ("Contraseña");
+		lblContra2.setFont(f2);
+		lblContra2.setBounds(20,400,100,50);
+		panel.add(lblContra2);
 		
 		contraField2 = new JPasswordField();
-		contraField2.setBounds(280,375,150,20);
+		contraField2.setBounds(110,415,300,25);
 		contraField2.setFont(f2);
 		contraField2.requestFocus();
 		panel.add(contraField2);
 		
 		btnRegistrar = new JButton ("Registrar"); 
-		btnRegistrar.setFont(f5);
+		btnRegistrar.setFont(f2);
 		btnEntrar.setToolTipText("Pulse este botón si desea crearse una cuenta");
-		btnRegistrar.setBounds(220, 410, 100, 30);
-		btnRegistrar.setBackground(Color.WHITE);
+		btnRegistrar.setBounds(200, 460, 100, 30);
 		panel.add(btnRegistrar);
 		btnRegistrar.addActionListener(new ActionListener()
 		{
@@ -251,14 +247,14 @@ public class frmInicioSesion extends JFrame implements ActionListener
 				char[] contra ;
 				clsUsuario usu = new clsUsuario(); 
 				
-				if(txtNombre.getText().isEmpty() || txtApellido.getText().isEmpty() || txtCorreo.getText().isEmpty() || txtUsuario.getText().isEmpty() || contraField2.getPassword()==null )
+				if(txtNombre.getText().isEmpty() || txtApe.getText().isEmpty() || txtCorreo.getText().isEmpty() || txtUsu2.getText().isEmpty() || contraField2.getPassword()==null )
 				{
 					JOptionPane.showMessageDialog(null,"Te faltan campos de información por rellenar","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
 				}
 				else
 				{
 					nombre = txtNombre.getText();
-					apellido = txtApellido.getText();
+					apellido = txtApe.getText();
 						
 					String emailPattern = "^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@" +  "[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$";
 					Pattern pattern = Pattern.compile(emailPattern);
@@ -279,12 +275,18 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					{
 						JOptionPane.showMessageDialog(null,"Introduzca un email");
 					}
-					nombreUsu = txtUsuario.getText();
+					nombreUsu = txtUsu2.getText();
 					contra = contraField2.getPassword();
 				}
 			}
 		});
 	}
+	
+	public static void comprobarUsuario(String usuario) throws clsNoExistente, clsExistente
+    {
+		
+    }
+	
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) 
@@ -296,7 +298,8 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	public static void main(String[] args)
 	{
 		JFrame frame = new JFrame("Inicio de sesión");
-		frame.setSize(500, 520);
+		frame.setSize(460, 550);
+		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -306,8 +309,4 @@ public class frmInicioSesion extends JFrame implements ActionListener
 
 		frame.setVisible(true);
 	}
-	
-	
-	
-
 }
