@@ -295,6 +295,4 @@ public class clsBD
 	
 	}
 	
-	public static 
-	
 }

@@ -5,9 +5,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseListener;
-import java.io.IOException;
-import java.util.HashSet;
 import java.util.logging.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,8 +20,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-import Excepciones.clsExistente;
-import Excepciones.clsNoExistente;
 import LN.clsUsuario;
 
 public class frmInicioSesion extends JFrame implements ActionListener
@@ -61,7 +56,8 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	{	
 		panel.setLayout(null);
 		panel.setBackground(Color.WHITE);
-				
+		
+		//Inserción de imagen
 		ImageIcon img = new ImageIcon("C:/logo.png");
 		JLabel fondo = new JLabel(img);	
 		JLabel fondo2 = new JLabel(img); 
@@ -77,10 +73,12 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		panel.add(fondo4);
 		fondo.setVisible(true);
 		
+		//Fuentes de letra para la pantalla 
 		Font f1 = new Font("Century Gothic",Font.BOLD,20);
 		Font f2 = new Font("Century Gothic",1,13); 
 		Font f3 = new Font("Century Gothic",1,13); 
 		
+		//Creación de la pantalla 
 		lblInicio = new JLabel("INICIAR SESIÓN"); 
 		lblInicio.setFont(f1);
 		lblInicio.setBounds(160,10,220,40);
@@ -115,6 +113,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		btnEntrar.setInputMap(0, map);
 		btnEntrar.setFont(f2);
 		btnEntrar.setBounds(200, 150, 100, 30);
+		btnEntrar.setBackground(Color.white);
 		panel.add(btnEntrar);
 		btnEntrar.addActionListener(new ActionListener()
 				{
@@ -125,6 +124,11 @@ public class frmInicioSesion extends JFrame implements ActionListener
 						char[] clave = contraField.getPassword();
 						String claveFinal = new String(clave); 
 						clsUsuario usu = new clsUsuario(); 
+						
+						if(txtUsu.getText() == "")
+						{
+							JOptionPane.showMessageDialog(null, "No ha rellenado todos los campos","ERROR",JOptionPane.INFORMATION_MESSAGE);
+						}
 						
 						if(txtUsu.getText().equals(usu.getNombre())&& claveFinal.equals(usu.getContrasena()))
 						{
@@ -201,6 +205,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		btnRegistrar.setFont(f2);
 		btnEntrar.setToolTipText("Pulse este botón si desea crearse una cuenta");
 		btnRegistrar.setBounds(200, 460, 100, 30);
+		btnRegistrar.setBackground(Color.WHITE);
 		panel.add(btnRegistrar);
 		btnRegistrar.addActionListener(new ActionListener()
 		{
@@ -248,20 +253,11 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		});
 	}
 	
-//	public static void comprobarUsuario(String usuario) throws clsNoExistente, clsExistente
-//    {
-//		boolean existe; 
-//		
-//		HashSet <clsUsuario> usu = clsBD.leerUsuarios; 
-//		
-//    }
-	
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) 
 	{
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
 	
 	public static void main(String[] args)

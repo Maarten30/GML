@@ -2,30 +2,31 @@ package LN;
 
 import java.io.File;
 import java.io.Serializable;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
+import java.util.logging.Logger;
 
-import Excepciones.clsPropertyException;
-import static LN.clsConstantes.Anio;
-import static LN.clsConstantes.AutorCa;
-import static LN.clsConstantes.Duracion;
-import static LN.clsConstantes.NombreCa;
-
-
-public class clsCancion implements itfProperty, Serializable
+public class clsCancion implements Serializable
 {
+	private static final long serialVersionUID = 1L;
+	
+	private static Logger logger = Logger.getLogger(clsUsuario.class.getName());
+	private static Connection connection = null;
+	private static Statement statement = null;
+	
 	private String nombre;
 	private String autor;
 	private int anio;
 	private float duracion;
 	private String[] ListaReproduccion;
 	private int idCa;
-	private int siguienteIdCa;
 	private File file;  
 	
 	
-	public clsCancion(File file, String nombre, String autor, int anio, float duracion,String[] ListaReproduccion, int idCa, boolean leerBD, int idBD)
+	public clsCancion(File file, String nombre, String autor, int anio, float duracion,String[] ListaReproduccion, int idCa)
 	{
 		this.file = file;
 		this.nombre= nombre;
@@ -34,18 +35,6 @@ public class clsCancion implements itfProperty, Serializable
 		this.duracion = duracion;
 		this.ListaReproduccion = ListaReproduccion;
 		this.idCa = idCa;
-		
-		if(leerBD)
-		{
-			this.idCa = idBD; 
-		}
-		else
-		{
-			this.idCa = siguienteIdCa; 
-			siguienteIdCa ++; 
-		}
-		
-		
 	}
 	
 	public clsCancion(File fl)
@@ -58,7 +47,79 @@ public class clsCancion implements itfProperty, Serializable
 		ListaReproduccion = null;
 	}
 	
+	public String getNombre() 
+	{
+		return nombre;
+	}
+
+	public void setNombre(String nombre) 
+	{
+		this.nombre = nombre;
+	}
+
+	public String getAutor() 
+	{
+		return autor;
+	}
+
+	public void setAutor(String autor) 
+	{
+		this.autor = autor;
+	}
+
+	public int getAnio() 
+	{
+		return anio;
+	}
+
+	public void setAnio(int anio) 
+	{
+		this.anio = anio;
+	}
+
+	public float getDuracion() 
+	{
+		return duracion;
+	}
+
+	public void setDuracion(float duracion) 
+	{
+		this.duracion = duracion;
+	}
+
+	public int getIdCa() 
+	{
+		return idCa;
+	}
+
+	public void setIdCa(int idCa) 
+	{
+		this.idCa = idCa;
+	}	
+
+	public String[] getListaReproduccion() 
+	{
+		return ListaReproduccion;
+	}
+
+	public void setListaReproduccion(String[] listaReproduccion) 
+	{
+		ListaReproduccion = listaReproduccion;
+	}
 	
+	//ToString
+	@Override
+	public String toString() 
+	{
+		return "Nombre: " + nombre + 
+				"\nAutor: " + autor + 
+				"\nAnio: " + anio + 
+				"\nDuracion: " + duracion +
+				"\nListaReproduccion: " + Arrays.toString(ListaReproduccion) + 
+				"\nidCa: " + idCa + 
+				"\nFile=" + file;
+	}
+
 	//Comprobar si ese fichero ya existe en la BD
 	public boolean existente ( Statement st ) 
 	{
@@ -157,110 +218,6 @@ public class clsCancion implements itfProperty, Serializable
 		}
 	}
 
-
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getAutor() {
-		return autor;
-	}
-
-	public void setAutor(String autor) {
-		this.autor = autor;
-	}
-
-	public int getAnio() {
-		return anio;
-	}
-
-	public void setAnio(int anio) {
-		this.anio = anio;
-	}
-
-	public float getDuracion() {
-		return duracion;
-	}
-
-	public void setDuracion(float duracion) {
-		this.duracion = duracion;
-	}
-
-	public int getIdCa() {
-		return idCa;
-	}
-
-	public void setIdCa(int idCa) {
-		this.idCa = idCa;
-	}
-
-	public int getSiguienteIdCa() {
-		return siguienteIdCa;
-	}
-
-	public void setSiguienteIdCa(int siguienteIdCa) {
-		this.siguienteIdCa = siguienteIdCa;
-	}
 	
-	
-
-	public String[] getListaReproduccion() {
-		return ListaReproduccion;
-	}
-
-	public void setListaReproduccion(String[] listaReproduccion) {
-		ListaReproduccion = listaReproduccion;
-	}
-
-	@Override
-	public String getStringProperty(String propiedad) {
-		
-		switch (propiedad)
-		{
-			case NombreCa : return getNombre();
-			case AutorCa: return getAutor(); 
-			
-			default: throw new clsPropertyException(propiedad); 
-		}
-	}
-
-	@Override
-	public Integer getIntegerProperty(String propiedad) 
-	{
-		switch (propiedad)
-		{
-			case Anio : return getAnio();
-			
-			default: throw new clsPropertyException(propiedad); 
-		}
-	}
-
-	@Override
-	public Float getFloatProperty(String propiedad) {
-		
-		switch (propiedad)
-		{
-			case Duracion : return getDuracion();
-			
-			default: throw new clsPropertyException(propiedad); 
-		}
-	}
-
-	@Override
-	public Double getDoubleProperty(String propiedad) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public char getCharProperty(String propiedad) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 }
