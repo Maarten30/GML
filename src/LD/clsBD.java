@@ -80,19 +80,6 @@ public class clsBD
 		return statement;
 	}
 	
-//	//Lectura de ficheros de base de datos
-//	public static HashSet <clsUsuario> leerUsuarios()
-//	{
-//		return null;
-//	
-//	}
-//	
-//	public static HashSet <clsCancion> leerCanciones()
-//	{
-//		return null;
-//	
-//	}
-	
 	//Crear tablas 
 	
 	/** Crea una tabla de usuarios en una base de datos.
@@ -104,15 +91,8 @@ public class clsBD
 		{ 
 			logger.log( Level.INFO, "Creando tabla");
 			
-			statement.executeUpdate("create table usuarios " +
-					"("
-					+ "nom_usu string,"
-					+ "ape_usu string,"
-					+ "email_usu string,"
-					+ "contra_usu string,"
-					+ "id_usu string,"
-					+ "primary key(id_usu)"
-					+ ")");
+			statement.executeUpdate("create table usuarios (nom_usu string, ape_usu string, email_usu string, contra_usu string, id_usu string,"
+					+ "primary key(id_usu)"); 
 			
 			logger.log( Level.INFO, "Tabla creada");
 		} 
@@ -133,15 +113,8 @@ public class clsBD
 		{ 
 			logger.log( Level.INFO, "Creando tabla");
 			
-			statement.executeUpdate("create table canciones " +
-					"("
-					+ "nom_cancion string,"
-					+ "autor_cancion string,"
-					+ "anio_cancion String,"
-					+ "duracion_cancion String,"
-					+ "id_cancion string,"
-					+ "primary key(id_cancion)"
-					+ ")");
+			statement.executeUpdate("create table canciones (nom_cancion string, autor_cancion string, anio_cancion string, duracion_cancion string,"
+					+ "id_cancion string, primary key(id_cancion)");   
 			
 			logger.log( Level.INFO, "Tabla creada");
 		} 
@@ -167,6 +140,7 @@ public class clsBD
 			String sentSQL = "insert into usuarios values(" +
 					"'" + idUsu + "', " +
 					"'" + contraseña + "')";
+			
 			int val = statement.executeUpdate( sentSQL );
 			if (val!=1) return false; 
 			return true;
@@ -320,5 +294,7 @@ public class clsBD
 		}
 	
 	}
+	
+	public static 
 	
 }
