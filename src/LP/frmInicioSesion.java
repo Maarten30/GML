@@ -120,20 +120,17 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					public void actionPerformed(ActionEvent arg0)
 					{				
 						logger.log(Level.INFO, "Comienzo inicio sesión");
+						String idUs; 
+						String pass; 
 						
 						char[] clave = contraField.getPassword();
 						String claveFinal = new String(clave); 
 						clsUsuario usu = new clsUsuario(); 
-						
-						if(txtUsu.getText() == "")
-						{
-							JOptionPane.showMessageDialog(null, "No ha rellenado todos los campos","ERROR",JOptionPane.INFORMATION_MESSAGE);
-						}
-						
+											
 						if(txtUsu.getText().equals(usu.getNombre())&& claveFinal.equals(usu.getContrasena()))
 						{
 							JOptionPane.showMessageDialog(null, "Bienvenido a GML music","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
-//							frmReproductor pagina = new frmReproductor(); //LLEVAR A LA PANTALLA PRINCIPAL
+							frmReproductor pagina = new frmReproductor(); //LLEVAR A LA PANTALLA PRINCIPAL
 						}
 						else
 						{
@@ -248,6 +245,8 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					}
 					nombreUsu = txtUsu2.getText();
 					contra = contraField2.getPassword();
+					
+					
 				}
 			}
 		});

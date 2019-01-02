@@ -245,26 +245,26 @@ public class clsUsuario implements Serializable
 	
 	public boolean anyadirUsuario( Statement st ) 
 	{
-		if (existenteUs(st)) 
-		{  
-			return modificarUsuario(st);
-		}
 		try 
 		{
-			String sentSQL = "insert into usuarios values(" +
-					"'" + nombre + "', " +
+			String listaEms = ""; 
+			String sep = "";
+			for (String email : listaEmail) 
+			{ //cogemos el atributo de lista emails y creamos un atributo 
+				listaEms = listaEms + sep + email;
+				sep = ",";
+			}
+			String sentSQL = "insert into usuario values(" +
+					"'" + nombre + "', " + //los valores van entre comillas simples en sql 
 					"'" + apellido + "', " +
 					"'" + nombreUs + "', " +
-					"'" + contrasena + "', " +
-					"'" + listaEmail + "', " +
-					idUs + "," +
-					 ")";
-			
-			System.out.println( sentSQL ); 
-			int val = st.executeUpdate( sentSQL );
-			if (val!=1) return false; 
+					"'" + listaEms + "')";
+			System.out.println( sentSQL );  // (Quitar) para ver lo que se hace, imprimimos la sentencia para ver que está bien escrito 
+			int val = st.executeUpdate( sentSQL ); //esto mete un usuario
+			if (val!=1) return false;  // Se tiene que añadir 1 - error si no
 			return true;
-		} catch (SQLException e) 
+		} 
+		catch (SQLException e) 
 		{
 			e.printStackTrace();
 			return false;
