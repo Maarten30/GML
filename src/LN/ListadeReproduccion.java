@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
 
-import LD.clsBD;
+import LN.clsBD;
 
 
 public class ListadeReproduccion implements ListModel<String>

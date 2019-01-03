@@ -20,6 +20,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
+import LN.clsBD;
 import LN.clsUsuario;
 
 public class frmInicioSesion extends JFrame implements ActionListener
@@ -54,6 +55,9 @@ public class frmInicioSesion extends JFrame implements ActionListener
 
 	public static void frmInicioSesion(JPanel panel) 
 	{	
+		clsBD.initBD(); 
+		clsBD.crearTablaUsuarios();
+		
 		panel.setLayout(null);
 		panel.setBackground(Color.WHITE);
 		
@@ -208,12 +212,12 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				String nombre = "" ;
-				String apellido = "" ;
-				String email = "" ;
-				String nombreUsu = "" ;
-				char[] contra ;
-				clsUsuario usu = new clsUsuario(); 
+				String nombre = ""; 
+				String apellido = "";
+				String email = "";
+				String nombreUsu ="";
+				
+				clsBD.añadirUsuario(nombre, apellido, email, nombreUsu);
 				
 				if(txtNombre.getText().isEmpty() || txtApe.getText().isEmpty() || txtCorreo.getText().isEmpty() || txtUsu2.getText().isEmpty() || contraField2.getPassword()==null )
 				{
@@ -243,10 +247,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					{
 						JOptionPane.showMessageDialog(null,"Introduzca un email");
 					}
-					nombreUsu = txtUsu2.getText();
-					contra = contraField2.getPassword();
-					
-					
+					nombreUsu = txtUsu2.getText(); 
 				}
 			}
 		});
