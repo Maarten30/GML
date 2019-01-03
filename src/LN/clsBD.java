@@ -31,7 +31,7 @@ public class clsBD
 		try
 		{
 		    Class.forName("org.sqlite.JDBC");
-		    connection = DriverManager.getConnection("jdbc:sqlite:" );
+		    connection = DriverManager.getConnection("jdbc:sqlite:BD.bd" );
 			statement = connection.createStatement(); //este statement es para meter todo lo que queramos a la BD 
 			statement.setQueryTimeout(30);// poner timeout 30 msg, esto se pone para el tiempo a esperar aunque no dará problemas 
 		    return connection;
@@ -47,22 +47,6 @@ public class clsBD
 		}
 	}
 	
-	/** Cierre de la conexión.
-	 */
-	public static void close() 
-	{
-		try 
-		{
-			statement.close();
-			connection.close();
-		} 
-		catch (SQLException e)
-		{
-			logger.log( Level.SEVERE, e.getMessage(), e );
-
-			e.printStackTrace();
-		}
-	}
 	
 	/** Devuelve la conexión.
 	 * @return	Conexión con la base de datos, null si no se ha establecido correctamente.
@@ -295,6 +279,23 @@ public class clsBD
 			return false;
 		}
 	
+	}
+	
+	/** Cierre de la conexión.
+	 */
+	public static void close() 
+	{
+		try 
+		{
+			statement.close();
+			connection.close();
+		} 
+		catch (SQLException e)
+		{
+			logger.log( Level.SEVERE, e.getMessage(), e );
+
+			e.printStackTrace();
+		}
 	}
 	
 }
