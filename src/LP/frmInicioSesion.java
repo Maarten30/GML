@@ -5,9 +5,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.logging.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+//import java.util.logging.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
@@ -20,51 +18,66 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import LN.clsBD;
-import LN.clsUsuario;
+import LN.clsPlayList;
 
 public class frmInicioSesion extends JFrame implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 	
-	private static Logger logger = Logger.getLogger(frmInicioSesion.class.getName());
+//	private static Logger logger = Logger.getLogger(frmInicioSesion.class.getName());
 
-	private JFrame frame;
-	static JLabel lblInicio;
-	static JLabel lblUsu; 
-	static JLabel lblRegistro;
-	static JLabel lblContra; 
-	static JLabel lblNombre;
-	static JLabel lblApe;
-	static JLabel lblCorreo;
-	static JLabel lblUsu2;
-	static JLabel lblContra2;
+	private JPanel panel;
 	
-	static JTextField txtUsu;
-	static JTextField txtNombre;
-	static JTextField txtApe;
-	static JTextField txtCorreo;
-	static JTextField txtUsu2;
+	private JLabel lblInicio;
+	private JLabel lblUsu; 
+	private JLabel lblRegistro;
+	private JLabel lblContra; 
+	private JLabel lblNombre;
+	private JLabel lblApe;
+	private JLabel lblCorreo;
+	private JLabel lblUsu2;
+	private JLabel lblContra2;
 	
-	static JPasswordField contraField; 
-	static JPasswordField contraField2; 
+	private JTextField txtUsu;
+	private JTextField txtNombre;
+	private JTextField txtApe;
+	private JTextField txtCorreo;
+	private JTextField txtUsu2;
 	
-	static JButton btnEntrar;
-	static JButton btnRegistrar; 
+	private JPasswordField contraField; 
+	private JPasswordField contraField2; 
 	
-	static InputMap map; 
+	private JButton btnEntrar;
+	private JButton btnRegistrar; 
+	
+	private InputMap map; 
 
-	public static void frmInicioSesion(JPanel panel) 
+	public frmInicioSesion() 
 	{	
-		clsBD.initBD(); 
-		clsBD.crearTablaUsuarios();
-		clsBD.crearTablaCanciones();
+		setTitle("Inicio de Sesión");
+		setSize(460,550);
+		setLocationRelativeTo(null);
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
-		panel.setLayout(null);
-		panel.setBackground(Color.WHITE);
-		
+	    panel = new JPanel();
+	    add(panel);
+	    
+	    panel.setVisible(true);
+	    panel.setLayout(null);
+	    panel.setBackground(Color.WHITE);
+	     
+	    clsBD.initBD(); 
+	    clsBD.crearTablaUsuarios();
+	    clsBD.crearTablaCanciones();
+	
 		//Inserción de imagen
-		ImageIcon img = new ImageIcon("C:/logo.png");
+		ImageIcon img = new ImageIcon("src/LN/logo.png");
 		JLabel fondo = new JLabel(img);	
 		JLabel fondo2 = new JLabel(img); 
 		JLabel fondo3 = new JLabel (img);
@@ -218,6 +231,8 @@ public class frmInicioSesion extends JFrame implements ActionListener
 				String apellido = "";
 				String email = "";
 				String nombreUsu ="";
+				ArrayList<clsPlayList> listas = null;
+				
 				
 				if(txtNombre.getText().isEmpty() || txtApe.getText().isEmpty() || txtCorreo.getText().isEmpty() || txtUsu2.getText().isEmpty() || contraField2.getPassword()==null )
 				{
@@ -229,67 +244,52 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					apellido = txtApe.getText();
 					nombreUsu = txtUsu2.getText();
 					
-					 Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+					Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 				                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 					 
-					 email = txtCorreo.getText();
+					email = txtCorreo.getText();
 					 
-					 Matcher mather = pattern.matcher(email);
-				     if (mather.find() == true) 
-				     {
-				    	 clsBD.añadirUsuario(nombre, apellido, email, nombreUsu);
-				    	 JOptionPane.showMessageDialog(null,"Su registro se ha realizado satisfactoriamente","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
-				     } 
-				     else 
-				     {
-							JOptionPane.showMessageDialog(null,"El correo ingresado no es válido","INICIO SESIÓN",JOptionPane.ERROR_MESSAGE);
+					Matcher mather = pattern.matcher(email);
+				    if (mather.find() == true) 
+				    {
+				    	clsBD.añadirUsuario(nombre, apellido, email, nombreUsu, listas);
+				    	JOptionPane.showMessageDialog(null,"Su registro se ha realizado satisfactoriamente","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+				    } 
+				    else 
+				    {
+						JOptionPane.showMessageDialog(null,"El correo ingresado no es válido","INICIO SESIÓN",JOptionPane.ERROR_MESSAGE);
 							
-							txtCorreo.setText(null);
-							txtCorreo.requestFocus();
-				     }
+						txtCorreo.setText(null);
+						txtCorreo.requestFocus();
+				    }
 				}
 			}
 		});
 	}
 	
-	@Override
-	public void actionPerformed(ActionEvent arg0) 
-	{
-		// TODO Auto-generated method stub	
-	}
-	
-//	public static void main(String[] args)
-//	{
-//		JFrame frame = new JFrame("Inicio de sesión");
-//		frame.setSize(460, 550);
-//		frame.setLocationRelativeTo(null);
-//		frame.setResizable(false);
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//	  public void createAndShowGUI() 
+//	    {    
+//	        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//	        //Display the window.
+//	        //this.pack();
+//	       
+//	        frame = new JFrame("Inicio de sesión");
+//			frame.setSize(460, 550);
+//			frame.setLocationRelativeTo(null);
+//			frame.setResizable(false);
+//			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //
-//		JPanel panel = new JPanel();
-//		frame.add(panel);
-//		frmInicioSesion(panel);
+//			JPanel panel = new JPanel();
+//			frame.add(panel);
+////			frmInicioSesion(panel);
 //
-//		frame.setVisible(true);
-//	}
-	
-	  public void createAndShowGUI() 
-	    {    
-	        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	        //Display the window.
-	        //this.pack();
-	       
-	        frame = new JFrame("Inicio de sesión");
-			frame.setSize(460, 550);
-			frame.setLocationRelativeTo(null);
-			frame.setResizable(false);
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-			JPanel panel = new JPanel();
-			frame.add(panel);
-			frmInicioSesion(panel);
-
-			frame.setVisible(true);
-	    }
+//			frame.setVisible(true);
+//	    }
 		
+	@Override
+	public void actionPerformed(ActionEvent e) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
 }

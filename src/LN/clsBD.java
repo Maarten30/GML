@@ -74,7 +74,7 @@ public class clsBD
 	{		
 		try 
 		{
-			statement.executeUpdate("create table usuarios (nombre string, apellido string, email string, nombreUsu string)");
+			statement.executeUpdate("create table usuarios (nombre string, apellido string, email string, nombreUsu string, listas string)");
 		} 
 		catch (SQLException e) 
 		{
@@ -142,13 +142,14 @@ public class clsBD
 	 * @param idUsu del  usuario para comprobar si existen o no en la BD. 
 	 * @return usuario, si no existía. 
 	 */
-	public static void añadirUsuario (String nombre, String apellido, String email, String nomUs)
+	public static void añadirUsuario (String nombre, String apellido, String email, String nomUs, ArrayList<clsPlayList> listas)
 	{
 		String sentSQL = "insert into usuarios values(" +
 				"'" + nombre + "', " +
 				"'" + apellido + 
 				"'" + email + "', " +
-				"'" + nomUs + "', " +"')";
+				"'" + nomUs + "', " +
+				"'" + listas + "', " +"')";
 		try 
 		{
 			statement.executeUpdate(sentSQL);
