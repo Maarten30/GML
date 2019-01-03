@@ -21,7 +21,7 @@ public class clsCancion implements Serializable
 	private String autor;
 	private int anio;
 	private float duracion;
-	private String[] ListaReproduccion;
+	private String[] ListaReproduccion; //Esto ya no hace falta no?
 	private int idCa;
 	private File file;  
 	

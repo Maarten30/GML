@@ -28,16 +28,18 @@ public class clsUsuario implements Serializable
 	String nombreUs;
 	String contrasena;
 	String email;
+	ArrayList<clsPlayList> listas;
 	int idUs;
 	
 	//Constructor con parámetros 
-	public clsUsuario(String nombre, String apellido, String email, String nombreUs, String contrasena, int idUs) 
+	public clsUsuario(String nombre, String apellido, String email, String nombreUs, String contrasena, ArrayList<clsPlayList> listas, int idUs) 
 	{
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
 		this.nombreUs = nombreUs;
 		this.contrasena = contrasena;
+		this.listas = listas;
 		this.idUs = idUs;
 	}
 	
@@ -49,6 +51,7 @@ public class clsUsuario implements Serializable
 		email = "";
 		nombreUs = ""; 
 		contrasena = ""; 
+		listas = null;
 		idUs = 0; 
 	}
 		
@@ -112,7 +115,15 @@ public class clsUsuario implements Serializable
 		{
 			this.idUs = idUs;
 		}
-	
+		
+		public ArrayList<clsPlayList> getListas() {
+			return listas;
+		}
+
+		public void setListas(ArrayList<clsPlayList> listas) {
+			this.listas = listas;
+		}
+
 	//ToString	
 	@Override
 	public String toString() 

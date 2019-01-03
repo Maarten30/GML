@@ -57,6 +57,8 @@ public class frmReproductor implements LineListener, ActionListener
 	boolean playCompleted;
 	boolean playing;
 	
+	private LN.clsUsuario usuario;
+	
 	private File audioFile;
 	public Clip audioClip;
 	//private String audioFilePath = "C:/Demi Lovato - Stone Cold (Official Video).wav";
@@ -282,7 +284,7 @@ public class frmReproductor implements LineListener, ActionListener
 	public void CargarPath()
 	{
 		
-		
+		//ArrayList<PlayList> listas = usuario.getListas();
 		
 		
 	}
