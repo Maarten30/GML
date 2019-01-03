@@ -56,6 +56,8 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	public static void frmInicioSesion(JPanel panel) 
 	{	
 		clsBD.initBD(); 
+		clsBD.crearTablaUsuarios();
+		clsBD.crearTablaCanciones();
 		
 		panel.setLayout(null);
 		panel.setBackground(Color.WHITE);

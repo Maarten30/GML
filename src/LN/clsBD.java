@@ -71,26 +71,10 @@ public class clsBD
 	/** Crea una tabla de usuarios en una base de datos.
 	 */
 	public static void crearTablaUsuarios() 
-	{
-//		if (statement==null) return;
-//		try
-//		{ 
-//			logger.log( Level.INFO, "Creando tabla");
-//			
-//			statement.executeUpdate("create table usuarios (nom_usu string, ape_usu string, email_usu string, contra_usu string, id_usu string,"
-//					+ "primary key(id_usu)"); 
-//			
-//			logger.log( Level.INFO, "Tabla creada");
-//		} 
-//		
-//		catch (SQLException e) 
-//		{
-//			logger.log( Level.INFO, "La tabla ya estaba creada"+ e.getMessage(), e ); //si hay excepción es que la tabla está creada
-//		}
-		
+	{		
 		try 
 		{
-			statement.executeUpdate("create table usuarios (nom_usu string, ape_usu string, email_usu string, id_usu string)");
+			statement.executeUpdate("create table usuarios (nombre string, apellido string, email string, nombreUsu string)");
 		} 
 		catch (SQLException e) 
 		{
@@ -139,20 +123,14 @@ public class clsBD
 	 */
 	public static void crearTablaCanciones() 
 	{
-		if (statement==null) return;
-		try
-		{ 
-			logger.log( Level.INFO, "Creando tabla");
-			
-			statement.executeUpdate("create table canciones (nom_cancion string, autor_cancion string, anio_cancion string, duracion_cancion string,"
-					+ "id_cancion string, primary key(id_cancion)");   
-			
-			logger.log( Level.INFO, "Tabla creada");
+		try 
+		{
+			statement.executeUpdate("create table canciones (nombre string, autor string, año int, duracion float, listaReproduccion string)");
 		} 
-		
 		catch (SQLException e) 
 		{
-			logger.log( Level.INFO, "La tabla ya estaba creada"+ e.getMessage(), e ); //si hay excepción es que la tabla está creada
+			if (!e.getMessage().equals("La tabla de usuarios ya existe."))  // Este error sí es correcto si la tabla ya existe
+				e.printStackTrace();
 		}
 	}
 	
