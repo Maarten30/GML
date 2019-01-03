@@ -1,9 +1,17 @@
 package LN;
 
-public class clsMain {
+import LP.frmInicioSesion;
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+public class clsMain 
+{
+
+	public static void main(String[] args)
+	{
+		frmInicioSesion frame = new frmInicioSesion();
+		frame.createAndShowGUI();
+		frame.setVisible(true);
+	
+		
 
 	}
 

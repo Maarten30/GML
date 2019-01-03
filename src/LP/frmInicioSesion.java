@@ -29,6 +29,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	
 	private static Logger logger = Logger.getLogger(frmInicioSesion.class.getName());
 
+	private JFrame frame;
 	static JLabel lblInicio;
 	static JLabel lblUsu; 
 	static JLabel lblRegistro;
@@ -257,18 +258,38 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		// TODO Auto-generated method stub	
 	}
 	
-	public static void main(String[] args)
-	{
-		JFrame frame = new JFrame("Inicio de sesión");
-		frame.setSize(460, 550);
-		frame.setLocationRelativeTo(null);
-		frame.setResizable(false);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//	public static void main(String[] args)
+//	{
+//		JFrame frame = new JFrame("Inicio de sesión");
+//		frame.setSize(460, 550);
+//		frame.setLocationRelativeTo(null);
+//		frame.setResizable(false);
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//
+//		JPanel panel = new JPanel();
+//		frame.add(panel);
+//		frmInicioSesion(panel);
+//
+//		frame.setVisible(true);
+//	}
+	
+	  public void createAndShowGUI() 
+	    {    
+	        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        //Display the window.
+	        //this.pack();
+	       
+	        frame = new JFrame("Inicio de sesión");
+			frame.setSize(460, 550);
+			frame.setLocationRelativeTo(null);
+			frame.setResizable(false);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		JPanel panel = new JPanel();
-		frame.add(panel);
-		frmInicioSesion(panel);
+			JPanel panel = new JPanel();
+			frame.add(panel);
+			frmInicioSesion(panel);
 
-		frame.setVisible(true);
-	}
+			frame.setVisible(true);
+	    }
+		
 }
