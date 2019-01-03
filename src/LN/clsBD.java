@@ -6,7 +6,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.StringTokenizer;
 import java.util.logging.*;
 import javax.swing.JOptionPane;
 
@@ -70,23 +72,68 @@ public class clsBD
 	 */
 	public static void crearTablaUsuarios() 
 	{
-		if (statement==null) return;
-		try
-		{ 
-			logger.log( Level.INFO, "Creando tabla");
-			
-			statement.executeUpdate("create table usuarios (nom_usu string, ape_usu string, email_usu string, contra_usu string, id_usu string,"
-					+ "primary key(id_usu)"); 
-			
-			logger.log( Level.INFO, "Tabla creada");
-		} 
+//		if (statement==null) return;
+//		try
+//		{ 
+//			logger.log( Level.INFO, "Creando tabla");
+//			
+//			statement.executeUpdate("create table usuarios (nom_usu string, ape_usu string, email_usu string, contra_usu string, id_usu string,"
+//					+ "primary key(id_usu)"); 
+//			
+//			logger.log( Level.INFO, "Tabla creada");
+//		} 
+//		
+//		catch (SQLException e) 
+//		{
+//			logger.log( Level.INFO, "La tabla ya estaba creada"+ e.getMessage(), e ); //si hay excepción es que la tabla está creada
+//		}
 		
+		try 
+		{
+			statement.executeUpdate("create table usuarios (nom_usu string, ape_usu string, email_usu string, id_usu string)");
+		} 
 		catch (SQLException e) 
 		{
-			logger.log( Level.INFO, "La tabla ya estaba creada"+ e.getMessage(), e ); //si hay excepción es que la tabla está creada
+			if (!e.getMessage().equals("La tabla de usuarios ya existe."))  // Este error sí es correcto si la tabla ya existe
+				e.printStackTrace();
 		}
 	}
 	
+	public static ArrayList<clsUsuario> consultaATabla( Statement st, String codigoSelect )
+	{
+		ArrayList<clsUsuario> ret = new ArrayList<>();
+		try 
+		{
+			String sentSQL = "select * from usuarios";
+			if (codigoSelect!=null && !codigoSelect.equals(""))
+				sentSQL = sentSQL + " where " + codigoSelect;
+			System.out.println( sentSQL );  // (Quitar) para ver lo que se hace
+			ResultSet rs = st.executeQuery( sentSQL );
+			while (rs.next()) {
+				clsUsuario u = new clsUsuario();
+				u.nombre = rs.getString( "nombre" );
+				u.apellido = rs.getString( "apellido" );
+				u.email = rs.getString( "email" );
+				u.nombreUs = rs.getString( "nombreUs" );
+				u.contrasena = rs.getString("contrasena"); 
+			
+				ret.add( u );
+			}
+			rs.close();
+			return ret;
+		} 
+		catch (IllegalArgumentException e) 
+		{  // Error en tipo usuario (enumerado)
+			e.printStackTrace();
+			return null;
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
+		
 	/**
 	 * Crea tabla de canciones en base de datos si no existia ya
 	 */
@@ -117,24 +164,25 @@ public class clsBD
 	 * @param idUsu del  usuario para comprobar si existen o no en la BD. 
 	 * @return usuario, si no existía. 
 	 */
-	public static boolean añadirUsuario (String nombre, String apellido, String email, String nomUs)
+	public static void añadirUsuario (String nombre, String apellido, String email, String nomUs)
 	{
+		String sentSQL = "insert into usuarios values(" +
+				"'" + nombre + "', " +
+				"'" + apellido + 
+				"'" + email + "', " +
+				"'" + nomUs + "', " +"')";
 		try 
 		{
-			String sentSQL = "insert into usuarios values(" +
-					"'" + nombre + "', " +
-					"'" + apellido + 
-					"'" + email + "', " +
-					"'" + nomUs + "', " +"')";
+			statement.executeUpdate(sentSQL);
 			
-			int val = statement.executeUpdate( sentSQL );
-			if (val!=1) return false; 
-			return true;
+//			int val = statement.executeUpdate( sentSQL );
+//			if (val!=1) return false; 
+//			return true;
 		} 
-		catch (SQLException e) 
+		catch (SQLException e)
 		{
-			logger.log( Level.WARNING, e.getMessage(), e );
-			return false;
+			System.out.println( "ERROR EN SENTENCIA SQL: " + sentSQL);
+			e.printStackTrace();
 		}
 	}
 	

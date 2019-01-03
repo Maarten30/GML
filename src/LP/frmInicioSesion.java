@@ -56,7 +56,6 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	public static void frmInicioSesion(JPanel panel) 
 	{	
 		clsBD.initBD(); 
-		clsBD.crearTablaUsuarios();
 		
 		panel.setLayout(null);
 		panel.setBackground(Color.WHITE);
@@ -119,32 +118,32 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		btnEntrar.setBounds(200, 150, 100, 30);
 		btnEntrar.setBackground(Color.white);
 		panel.add(btnEntrar);
-		btnEntrar.addActionListener(new ActionListener()
-				{
-					public void actionPerformed(ActionEvent arg0)
-					{				
-						logger.log(Level.INFO, "Comienzo inicio sesión");
-						String idUs; 
-						String pass; 
-						
-						char[] clave = contraField.getPassword();
-						String claveFinal = new String(clave); 
-						clsUsuario usu = new clsUsuario(); 
-											
-						if(txtUsu.getText().equals(usu.getNombre())&& claveFinal.equals(usu.getContrasena()))
-						{
-							JOptionPane.showMessageDialog(null, "Bienvenido a GML music","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
-							frmReproductor pagina = new frmReproductor(); //LLEVAR A LA PANTALLA PRINCIPAL
-						}
-						else
-						{
-							JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos","ERROR",JOptionPane.ERROR_MESSAGE);
-							txtUsu.setText("");
-							contraField.setText("");
-							txtUsu.requestFocus(); 
-						}
-					}
-				});	
+//		btnEntrar.addActionListener(new ActionListener()
+//				{
+//					public void actionPerformed(ActionEvent arg0)
+//					{				
+//						logger.log(Level.INFO, "Comienzo inicio sesión");
+//						String nombreUsu; 
+//						String contrasena; 
+//						
+//						char[] clave = contraField.getPassword();
+//						String claveFinal = new String(clave); 
+//						clsUsuario usu = new clsUsuario(); 
+//											
+//						if(txtUsu.getText().equals(usu.getNombre())&& claveFinal.equals(usu.getContrasena()))
+//						{
+//							JOptionPane.showMessageDialog(null, "Bienvenido a GML music","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+//							frmReproductor pagina = new frmReproductor(); //LLEVAR A LA PANTALLA PRINCIPAL
+//						}
+//						else
+//						{
+//							JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos","ERROR",JOptionPane.ERROR_MESSAGE);
+//							txtUsu.setText("");
+//							contraField.setText("");
+//							txtUsu.requestFocus(); 
+//						}
+//					}
+//				});	
 
 		lblRegistro = new JLabel("REGISTRARSE"); 
 		lblRegistro.setFont(f1);
@@ -217,8 +216,6 @@ public class frmInicioSesion extends JFrame implements ActionListener
 				String email = "";
 				String nombreUsu ="";
 				
-				clsBD.añadirUsuario(nombre, apellido, email, nombreUsu);
-				
 				if(txtNombre.getText().isEmpty() || txtApe.getText().isEmpty() || txtCorreo.getText().isEmpty() || txtUsu2.getText().isEmpty() || contraField2.getPassword()==null )
 				{
 					JOptionPane.showMessageDialog(null,"Te faltan campos de información por rellenar","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
@@ -227,33 +224,31 @@ public class frmInicioSesion extends JFrame implements ActionListener
 				{
 					nombre = txtNombre.getText();
 					apellido = txtApe.getText();
-						
-					String emailPattern = "^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@" +  "[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$";
-					Pattern pattern = Pattern.compile(emailPattern);
-				
-					if (txtCorreo.getText() != null)
-					{
-						Matcher matcher = pattern.matcher(email);
-						if (matcher.matches())
-						{
-							email = txtCorreo.getText();
-						}
-						else
-						{
-						JOptionPane.showMessageDialog(null,"Introduzca un email válido");
-						}
-					}
-					else
-					{
-						JOptionPane.showMessageDialog(null,"Introduzca un email");
-					}
-					nombreUsu = txtUsu2.getText(); 
+					nombreUsu = txtUsu2.getText();
+					
+					 Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+				                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+					 
+					 email = txtCorreo.getText();
+					 
+					 Matcher mather = pattern.matcher(email);
+				     if (mather.find() == true) 
+				     {
+				    	 clsBD.añadirUsuario(nombre, apellido, email, nombreUsu);
+				    	 JOptionPane.showMessageDialog(null,"Su registro se ha realizado satisfactoriamente","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+				     } 
+				     else 
+				     {
+							JOptionPane.showMessageDialog(null,"El correo ingresado no es válido","INICIO SESIÓN",JOptionPane.ERROR_MESSAGE);
+							
+							txtCorreo.setText(null);
+							txtCorreo.requestFocus();
+				     }
 				}
 			}
 		});
 	}
 	
-
 	@Override
 	public void actionPerformed(ActionEvent arg0) 
 	{
