@@ -6,6 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 //import java.util.logging.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
@@ -47,13 +52,20 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	private JTextField txtNombre;
 	private JTextField txtApe;
 	private JTextField txtCorreo;
-	private JTextField txtUsu2;
+	public static JTextField txtUsu2;
 	
 	private JPasswordField contraField; 
 	private JPasswordField contraField2; 
 	
 	private JButton btnEntrar;
 	private JButton btnRegistrar; 
+	
+	private String nombre; 
+	private String apellido;
+	private String email;
+	private String nombreUsu;
+	private String contrasenya;
+//	ArrayList<clsPlayList> listas = null;
 	
 	private InputMap map; 
 
@@ -227,13 +239,6 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				String nombre = ""; 
-				String apellido = "";
-				String email = "";
-				String nombreUsu ="";
-				String contrasenya;
-//				ArrayList<clsPlayList> listas = null;
-				
 				
 				if(txtNombre.getText().isEmpty() || txtApe.getText().isEmpty() || txtCorreo.getText().isEmpty() || txtUsu2.getText().isEmpty() || contraField2.getPassword()==null )
 				{
@@ -254,7 +259,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					Matcher mather = pattern.matcher(email);
 				    if (mather.find() == true) 
 				    {
-				    	clsBD.añadirUsuario(nombre, apellido, email, nombreUsu, contrasenya);
+				    	//FALTARÍA AÑADIR EL USUARIO
 				    	JOptionPane.showMessageDialog(null,"Su registro se ha realizado satisfactoriamente","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
 				    	dispose();
 				    	

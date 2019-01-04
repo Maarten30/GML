@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 
 //import LN.clsCancion;
 import LN.clsUsuario;
+import LP.frmInicioSesion;
 
 public class clsBD 
 {
@@ -22,7 +23,12 @@ public class clsBD
 	private static Connection connection = null;
 	private static Statement statement = null;
 //	private static ResultSet rs=null;
-
+	
+	String nombre = "";
+	String apellido="";
+	String email = "";
+	String nomUs ="";
+	String contrasenya = "";
 
 	/** Inicializa una base de datos y devuelve una conexión con ella.
 	 * @param nombreBD	Nombre de fichero de la base de datos.
@@ -98,42 +104,6 @@ public class clsBD
 		}
 	}
 	
-	//CONSULTA DE TABLAS
-	
-	public static ArrayList<clsUsuario> consultaATabla( Statement st, String codigoSelect )
-	{
-		ArrayList<clsUsuario> ret = new ArrayList<>();
-		try 
-		{
-			String sentSQL = "select * from usuarios";
-			if (codigoSelect!=null && !codigoSelect.equals(""))
-				sentSQL = sentSQL + " where " + codigoSelect;
-			System.out.println( sentSQL );  // (Quitar) para ver lo que se hace
-			ResultSet rs = st.executeQuery( sentSQL );
-			while (rs.next()) {
-				clsUsuario u = new clsUsuario();
-				u.nombre = rs.getString( "nombre" );
-				u.apellido = rs.getString( "apellido" );
-				u.email = rs.getString( "email" );
-				u.nombreUs = rs.getString( "nombreUs" );
-				
-				ret.add( u );
-			}
-			rs.close();
-			return ret;
-		} 
-		catch (IllegalArgumentException e) 
-		{  // Error en tipo usuario (enumerado)
-			e.printStackTrace();
-			return null;
-		} 
-		catch (SQLException e) 
-		{
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
 	//AÑADIR FILAS 
 	
 	/**
@@ -142,23 +112,50 @@ public class clsBD
 	 * @param idUsu del  usuario para comprobar si existen o no en la BD. 
 	 * @return usuario, si no existía. 
 	 */
-	public static void añadirUsuario (String nombre, String apellido, String email, String nomUs, String contrasenya)
+	public boolean añadirUsuario (Statement st)
 	{	
-//		boolean existe = false; 
-		
-		String sentSQL = "insert into usuarios values('" +nombre+"', '"+apellido+"', '"+email+"' ,'"+nomUs+"', '"+contrasenya+"' )";
+		if(mirarSiYaTabla(st))
+		{
+			JOptionPane.showMessageDialog(null,"El nombre de usuario ya existe","INICIO SESIÓN",JOptionPane.ERROR_MESSAGE);
+		}
 		
 		try 
 		{
+			String sentSQL = "insert into usuarios values('" +nombre+"', '"+apellido+"', '"+email+"' ,'"+nomUs+"', '"+contrasenya+"' )";
 			statement.executeUpdate(sentSQL);
+			int val = st.executeUpdate( sentSQL );
+			if (val!=1) return false;  // Se tiene que añadir 1 - error si no
+			return true;
 	
 		} 
 		catch (SQLException e)
 		{
 			e.printStackTrace();
+			return false;
 		}
+		
 	}
 	
+	public boolean mirarSiYaTabla(Statement st) 
+	{
+		try 
+		{
+			String sentSQL = "select * from usuarios where (nombreUsu = '" + frmInicioSesion.txtUsu2.getText() + "')";
+//			System.out.println( sentSQL );  // (Quitar) para ver lo que se hace
+			ResultSet rs = st.executeQuery( sentSQL );
+			if (rs.next()) {  // Normalmente se recorre con un while, pero aquí solo hay que ver si ya existe
+				rs.close();
+				return true;
+			}
+			return false;
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
+		
 	/**
 	 * Añade una canción si no existía previamente. 
 	 * @param file 
@@ -193,26 +190,26 @@ public class clsBD
 	 * @param tabla
 	 * @return
 	 */
-	public static boolean borrarUsuario (Object ident, String tabla)
-	{
-		logger.log( Level.INFO, tabla);
-		
-		try 
-		{
-			int idUsu=(Integer)ident;
-			String sentSQL = "DELETE FROM ficheroUsuario WHERE codUsu = "+idUsu;
-			int val = statement.executeUpdate( sentSQL );
-			if (val!=1) return false;   
-			//Borrado satisfactorio
-			return true;
-		}
-		catch (SQLException e) 
-		{
-			logger.log( Level.WARNING, e.getMessage(), e );
-			return false;
-		}
-		
-	}
+//	public static boolean borrarUsuario (Object ident, String tabla)
+//	{
+//		logger.log( Level.INFO, tabla);
+//		
+//		try 
+//		{
+//			int idUsu=(Integer)ident;
+//			String sentSQL = "DELETE FROM ficheroUsuario WHERE codUsu = "+idUsu;
+//			int val = statement.executeUpdate( sentSQL );
+//			if (val!=1) return false;   
+//			//Borrado satisfactorio
+//			return true;
+//		}
+//		catch (SQLException e) 
+//		{
+//			logger.log( Level.WARNING, e.getMessage(), e );
+//			return false;
+//		}
+//		
+//	}
 	
 	/**
 	 * Borra una canción de la BD. 
@@ -220,26 +217,26 @@ public class clsBD
 	 * @param tabla
 	 * @return
 	 */
-	public static boolean borrarCancion (Object ident, String tabla)
-	{
-		logger.log( Level.INFO, tabla);
-		
-		try 
-		{
-			int idCa=(Integer)ident;
-			String sentSQL = "DELETE FROM ficheroCancion WHERE codUsu = "+idCa;
-			int val = statement.executeUpdate( sentSQL );
-			if (val!=1) return false;   
-			//Borrado satisfactorio
-			return true;
-		}
-		catch (SQLException e) 
-		{
-			logger.log( Level.WARNING, e.getMessage(), e );
-			return false;
-		}
-		
-	}
+//	public static boolean borrarCancion (Object ident, String tabla)
+//	{
+//		logger.log( Level.INFO, tabla);
+//		
+//		try 
+//		{
+//			int idCa=(Integer)ident;
+//			String sentSQL = "DELETE FROM ficheroCancion WHERE codUsu = "+idCa;
+//			int val = statement.executeUpdate( sentSQL );
+//			if (val!=1) return false;   
+//			//Borrado satisfactorio
+//			return true;
+//		}
+//		catch (SQLException e) 
+//		{
+//			logger.log( Level.WARNING, e.getMessage(), e );
+//			return false;
+//		}
+//		
+//	}
 	
 	//BORRADO DE TABLAS
 	/**
@@ -291,9 +288,7 @@ public class clsBD
 //		}
 //	
 //	}
-	
-	
-	
+		
 	//CIERRE DE LA CONEXIÓN
 	/** Cierre de la conexión.
 	 */
