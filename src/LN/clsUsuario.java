@@ -26,105 +26,111 @@ public class clsUsuario implements Serializable
 	String nombre;
 	String apellido;
 	String nombreUs;
-	String contrasena;
+	String contrasenya;
 	String email;
 	ArrayList<clsPlayList> listas;
 	int idUs;
 	
-	//Constructor con parámetros 
-	public clsUsuario(String nombre, String apellido, String email, String nombreUs, String contrasena, ArrayList<clsPlayList> listas, int idUs) 
+	//CONSTRUCTOR CON PARÁMETROS 
+	
+	public clsUsuario(String nombre, String apellido, String email, String nombreUs, String contrasenya, ArrayList<clsPlayList> listas, int idUs) 
 	{
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
 		this.nombreUs = nombreUs;
-		this.contrasena = contrasena;
+		this.contrasenya = contrasenya;
 		this.listas = listas;
 		this.idUs = idUs;
 	}
 	
-	//Constructor vacío
+	//CONSTRUCTOR VACÍO
+	
 	public clsUsuario() 
 	{
 		nombre = "";
 		apellido = "";
 		email = "";
 		nombreUs = ""; 
-		contrasena = ""; 
+		contrasenya = ""; 
 		listas = null;
 		idUs = 0; 
 	}
 		
 	//GETTERS Y SETTERS 
-		public String getNombre() 
-		{
-			return nombre;
-		}
+	
+	public String getNombre() 
+	{
+		return nombre;
+	}
 
-		public void setNombre(String nombre) 
-		{
-			this.nombre = nombre;
-		}
+	public void setNombre(String nombre) 
+	{
+		this.nombre = nombre;
+	}
 
-		public String getApellido() 
-		{
-			return apellido;
-		}
+	public String getApellido() 
+	{
+		return apellido;
+	}
 
-		public void setApellido(String apellido) 
-		{
-			this.apellido = apellido;
-		}
+	public void setApellido(String apellido) 
+	{
+		this.apellido = apellido;
+	}
 
-		public String getNombreUs() 
-		{
-			return nombreUs;
-		}
+	public String getNombreUs() 
+	{
+		return nombreUs;
+	}
 
-		public String getEmail() 
-		{
-			return email;
-		}
+	public String getEmail() 
+	{
+		return email;
+	}
 
-		public void setEmail(String email) 
-		{
-			this.email = email;
-		}
+	public void setEmail(String email) 
+	{
+		this.email = email;
+	}
 
-		public void setNombreUs(String nombreUs) 
-		{
-			this.nombreUs = nombreUs;
-		}
+	public void setNombreUs(String nombreUs) 
+	{
+		this.nombreUs = nombreUs;
+	}
 
-		public String getContrasena() 
-		{
-			return contrasena;
-		}
+	public String getContrasena() 
+	{
+		return contrasenya;
+	}
 
-		public void setContrasena(String contraseña) 
-		{
-			this.contrasena = contraseña;
-		}
+	public void setContrasena(String contraseña) 
+	{
+		this.contrasenya = contraseña;
+	}
 		
-		public int getIdUs() 
-		{
-			return idUs;
-		}
+	public int getIdUs() 
+	{
+		return idUs;
+	}
 
-		public void setIdUs(int idUs) 
-		{
-			this.idUs = idUs;
-		}
+	public void setIdUs(int idUs) 
+	{
+		this.idUs = idUs;
+	}
 		
-		public ArrayList<clsPlayList> getListas() {
-			return listas;
-		}
+	public ArrayList<clsPlayList> getListas()
+	{
+		return listas;
+	}
 
-		public void setListas(ArrayList<clsPlayList> listas) {
-			this.listas = listas;
-		}
+	public void setListas(ArrayList<clsPlayList> listas) 
+	{
+		this.listas = listas;
+	}
 
-	//ToString	
+	//TOSTRING
+	
 	@Override
 	public String toString() 
 	{
@@ -136,6 +142,7 @@ public class clsUsuario implements Serializable
 	}
 	
 	//Crea y devuelve un nuevo Usuario partiendo de los datos de una línea separados por comas
+	
 	public static clsUsuario crearDeLinea( String linea ) 
 	{
 		clsUsuario u = new clsUsuario();
@@ -169,6 +176,7 @@ public class clsUsuario implements Serializable
 	}
 			
 	// Dos usuarios son iguales si TODOS sus campos son iguales
+	
 	public boolean equals( Object o ) 
 	{
 		clsUsuario u2 = null;

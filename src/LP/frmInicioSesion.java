@@ -231,7 +231,8 @@ public class frmInicioSesion extends JFrame implements ActionListener
 				String apellido = "";
 				String email = "";
 				String nombreUsu ="";
-				ArrayList<clsPlayList> listas = null;
+				String contrasenya;
+//				ArrayList<clsPlayList> listas = null;
 				
 				
 				if(txtNombre.getText().isEmpty() || txtApe.getText().isEmpty() || txtCorreo.getText().isEmpty() || txtUsu2.getText().isEmpty() || contraField2.getPassword()==null )
@@ -243,6 +244,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					nombre = txtNombre.getText();
 					apellido = txtApe.getText();
 					nombreUsu = txtUsu2.getText();
+					contrasenya = new String(contraField2.getPassword());
 					
 					Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 				                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
@@ -252,8 +254,13 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					Matcher mather = pattern.matcher(email);
 				    if (mather.find() == true) 
 				    {
-				    	clsBD.añadirUsuario(nombre, apellido, email, nombreUsu, listas);
+				    	clsBD.añadirUsuario(nombre, apellido, email, nombreUsu, contrasenya);
 				    	JOptionPane.showMessageDialog(null,"Su registro se ha realizado satisfactoriamente","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+				    	dispose();
+				    	
+				    	//Llama a la pantalla frmReproductor
+				        frmReproductor player = new frmReproductor();
+				        player.GUI();
 				    } 
 				    else 
 				    {
@@ -266,25 +273,6 @@ public class frmInicioSesion extends JFrame implements ActionListener
 			}
 		});
 	}
-	
-//	  public void createAndShowGUI() 
-//	    {    
-//	        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//	        //Display the window.
-//	        //this.pack();
-//	       
-//	        frame = new JFrame("Inicio de sesión");
-//			frame.setSize(460, 550);
-//			frame.setLocationRelativeTo(null);
-//			frame.setResizable(false);
-//			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//
-//			JPanel panel = new JPanel();
-//			frame.add(panel);
-////			frmInicioSesion(panel);
-//
-//			frame.setVisible(true);
-//	    }
 		
 	@Override
 	public void actionPerformed(ActionEvent e) 

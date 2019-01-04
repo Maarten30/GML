@@ -7,12 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.StringTokenizer;
+//import java.util.HashSet;
+//import java.util.StringTokenizer;
 import java.util.logging.*;
 import javax.swing.JOptionPane;
 
-import LN.clsCancion;
+//import LN.clsCancion;
 import LN.clsUsuario;
 
 public class clsBD 
@@ -21,7 +21,7 @@ public class clsBD
 	
 	private static Connection connection = null;
 	private static Statement statement = null;
-	private static ResultSet rs=null;
+//	private static ResultSet rs=null;
 
 
 	/** Inicializa una base de datos y devuelve una conexión con ella.
@@ -43,8 +43,7 @@ public class clsBD
 		{
 			logger.log( Level.SEVERE, e.getMessage(), e );
 
-			JOptionPane.showMessageDialog( null, "Error de conexión, no se ha podido conectar con " , "ERROR", JOptionPane.ERROR_MESSAGE );
-			System.out.println( "Error de conexión, no se ha podido conectar con " );
+			JOptionPane.showMessageDialog( null, "Error de conexión, no se ha podido conectar " , "ERROR", JOptionPane.ERROR_MESSAGE );
 			return null;
 		}
 	}
@@ -66,7 +65,7 @@ public class clsBD
 		return statement;
 	}
 	
-	//Crear tablas 
+	//CREACIÓN DE TABLAS 
 	
 	/** Crea una tabla de usuarios en una base de datos.
 	 */
@@ -74,7 +73,7 @@ public class clsBD
 	{		
 		try 
 		{
-			statement.executeUpdate("create table usuarios (nombre string, apellido string, email string, nombreUsu string, listas string)");
+			statement.executeUpdate("create table usuarios (nombre string, apellido string, email string, nombreUsu string, contrasenya string)");
 		} 
 		catch (SQLException e) 
 		{
@@ -82,6 +81,24 @@ public class clsBD
 				e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Crea tabla de canciones en base de datos si no existia ya
+	 */
+	public static void crearTablaCanciones() 
+	{
+		try 
+		{
+			statement.executeUpdate("create table canciones (nombre string, autor string, año int, duracion float)");
+		} 
+		catch (SQLException e) 
+		{
+			if (!e.getMessage().equals("La tabla de canciones ya existe."))  // Este error sí es correcto si la tabla ya existe
+				e.printStackTrace();
+		}
+	}
+	
+	//CONSULTA DE TABLAS
 	
 	public static ArrayList<clsUsuario> consultaATabla( Statement st, String codigoSelect )
 	{
@@ -99,8 +116,7 @@ public class clsBD
 				u.apellido = rs.getString( "apellido" );
 				u.email = rs.getString( "email" );
 				u.nombreUs = rs.getString( "nombreUs" );
-				u.contrasena = rs.getString("contrasena"); 
-			
+				
 				ret.add( u );
 			}
 			rs.close();
@@ -117,24 +133,8 @@ public class clsBD
 			return null;
 		}
 	}
-		
-	/**
-	 * Crea tabla de canciones en base de datos si no existia ya
-	 */
-	public static void crearTablaCanciones() 
-	{
-		try 
-		{
-			statement.executeUpdate("create table canciones (nombre string, autor string, año int, duracion float, listaReproduccion string)");
-		} 
-		catch (SQLException e) 
-		{
-			if (!e.getMessage().equals("La tabla de usuarios ya existe."))  // Este error sí es correcto si la tabla ya existe
-				e.printStackTrace();
-		}
-	}
 	
-	//Añadir filas
+	//AÑADIR FILAS 
 	
 	/**
 	 * Crea un usuario si no existe ya. 
@@ -142,30 +142,23 @@ public class clsBD
 	 * @param idUsu del  usuario para comprobar si existen o no en la BD. 
 	 * @return usuario, si no existía. 
 	 */
-	public static void añadirUsuario (String nombre, String apellido, String email, String nomUs, ArrayList<clsPlayList> listas)
-	{
-		String sentSQL = "insert into usuarios values(" +
-				"'" + nombre + "', " +
-				"'" + apellido + 
-				"'" + email + "', " +
-				"'" + nomUs + "', " +
-				"'" + listas + "', " +"')";
+	public static void añadirUsuario (String nombre, String apellido, String email, String nomUs, String contrasenya)
+	{	
+//		boolean existe = false; 
+		
+		String sentSQL = "insert into usuarios values('" +nombre+"', '"+apellido+"', '"+email+"' ,'"+nomUs+"', '"+contrasenya+"' )";
+		
 		try 
 		{
 			statement.executeUpdate(sentSQL);
-			
-//			int val = statement.executeUpdate( sentSQL );
-//			if (val!=1) return false; 
-//			return true;
+	
 		} 
 		catch (SQLException e)
 		{
-			System.out.println( "ERROR EN SENTENCIA SQL: " + sentSQL);
 			e.printStackTrace();
 		}
 	}
 	
-	//CREO QUE ESTE MÉTODO AL IGUAL QUE EL DE USUARIO, VAN EN SU PROPIA CLASS, NO AQUÍ
 	/**
 	 * Añade una canción si no existía previamente. 
 	 * @param file 
@@ -177,31 +170,22 @@ public class clsBD
 	 * @param idCa
 	 * @return
 	 */
-	public static boolean añadirCancion (File file, String nombre, String autor, int anio, float duracion,String[] ListaReproduccion, int idCa)
+	public static void añadirCancion (File file, String nombre, String autor, int anio, float duracion)
 	{
+		String sentSQL = "insert into usuarios values('" +file.getAbsolutePath()+"', '"+nombre+"', '"+autor+"' ,'"+anio+"', '"+duracion+"' )";
+		
 		try 
 		{
-			String sentSQL = "insert into canciones values(" +
-					"'" + file.getAbsolutePath() + "', " +
-					"'" + nombre + "', " +
-					"'" + autor + "'," + 
-					 + anio + ", " +
-					 + duracion + ", " +
-					"'" + ListaReproduccion + "', " +
-					 + idCa + ")";
-			
-			int val = statement.executeUpdate( sentSQL );
-			if (val!=1) return false; 
-			return true;
+			statement.executeUpdate(sentSQL);
+	
 		} 
-		catch (SQLException e) 
+		catch (SQLException e)
 		{
-			logger.log( Level.WARNING, e.getMessage(), e );
-			return false;
+			e.printStackTrace();
 		}
 	}
 	
-	//Borrar filas
+	//BORRADO FILAS 
 	
 	/**
 	 * Borra un usuario de la BD. 
@@ -257,57 +241,60 @@ public class clsBD
 		
 	}
 	
-	//Borrado de tablas
+	//BORRADO DE TABLAS
 	/**
 	 * Borra la tabla de usuarios. 
 	 * @param tabla
 	 * @return
 	 */
-	public static boolean borrarTablaUsuarios (String tabla)
-	{
-		logger.log(Level.INFO,tabla);
-		
-		try
-		{
-			logger.log( Level.INFO,"borrar tabla usuario");
-			String sentSQL = "drop table ficheroUsu";
-			logger.log( Level.INFO, sentSQL);
-			int val = statement.executeUpdate( sentSQL );
-			return true;
-		} 
-		catch (SQLException e) 
-		{
-			logger.log( Level.WARNING, e.getMessage(), e );
-			return false;
-		}
-	
-	}
+//	public static boolean borrarTablaUsuarios (String tabla)
+//	{
+//		logger.log(Level.INFO,tabla);
+//		
+//		try
+//		{
+//			logger.log( Level.INFO,"borrar tabla usuario");
+//			String sentSQL = "drop table ficheroUsu";
+//			logger.log( Level.INFO, sentSQL);
+//			int val = statement.executeUpdate( sentSQL );
+//			return true;
+//		} 
+//		catch (SQLException e) 
+//		{
+//			logger.log( Level.WARNING, e.getMessage(), e );
+//			return false;
+//		}
+//	
+//	}
 	
 	/**
 	 * Borra la tabla de canciones. 
 	 * @param tabla
 	 * @return
 	 */
-	public static boolean borrarTablaCancion (String tabla)
-	{
-		logger.log(Level.INFO,tabla);
-		
-		try
-		{
-			logger.log( Level.INFO,"borrar tabla cancion");
-			String sentSQL = "drop table ficheroCancion";
-			logger.log( Level.INFO, sentSQL);
-			int val = statement.executeUpdate( sentSQL );
-			return true;
-		} 
-		catch (SQLException e) 
-		{
-			logger.log( Level.WARNING, e.getMessage(), e );
-			return false;
-		}
+//	public static boolean borrarTablaCancion (String tabla)
+//	{
+//		logger.log(Level.INFO,tabla);
+//		
+//		try
+//		{
+//			logger.log( Level.INFO,"borrar tabla cancion");
+//			String sentSQL = "drop table ficheroCancion";
+//			logger.log( Level.INFO, sentSQL);
+//			int val = statement.executeUpdate( sentSQL );
+//			return true;
+//		} 
+//		catch (SQLException e) 
+//		{
+//			logger.log( Level.WARNING, e.getMessage(), e );
+//			return false;
+//		}
+//	
+//	}
 	
-	}
 	
+	
+	//CIERRE DE LA CONEXIÓN
 	/** Cierre de la conexión.
 	 */
 	public static void close() 
