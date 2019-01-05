@@ -161,7 +161,7 @@ public class clsBD
 			{
 			String nomUsuDB = rs.getString("nombreUsu");
 			
-			if (nomUsu.equals(nomUsuDB))
+			if (nomUsu.toUpperCase().equals(nomUsuDB))
 					
 			{
 				 devolver = true;

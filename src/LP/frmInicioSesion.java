@@ -251,7 +251,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					nombre = txtNombre.getText();
 					apellido = txtApe.getText();
 					
-					if (clsBD.comprUsuario(txtUsu2.getText()) == false)
+					if (clsBD.comprUsuario(txtUsu2.getText().toUpperCase()) == false)
 					{
 						nombreUsu = txtUsu2.getText();
 						contrasenya = new String(contraField2.getPassword());
