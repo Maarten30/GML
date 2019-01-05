@@ -3,6 +3,7 @@ package LN;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,7 +11,9 @@ import java.util.ArrayList;
 //import java.util.HashSet;
 //import java.util.StringTokenizer;
 import java.util.logging.*;
+
 import javax.swing.JOptionPane;
+
 
 //import LN.clsCancion;
 import LN.clsUsuario;
@@ -22,6 +25,7 @@ public class clsBD
 	
 	private static Connection connection = null;
 	public static Statement statement = null;
+	
 //	private static ResultSet rs=null;
 	
 //	String nombre = "";
@@ -29,6 +33,8 @@ public class clsBD
 //	String email = "";
 //	String nomUs ="";
 //	String contrasenya = "";
+	
+	
 
 	/** Inicializa una base de datos y devuelve una conexión con ella.
 	 * @param nombreBD	Nombre de fichero de la base de datos.
@@ -138,20 +144,42 @@ public class clsBD
 	
 	public static boolean comprUsuario (String nomUsu)
 	{
+		boolean devolver = true;
+		
 		try {
-			if (nomUsu.equals(statement.executeQuery("SELECT nomUs FROM usuarios") ))
+			
+			PreparedStatement upd = connection.prepareStatement("SELECT nombreUsu FROM usuarios");
+			 ResultSet rs = upd.executeQuery();
+			
+//			statement = connection.prepareStatement("select nombreUsu from usuarios");
+//			
+//			ResultSet rs = statement.executeQuery("select nombreUsu from usuarios");
+//		
+//			statement.executeQuery("select nombreUsu from usuarios");
+			
+			while (rs.next())
 			{
-				return true;
+			String nomUsuDB = rs.getString("nombreUsu");
+			
+			if (nomUsu.equals(nomUsuDB))
+					
+			{
+				 devolver = true;
 			}
 			else
 			{
-				return false;
+				 devolver = false;
 			}
-		} catch (SQLException e) {
+			}
+		}
+		 catch (SQLException e) {
 		
 			e.printStackTrace();
-			return false;
+			 devolver = false;
 		}
+		return devolver;
+		
+		
 	}
 	
 	public boolean mirarSiYaTabla(Statement st) 
