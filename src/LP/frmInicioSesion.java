@@ -67,6 +67,8 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	private String contrasenya;
 //	ArrayList<clsPlayList> listas = null;
 	
+	
+	
 	private InputMap map; 
 
 	public frmInicioSesion() 
@@ -248,32 +250,45 @@ public class frmInicioSesion extends JFrame implements ActionListener
 				{
 					nombre = txtNombre.getText();
 					apellido = txtApe.getText();
-					nombreUsu = txtUsu2.getText();
-					contrasenya = new String(contraField2.getPassword());
 					
-					Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-				                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+					if (clsBD.comprUsuario(txtUsu2.getText()) == true)
+					{
+						nombreUsu = txtUsu2.getText();
+						contrasenya = new String(contraField2.getPassword());
+						
+						Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+					                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+						 
+						email = txtCorreo.getText();
+						 
+						Matcher mather = pattern.matcher(email);
+					    if (mather.find() == true) 
+					    {
+					    	//FALTARÍA AÑADIR EL USUARIO
+				
+					    		clsBD.añadirUsuario(nombre, apellido, email, nombreUsu, contrasenya);
 					 
-					email = txtCorreo.getText();
-					 
-					Matcher mather = pattern.matcher(email);
-				    if (mather.find() == true) 
-				    {
-				    	//FALTARÍA AÑADIR EL USUARIO
-				    	JOptionPane.showMessageDialog(null,"Su registro se ha realizado satisfactoriamente","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
-				    	dispose();
-				    	
-				    	//Llama a la pantalla frmReproductor
-				        frmReproductor player = new frmReproductor();
-				        player.GUI();
-				    } 
-				    else 
-				    {
-						JOptionPane.showMessageDialog(null,"El correo ingresado no es válido","INICIO SESIÓN",JOptionPane.ERROR_MESSAGE);
-							
-						txtCorreo.setText(null);
-						txtCorreo.requestFocus();
-				    }
+					    		JOptionPane.showMessageDialog(null,"Su registro se ha realizado satisfactoriamente","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+					    		dispose();
+					    	
+					    	//Llama a la pantalla frmReproductor
+					        frmReproductor player = new frmReproductor();
+					        player.GUI();
+					    } 
+					    else 
+					    {
+							JOptionPane.showMessageDialog(null,"El correo ingresado no es válido","INICIO SESIÓN",JOptionPane.ERROR_MESSAGE);
+								
+							txtCorreo.setText(null);
+							txtCorreo.requestFocus();
+					    }
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null,"Su Nombre de usuario ya está ocupado","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+					}
+					
+				
 				}
 			}
 		});

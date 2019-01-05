@@ -24,9 +24,10 @@ public class clsCancion implements Serializable
 	private String[] ListaReproduccion; //Esto ya no hace falta no?
 	private int idCa;
 	private File file;  
+	private String ruta;
 	
 	
-	public clsCancion(File file, String nombre, String autor, int anio, float duracion,String[] ListaReproduccion, int idCa)
+	public clsCancion(File file, String nombre, String autor, int anio, float duracion,String[] ListaReproduccion, int idCa, String ruta)
 	{
 		this.file = file;
 		this.nombre= nombre;
@@ -35,6 +36,7 @@ public class clsCancion implements Serializable
 		this.duracion = duracion;
 		this.ListaReproduccion = ListaReproduccion;
 		this.idCa = idCa;
+		this.ruta = ruta;
 	}
 	
 	public clsCancion(File fl)
@@ -45,6 +47,7 @@ public class clsCancion implements Serializable
 		anio = 0;
 		duracion = 1.5f;
 		ListaReproduccion = null;
+		ruta = "";
 	}
 	
 	public String getNombre() 
@@ -107,6 +110,15 @@ public class clsCancion implements Serializable
 		ListaReproduccion = listaReproduccion;
 	}
 	
+	
+	public String getRuta() {
+		return ruta;
+	}
+
+	public void setRuta(String ruta) {
+		this.ruta = ruta;
+	}
+
 	//ToString
 	@Override
 	public String toString() 

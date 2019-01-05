@@ -21,14 +21,14 @@ public class clsBD
 	private static Logger logger = Logger.getLogger(clsBD.class.getName());
 	
 	private static Connection connection = null;
-	private static Statement statement = null;
+	public static Statement statement = null;
 //	private static ResultSet rs=null;
 	
-	String nombre = "";
-	String apellido="";
-	String email = "";
-	String nomUs ="";
-	String contrasenya = "";
+//	String nombre = "";
+//	String apellido="";
+//	String email = "";
+//	String nomUs ="";
+//	String contrasenya = "";
 
 	/** Inicializa una base de datos y devuelve una conexión con ella.
 	 * @param nombreBD	Nombre de fichero de la base de datos.
@@ -95,7 +95,7 @@ public class clsBD
 	{
 		try 
 		{
-			statement.executeUpdate("create table canciones (nombre string, autor string, año int, duracion float)");
+			statement.executeUpdate("create table canciones (ruta string, nombre string, autor string, año int, duracion float)");
 		} 
 		catch (SQLException e) 
 		{
@@ -112,28 +112,46 @@ public class clsBD
 	 * @param idUsu del  usuario para comprobar si existen o no en la BD. 
 	 * @return usuario, si no existía. 
 	 */
-	public boolean añadirUsuario (Statement st)
+	public  static void  añadirUsuario (String nombre, String apellido, String email, String nomUs, String contrasenya)
 	{	
-		if(mirarSiYaTabla(st))
-		{
-			JOptionPane.showMessageDialog(null,"El nombre de usuario ya existe","INICIO SESIÓN",JOptionPane.ERROR_MESSAGE);
-		}
-		
+//		if(mirarSiYaTabla(st))
+//		{
+//			JOptionPane.showMessageDialog(null,"El nombre de usuario ya existe","INICIO SESIÓN",JOptionPane.ERROR_MESSAGE);
+//		}
+//		
 		try 
 		{
 			String sentSQL = "insert into usuarios values('" +nombre+"', '"+apellido+"', '"+email+"' ,'"+nomUs+"', '"+contrasenya+"' )";
 			statement.executeUpdate(sentSQL);
-			int val = st.executeUpdate( sentSQL );
-			if (val!=1) return false;  // Se tiene que añadir 1 - error si no
-			return true;
+//			int val = st.executeUpdate( sentSQL );
+//			if (val!=1) return false;  // Se tiene que añadir 1 - error si no
+			
 	
 		} 
 		catch (SQLException e)
 		{
 			e.printStackTrace();
-			return false;
+			
 		}
 		
+	}
+	
+	public static boolean comprUsuario (String nomUsu)
+	{
+		try {
+			if (nomUsu.equals(statement.executeQuery("SELECT nomUs FROM usuarios") ))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		} catch (SQLException e) {
+		
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	public boolean mirarSiYaTabla(Statement st) 
@@ -169,7 +187,7 @@ public class clsBD
 	 */
 	public static void añadirCancion (File file, String nombre, String autor, int anio, float duracion)
 	{
-		String sentSQL = "insert into usuarios values('" +file.getAbsolutePath()+"', '"+nombre+"', '"+autor+"' ,'"+anio+"', '"+duracion+"' )";
+		String sentSQL = "insert into canciones values('" +file.getAbsolutePath()+"', '"+nombre+"', '"+autor+"' ,'"+anio+"', '"+duracion+"' )";
 		
 		try 
 		{
