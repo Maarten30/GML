@@ -282,7 +282,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					 
 					    		JOptionPane.showMessageDialog(null,"Su registro se ha realizado satisfactoriamente","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
 					    		dispose();
-					    	
+					    		JOptionPane.showMessageDialog(null, "Bienvenido a GML music","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
 					    	//Llama a la pantalla frmReproductor
 					        frmReproductor player = new frmReproductor();
 					        player.GUI();
