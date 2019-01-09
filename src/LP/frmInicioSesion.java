@@ -166,31 +166,24 @@ public class frmInicioSesion extends JFrame implements ActionListener
 							if (clsBD.comprUsuario(txtUsu.getText()) == true)
 							{
 								usuario = txtUsu.getText();
+								
+								if (clsBD.comprContra(txtUsu.getText(),String.valueOf(contraField.getPassword())) == true)
+								{
 								contra = new String (contraField.getPassword());
 								JOptionPane.showMessageDialog(null, "Bienvenido a GML music","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
 								frmReproductor pagina = new frmReproductor(); //LLEVAR A LA PANTALLA PRINCIPAL
 								pagina.GUI();
+								}
+								else
+								{
+									JOptionPane.showMessageDialog(null,"La contraseña introducida es incorrecta","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+								}
 							}
 							else
 							{
 								JOptionPane.showMessageDialog(null,"Ese nombre de usuario no esta registrado en la aplicacion","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
 							}
-//						char[] clave = contraField.getPassword();
-//						String claveFinal = new String(clave); 
-//						clsUsuario usu = new clsUsuario(); 
-//											
-//						if(txtUsu.getText().equals(usu.getNombre())&& claveFinal.equals(usu.getContrasena()))
-//						{
-//							JOptionPane.showMessageDialog(null, "Bienvenido a GML music","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
-//							frmReproductor pagina = new frmReproductor(); //LLEVAR A LA PANTALLA PRINCIPAL
-//						}
-//						else
-//						{
-//							JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos","ERROR",JOptionPane.ERROR_MESSAGE);
-//							txtUsu.setText("");
-//							contraField.setText("");
-//							txtUsu.requestFocus(); 
-//						}
+
 					}
 				}});	
 

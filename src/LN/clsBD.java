@@ -165,6 +165,7 @@ public class clsBD
 					
 			{
 				 devolver = true;
+				 break;
 			}
 			else
 			{
@@ -179,6 +180,14 @@ public class clsBD
 		}
 		return devolver;
 		
+		
+	}
+	
+	public static boolean comprContra (String nomUsu, String Contra)
+	{
+		boolean devolver = true;
+		
+		return devolver;
 		
 	}
 	
