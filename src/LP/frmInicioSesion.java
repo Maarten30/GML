@@ -65,6 +65,8 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	private String email;
 	private String nombreUsu;
 	private String contrasenya;
+	private String usuario;
+	private String contra;
 //	ArrayList<clsPlayList> listas = null;
 	
 	
@@ -148,14 +150,31 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		btnEntrar.setBounds(200, 150, 100, 30);
 		btnEntrar.setBackground(Color.white);
 		panel.add(btnEntrar);
-//		btnEntrar.addActionListener(new ActionListener()
-//				{
-//					public void actionPerformed(ActionEvent arg0)
-//					{				
+		btnEntrar.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent arg0)
+					{				
 //						logger.log(Level.INFO, "Comienzo inicio sesión");
-//						String nombreUsu; 
-//						String contrasena; 
-//						
+						
+						if(txtUsu.getText().isEmpty() || contraField.getPassword()==null)
+						{
+							JOptionPane.showMessageDialog(null,"Te faltan campos de información por rellenar","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+						}
+						else
+						{
+							
+							if (clsBD.comprUsuario(txtUsu.getText()) == true)
+							{
+								usuario = txtUsu.getText();
+								contra = new String (contraField.getPassword());
+								JOptionPane.showMessageDialog(null, "Bienvenido a GML music","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+								frmReproductor pagina = new frmReproductor(); //LLEVAR A LA PANTALLA PRINCIPAL
+								pagina.GUI();
+							}
+							else
+							{
+								JOptionPane.showMessageDialog(null,"Ese nombre de usuario no esta registrado en la aplicacion","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+							}
 //						char[] clave = contraField.getPassword();
 //						String claveFinal = new String(clave); 
 //						clsUsuario usu = new clsUsuario(); 
@@ -172,8 +191,8 @@ public class frmInicioSesion extends JFrame implements ActionListener
 //							contraField.setText("");
 //							txtUsu.requestFocus(); 
 //						}
-//					}
-//				});	
+					}
+				}});	
 
 		lblRegistro = new JLabel("REGISTRARSE"); 
 		lblRegistro.setFont(f1);
@@ -251,7 +270,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					nombre = txtNombre.getText();
 					apellido = txtApe.getText();
 					
-					if (clsBD.comprUsuario(txtUsu2.getText().toUpperCase()) == false)
+					if (clsBD.comprUsuario(txtUsu2.getText()) == false)
 					{
 						nombreUsu = txtUsu2.getText();
 						contrasenya = new String(contraField2.getPassword());

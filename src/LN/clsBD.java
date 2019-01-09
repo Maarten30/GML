@@ -144,7 +144,7 @@ public class clsBD
 	
 	public static boolean comprUsuario (String nomUsu)
 	{
-		boolean devolver = true;
+		boolean devolver = false;
 		
 		try {
 			
@@ -161,7 +161,7 @@ public class clsBD
 			{
 			String nomUsuDB = rs.getString("nombreUsu");
 			
-			if (nomUsu.toUpperCase().equals(nomUsuDB))
+			if (nomUsu.equals(nomUsuDB))
 					
 			{
 				 devolver = true;
