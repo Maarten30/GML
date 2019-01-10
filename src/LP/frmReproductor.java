@@ -144,28 +144,77 @@ public class frmReproductor implements LineListener, ActionListener
 		BarraProgreso = new JProgressBar(0, 1000);
 		BarraProgreso.setStringPainted(true);
 		
-		pausar.setOpaque(false);            // Fondo Transparente (los gráficos son png transparentes)
-    	pausar.setContentAreaFilled(false); // No rellenar el área
-    	pausar.setBorderPainted(false);     // No pintar el borde
+		pausar.setOpaque(false);            
+    	pausar.setContentAreaFilled(false); 
+    	pausar.setBorderPainted(false);     
     	pausar.setBorder(null); 
     	pausar.setFocusPainted(false);
     	pausar.setContentAreaFilled(false);
 
-    	stop.setOpaque(false);            // Fondo Transparente (los gráficos son png transparentes)
-    	stop.setContentAreaFilled(false); // No rellenar el área
-    	stop.setBorderPainted(false);     // No pintar el borde
+    	stop.setOpaque(false);            
+    	stop.setContentAreaFilled(false); 
+    	stop.setBorderPainted(false);    
     	stop.setBorder(null); 
     	stop.setFocusPainted(false);
     	stop.setContentAreaFilled(false);
-    
-    	
-    	play.setOpaque(false);            // Fondo Transparente (los gráficos son png transparentes)
-    	play.setContentAreaFilled(false); // No rellenar el área
-    	play.setBorderPainted(false);     // No pintar el borde
+
+    	play.setOpaque(false);            
+    	play.setContentAreaFilled(false); 
+    	play.setBorderPainted(false);     
     	play.setBorder(null); 
     	play.setFocusPainted(false);
     	play.setContentAreaFilled(false);
+    	
+    	anterior.setOpaque(false);            
+    	anterior.setContentAreaFilled(false); 
+    	anterior.setBorderPainted(false);     
+    	anterior.setBorder(null); 
+    	anterior.setFocusPainted(false);
+    	anterior.setContentAreaFilled(false);
+    	
+    	avance.setOpaque(false);            
+    	avance.setContentAreaFilled(false); 
+    	avance.setBorderPainted(false);     
+    	avance.setBorder(null); 
+    	avance.setFocusPainted(false);
+    	avance.setContentAreaFilled(false);
+    	
+    	Fin.setOpaque(false);            
+    	Fin.setContentAreaFilled(false); 
+    	Fin.setBorderPainted(false);     
+    	Fin.setBorder(null); 
+    	Fin.setFocusPainted(false);
+    	Fin.setContentAreaFilled(false);
+    	
+    	rebobinar.setOpaque(false);            
+    	rebobinar.setContentAreaFilled(false); 
+    	rebobinar.setBorderPainted(false);     
+    	rebobinar.setBorder(null); 
+    	rebobinar.setFocusPainted(false);
+    	rebobinar.setContentAreaFilled(false);
+    	
+    	shuffle.setOpaque(false);            
+    	shuffle.setContentAreaFilled(false); 
+    	shuffle.setBorderPainted(false);     
+    	shuffle.setBorder(null); 
+    	shuffle.setFocusPainted(false);
+    	shuffle.setContentAreaFilled(false);
+    	
+    	siguiente.setOpaque(false);            
+    	siguiente.setContentAreaFilled(false); 
+    	siguiente.setBorderPainted(false);     
+    	siguiente.setBorder(null); 
+    	siguiente.setFocusPainted(false);
+    	siguiente.setContentAreaFilled(false);
+    	
+    	principio.setOpaque(false);            
+    	principio.setContentAreaFilled(false); 
+    	principio.setBorderPainted(false);     
+    	principio.setBorder(null); 
+    	principio.setFocusPainted(false);
+    	principio.setContentAreaFilled(false);
 		
+    	
 		play.addActionListener(this);
 		stop.addActionListener(this);
 		pausar.addActionListener(this);
