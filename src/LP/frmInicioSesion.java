@@ -285,7 +285,9 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					    if (mather.find() == true) 
 					    {				
 					    	clsBD.añadirUsuario(nombre, apellido, email, nombreUsu, contrasenya);
-					    	gestor.enviarCorreo();
+					    	//gestor.correo(email);
+					    	
+					    	gestor.enviarCorreo(email);
 					    	JOptionPane.showMessageDialog(null,"Su registro se ha realizado satisfactoriamente","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
 					    	
 					    	dispose();
