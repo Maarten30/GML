@@ -218,6 +218,13 @@ public class frmReproductor implements LineListener, ActionListener
 		play.addActionListener(this);
 		stop.addActionListener(this);
 		pausar.addActionListener(this);
+		anterior.addActionListener(this);
+		siguiente.addActionListener(this);
+		shuffle.addActionListener(this);
+		principio.addActionListener(this);
+		rebobinar.addActionListener(this);
+		avance.addActionListener(this);
+		Fin.addActionListener(this);
 		
 		;
 		Botonera.add(anterior);
