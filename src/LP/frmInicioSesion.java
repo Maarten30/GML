@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 
 import LN.clsBD;
 import LN.clsCancion;
+import LN.clsGestor;
 import LN.clsPlayList;
 
 public class frmInicioSesion extends JFrame implements ActionListener
@@ -53,11 +54,11 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	private JTextField txtUsu;
 	private JTextField txtNombre;
 	private JTextField txtApe;
-	private JTextField txtCorreo;
+	public static JTextField txtCorreo;
 	public static JTextField txtUsu2;
 	
 	private JPasswordField contraField; 
-	private JPasswordField contraField2; 
+	private  JPasswordField contraField2; 
 	
 	private JButton btnEntrar;
 	private JButton btnRegistrar; 
@@ -67,14 +68,15 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	private String email;
 	private String nombreUsu;
 	private String contrasenya;
+	
 	private String usuario;
-	private String contra;
-//	ArrayList<clsPlayList> listas = null;
-	
-	
+	private String contra; 
 	
 	private InputMap map; 
+	
+	private clsGestor gestor; 
 
+	
 	public frmInicioSesion() 
 	{	
 		setTitle("Inicio de Sesión");
@@ -90,23 +92,19 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	    panel.setLayout(null);
 	    panel.setBackground(Color.WHITE);
 	     
-	   
-	    
-	    
-	
 		//Inserción de imagen
 		ImageIcon img = new ImageIcon("src/LN/logo.png");
 		JLabel fondo = new JLabel(img);	
-		JLabel fondo2 = new JLabel(img); 
-		JLabel fondo3 = new JLabel (img);
+//		JLabel fondo2 = new JLabel(img); 
+//		JLabel fondo3 = new JLabel (img);
 		JLabel fondo4 = new JLabel (img);
 		fondo.setBounds(-10,-20,100,100);
-		fondo2.setBounds(-10, 440, 100, 100);
-		fondo3.setBounds(360, -20, 100, 100);
+//		fondo2.setBounds(-10, 440, 100, 100);
+//		fondo3.setBounds(360, -20, 100, 100);
 		fondo4.setBounds(360,440,100,100);
 		panel.add(fondo);
-		panel.add(fondo2); 
-		panel.add(fondo3);
+//		panel.add(fondo2); 
+//		panel.add(fondo3);
 		panel.add(fondo4);
 		fondo.setVisible(true);
 		
@@ -185,7 +183,6 @@ public class frmInicioSesion extends JFrame implements ActionListener
 							{
 								JOptionPane.showMessageDialog(null,"Ese nombre de usuario no esta registrado en la aplicacion","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
 							}
-
 					}
 				}});	
 
@@ -255,6 +252,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
+				gestor = new clsGestor();
 				
 				if(txtNombre.getText().isEmpty() || txtApe.getText().isEmpty() || txtCorreo.getText().isEmpty() || txtUsu2.getText().isEmpty() || contraField2.getPassword()==null )
 				{
@@ -277,14 +275,13 @@ public class frmInicioSesion extends JFrame implements ActionListener
 						 
 						Matcher mather = pattern.matcher(email);
 					    if (mather.find() == true) 
-					    {
-					    	//FALTARÍA AÑADIR EL USUARIO
-				
-					    		clsBD.añadirUsuario(nombre, apellido, email, nombreUsu, contrasenya);
-					 
-					    		JOptionPane.showMessageDialog(null,"Su registro se ha realizado satisfactoriamente","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
-					    		dispose();
-					    		JOptionPane.showMessageDialog(null, "Bienvenido a GML music","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+					    {				
+					    	clsBD.añadirUsuario(nombre, apellido, email, nombreUsu, contrasenya);
+					    	gestor.enviarCorreo();
+					    	JOptionPane.showMessageDialog(null,"Su registro se ha realizado satisfactoriamente","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+					    	
+					    	dispose();
+					    	JOptionPane.showMessageDialog(null, "Bienvenido a GML music","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
 					    	//Llama a la pantalla frmReproductor
 					        frmReproductor player = new frmReproductor();
 					        player.GUI();
@@ -308,8 +305,6 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		});
 	}
 	
-	
-		
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{

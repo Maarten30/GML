@@ -6,6 +6,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.swing.JOptionPane;
+
+import LP.frmInicioSesion;
 
 public class clsGestor 
 {
@@ -126,5 +138,47 @@ public class clsGestor
 		
 	}
 	
-	
+	public void enviarCorreo()
+	{
+		try 
+		{	
+			String correo = frmInicioSesion.txtCorreo.getText();
+			//Propiedades para la conexión en nuestra cuenta
+			Properties props = new Properties();
+			props.setProperty("mail.smtp.host", "smtp.gmail.com");
+			props.setProperty("mail.smtp.starttls", "true");
+			props.setProperty("mail.smtp.port", "587");
+			props.setProperty("mail.smtp.auth", "true");
+			
+			Session session = Session.getDefaultInstance(props);
+			
+			//Datos para el correo
+			String correoRemitente = "gabrigaraizabal@opendeusto.es"; 
+			String passwordRemitente = "";
+			String correoReceptor = correo;
+			String asunto = "Correo de prueba";
+			String mensaje = "Este es el contenido del mensaje";
+			
+			MimeMessage message = new MimeMessage(session); 
+			message.setFrom(new InternetAddress(correoRemitente));
+			
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(correoReceptor));
+			message.setSubject(asunto);
+			message.setText(mensaje,"ISO-8859-1","html");
+
+			Transport t = session.getTransport("smtp");
+			t.connect(correoRemitente, passwordRemitente);
+			t.sendMessage(message,message.getRecipients(Message.RecipientType.TO));
+			t.close();
+			
+			JOptionPane.showMessageDialog(null, "Correo electrónico enviado");
+		
+		} catch (AddressException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

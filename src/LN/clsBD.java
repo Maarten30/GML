@@ -26,15 +26,6 @@ public class clsBD
 	private static Connection connection = null;
 	public static Statement statement = null;
 	
-//	private static ResultSet rs=null;
-	
-//	String nombre = "";
-//	String apellido="";
-//	String email = "";
-//	String nomUs ="";
-//	String contrasenya = "";
-	
-	
 
 	/** Inicializa una base de datos y devuelve una conexión con ella.
 	 * @param nombreBD	Nombre de fichero de la base de datos.
@@ -133,19 +124,10 @@ public class clsBD
 	 */
 	public  static void  añadirUsuario (String nombre, String apellido, String email, String nomUs, String contrasenya)
 	{	
-//		if(mirarSiYaTabla(st))
-//		{
-//			JOptionPane.showMessageDialog(null,"El nombre de usuario ya existe","INICIO SESIÓN",JOptionPane.ERROR_MESSAGE);
-//		}
-//		
 		try 
 		{
 			String sentSQL = "insert into usuarios values('" +nombre+"', '"+apellido+"', '"+email+"' ,'"+nomUs+"', '"+contrasenya+"' )";
 			statement.executeUpdate(sentSQL);
-//			int val = st.executeUpdate( sentSQL );
-//			if (val!=1) return false;  // Se tiene que añadir 1 - error si no
-			
-	
 		} 
 		catch (SQLException e)
 		{
@@ -251,26 +233,6 @@ try {
 		return devolver;
 		
 	}
-	
-	public boolean mirarSiYaTabla(Statement st) 
-	{
-		try 
-		{
-			String sentSQL = "select * from usuarios where (nombreUsu = '" + frmInicioSesion.txtUsu2.getText() + "')";
-//			System.out.println( sentSQL );  // (Quitar) para ver lo que se hace
-			ResultSet rs = st.executeQuery( sentSQL );
-			if (rs.next()) {  // Normalmente se recorre con un while, pero aquí solo hay que ver si ya existe
-				rs.close();
-				return true;
-			}
-			return false;
-		} 
-		catch (SQLException e) 
-		{
-			e.printStackTrace();
-			return false;
-		}
-	}
 		
 	/**
 	 * Añade una canción si no existía previamente. 
@@ -297,115 +259,6 @@ try {
 			e.printStackTrace();
 		}
 	}
-	
-//	public static void añadirCancionPlaylist ()
-	
-	//BORRADO FILAS 
-	
-	/**
-	 * Borra un usuario de la BD. 
-	 * @param ident
-	 * @param tabla
-	 * @return
-	 */
-//	public static boolean borrarUsuario (Object ident, String tabla)
-//	{
-//		logger.log( Level.INFO, tabla);
-//		
-//		try 
-//		{
-//			int idUsu=(Integer)ident;
-//			String sentSQL = "DELETE FROM ficheroUsuario WHERE codUsu = "+idUsu;
-//			int val = statement.executeUpdate( sentSQL );
-//			if (val!=1) return false;   
-//			//Borrado satisfactorio
-//			return true;
-//		}
-//		catch (SQLException e) 
-//		{
-//			logger.log( Level.WARNING, e.getMessage(), e );
-//			return false;
-//		}
-//		
-//	}
-	
-	/**
-	 * Borra una canción de la BD. 
-	 * @param ident
-	 * @param tabla
-	 * @return
-	 */
-//	public static boolean borrarCancion (Object ident, String tabla)
-//	{
-//		logger.log( Level.INFO, tabla);
-//		
-//		try 
-//		{
-//			int idCa=(Integer)ident;
-//			String sentSQL = "DELETE FROM ficheroCancion WHERE codUsu = "+idCa;
-//			int val = statement.executeUpdate( sentSQL );
-//			if (val!=1) return false;   
-//			//Borrado satisfactorio
-//			return true;
-//		}
-//		catch (SQLException e) 
-//		{
-//			logger.log( Level.WARNING, e.getMessage(), e );
-//			return false;
-//		}
-//		
-//	}
-	
-	//BORRADO DE TABLAS
-	/**
-	 * Borra la tabla de usuarios. 
-	 * @param tabla
-	 * @return
-	 */
-//	public static boolean borrarTablaUsuarios (String tabla)
-//	{
-//		logger.log(Level.INFO,tabla);
-//		
-//		try
-//		{
-//			logger.log( Level.INFO,"borrar tabla usuario");
-//			String sentSQL = "drop table ficheroUsu";
-//			logger.log( Level.INFO, sentSQL);
-//			int val = statement.executeUpdate( sentSQL );
-//			return true;
-//		} 
-//		catch (SQLException e) 
-//		{
-//			logger.log( Level.WARNING, e.getMessage(), e );
-//			return false;
-//		}
-//	
-//	}
-	
-	/**
-	 * Borra la tabla de canciones. 
-	 * @param tabla
-	 * @return
-	 */
-//	public static boolean borrarTablaCancion (String tabla)
-//	{
-//		logger.log(Level.INFO,tabla);
-//		
-//		try
-//		{
-//			logger.log( Level.INFO,"borrar tabla cancion");
-//			String sentSQL = "drop table ficheroCancion";
-//			logger.log( Level.INFO, sentSQL);
-//			int val = statement.executeUpdate( sentSQL );
-//			return true;
-//		} 
-//		catch (SQLException e) 
-//		{
-//			logger.log( Level.WARNING, e.getMessage(), e );
-//			return false;
-//		}
-//	
-//	}
 		
 	//CIERRE DE LA CONEXIÓN
 	/** Cierre de la conexión.

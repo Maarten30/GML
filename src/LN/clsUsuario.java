@@ -143,37 +143,37 @@ public class clsUsuario implements Serializable
 	
 	//Crea y devuelve un nuevo Usuario partiendo de los datos de una línea separados por comas
 	
-	public static clsUsuario crearDeLinea( String linea ) 
-	{
-		clsUsuario u = new clsUsuario();
-		StringTokenizer st = new StringTokenizer( linea, "," ); 
-		try 
-		{
-			u.nombre = st.nextToken();
-			u.apellido = st.nextToken();
-			u.email = st.nextToken();
-			u.nombreUs = st.nextToken();
-			u.idUs = Integer.parseInt(st.nextToken());
-		
-			return u;
-		} 
-		catch (NoSuchElementException e) 
-		{  // Error en datos insuficientes (faltan campos)
-			return null;
-		} 
-		catch (NumberFormatException e) 
-		{  // Error en tipo long de telefono o fechaLogin
-			return null;
-		} 
-		catch (IllegalArgumentException e) 
-		{  // Error en tipo usuario (enumerado)
-			return null;
-		} 
-		catch (Exception e) 
-		{  // Cualquier otro error
-			return null;
-		}
-	}
+//	public static clsUsuario crearDeLinea( String linea ) 
+//	{
+//		clsUsuario u = new clsUsuario();
+//		StringTokenizer st = new StringTokenizer( linea, "," ); 
+//		try 
+//		{
+//			u.nombre = st.nextToken();
+//			u.apellido = st.nextToken();
+//			u.email = st.nextToken();
+//			u.nombreUs = st.nextToken();
+//			u.idUs = Integer.parseInt(st.nextToken());
+//		
+//			return u;
+//		} 
+//		catch (NoSuchElementException e) 
+//		{  // Error en datos insuficientes (faltan campos)
+//			return null;
+//		} 
+//		catch (NumberFormatException e) 
+//		{  // Error en tipo long de telefono o fechaLogin
+//			return null;
+//		} 
+//		catch (IllegalArgumentException e) 
+//		{  // Error en tipo usuario (enumerado)
+//			return null;
+//		} 
+//		catch (Exception e) 
+//		{  // Cualquier otro error
+//			return null;
+//		}
+//	}
 			
 	// Dos usuarios son iguales si TODOS sus campos son iguales
 	
