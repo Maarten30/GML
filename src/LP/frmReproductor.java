@@ -118,15 +118,25 @@ public class frmReproductor implements LineListener, ActionListener
 		Botonera.setLayout( new FlowLayout( FlowLayout.CENTER ));
 		panelBajo.setLayout( new BorderLayout() );
 		
-		
+//		pausar = new JButton( new ImageIcon( frmReproductor.class.getResource("img/Button Pause.png")) );
+//		play = new JButton( new ImageIcon( frmReproductor.class.getResource("img/Button Play.png")) );
 		
 	
 		stop = new JButton("Stop");
 		pausar = new JButton("Pausar");
-		play = new JButton("Play");
+		play= new JButton("Play");
 		BarraProgreso = new JProgressBar(0, 1000);
 		BarraProgreso.setStringPainted(true);
 		
+		pausar.setOpaque(false);            // Fondo Transparente (los gráficos son png transparentes)
+    	pausar.setContentAreaFilled(false); // No rellenar el área
+    	pausar.setBorderPainted(false);     // No pintar el borde
+    	pausar.setBorder(null);  
+    	
+    	play.setOpaque(false);            // Fondo Transparente (los gráficos son png transparentes)
+    	play.setContentAreaFilled(false); // No rellenar el área
+    	play.setBorderPainted(false);     // No pintar el borde
+    	play.setBorder(null); 
 		
 		play.addActionListener(this);
 		stop.addActionListener(this);
