@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 //import java.util.logging.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -28,6 +29,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import LN.clsBD;
+import LN.clsCancion;
 import LN.clsPlayList;
 
 public class frmInicioSesion extends JFrame implements ActionListener
@@ -88,9 +90,9 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	    panel.setLayout(null);
 	    panel.setBackground(Color.WHITE);
 	     
-	    clsBD.initBD(); 
-	    clsBD.crearTablaUsuarios();
-	    clsBD.crearTablaCanciones();
+	   
+	    
+	    
 	
 		//Inserción de imagen
 		ImageIcon img = new ImageIcon("src/LN/logo.png");
@@ -305,6 +307,8 @@ public class frmInicioSesion extends JFrame implements ActionListener
 			}
 		});
 	}
+	
+	
 		
 	@Override
 	public void actionPerformed(ActionEvent e) 

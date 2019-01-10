@@ -110,6 +110,19 @@ public class clsBD
 		}
 	}
 	
+	public static void crearTablaPlaylist()
+	{
+		try 
+		{
+			statement.executeUpdate("create table playlist (nombre string, cancion string)");
+		} 
+		catch (SQLException e) 
+		{
+			if (!e.getMessage().equals("La tabla de playlist ya existe."))  // Este error sí es correcto si la tabla ya existe
+				e.printStackTrace();
+		}
+	}
+	
 	//AÑADIR FILAS 
 	
 	/**
@@ -270,9 +283,9 @@ try {
 	 * @param idCa
 	 * @return
 	 */
-	public static void añadirCancion (File file, String nombre, String autor, int anio, float duracion)
+	public static void añadirCancion (clsCancion cancion)
 	{
-		String sentSQL = "insert into canciones values('" +file.getAbsolutePath()+"', '"+nombre+"', '"+autor+"' ,'"+anio+"', '"+duracion+"' )";
+		String sentSQL = "insert into canciones values('" +cancion.getFile().getPath()+"', '"+cancion.getNombre()+"', '"+cancion.getAutor()+"' ,'"+cancion.getAnio()+"', '"+cancion.getDuracion()+"' )";
 		
 		try 
 		{
@@ -284,6 +297,8 @@ try {
 			e.printStackTrace();
 		}
 	}
+	
+//	public static void añadirCancionPlaylist ()
 	
 	//BORRADO FILAS 
 	

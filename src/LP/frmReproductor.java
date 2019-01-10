@@ -312,13 +312,13 @@ public class frmReproductor implements LineListener, ActionListener
  
     }
     
-//    public static void main(String[] args) 
-//    {
-//    	
-//        frmReproductor player = new frmReproductor();
-//        player.GUI();
-//        
-//    }
+    public static void main(String[] args) 
+    {
+    	
+        frmReproductor player = new frmReproductor();
+        player.GUI();
+        
+    }
 }
 
 

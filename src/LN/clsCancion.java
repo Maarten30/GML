@@ -22,21 +22,20 @@ public class clsCancion implements Serializable
 	private int anio;
 	private float duracion;
 	private String[] ListaReproduccion; //Esto ya no hace falta no?
-	private int idCa;
+//	private int idCa;
 	private File file;  
-	private String ruta;
+//	private String ruta;
 	
 	
-	public clsCancion(File file, String nombre, String autor, int anio, float duracion,String[] ListaReproduccion, int idCa, String ruta)
+	public clsCancion(File file, String nombre, String autor, int anio, float duracion)
 	{
 		this.file = file;
 		this.nombre= nombre;
 		this.autor = autor;
 		this.anio = anio;
 		this.duracion = duracion;
-		this.ListaReproduccion = ListaReproduccion;
-		this.idCa = idCa;
-		this.ruta = ruta;
+//		this.idCa = idCa;
+//		this.ruta = ruta;
 	}
 	
 	public clsCancion(File fl)
@@ -45,9 +44,8 @@ public class clsCancion implements Serializable
 		nombre = "";
 		autor = "";
 		anio = 0;
-		duracion = 1.5f;
-		ListaReproduccion = null;
-		ruta = "";
+		duracion = 0.0f;
+//		ruta = "";
 	}
 	
 	public String getNombre() 
@@ -90,15 +88,15 @@ public class clsCancion implements Serializable
 		this.duracion = duracion;
 	}
 
-	public int getIdCa() 
-	{
-		return idCa;
-	}
-
-	public void setIdCa(int idCa) 
-	{
-		this.idCa = idCa;
-	}	
+//	public int getIdCa() 
+//	{
+//		return idCa;
+//	}
+//
+//	public void setIdCa(int idCa) 
+//	{
+//		this.idCa = idCa;
+//	}	
 
 	public String[] getListaReproduccion() 
 	{
@@ -111,12 +109,20 @@ public class clsCancion implements Serializable
 	}
 	
 	
-	public String getRuta() {
-		return ruta;
+//	public String getRuta() {
+//		return ruta;
+//	}
+//
+//	public void setRuta(String ruta) {
+//		this.ruta = ruta;
+//	}
+
+	public File getFile() {
+		return file;
 	}
 
-	public void setRuta(String ruta) {
-		this.ruta = ruta;
+	public void setFile(File file) {
+		this.file = file;
 	}
 
 	//ToString
@@ -128,7 +134,7 @@ public class clsCancion implements Serializable
 				"\nAnio: " + anio + 
 				"\nDuracion: " + duracion +
 				"\nListaReproduccion: " + Arrays.toString(ListaReproduccion) + 
-				"\nidCa: " + idCa + 
+//				"\nidCa: " + idCa + 
 				"\nFile=" + file;
 	}
 
@@ -169,8 +175,7 @@ public class clsCancion implements Serializable
 					"'" + autor + "', " +
 					 + anio + ","  +
 					 + duracion + ", " +
-					"'" + ListaReproduccion + "', " +
-					 + idCa + ")";
+					"'" + ListaReproduccion + "', " + ")";
 			
 			System.out.println( sentSQL ); 
 			int val = st.executeUpdate( sentSQL );
@@ -193,7 +198,7 @@ public class clsCancion implements Serializable
 					"anio = " + anio + ","  +
 					"duracion = " + duracion + 
 					"Lista = '" + ListaReproduccion + "'," +
-					"idCancion =" + idCa +
+//					"idCancion =" + idCa +
 					"where (fichero = '" + file.getAbsolutePath() + "')";
 			System.out.println( sentSQL );  
 			int val = st.executeUpdate( sentSQL );
@@ -220,7 +225,7 @@ public class clsCancion implements Serializable
 				this.anio = rs.getInt( "anio" );
 				this.duracion = rs.getFloat( "duracion" );
 			//	this.ListaReproduccion = rs.getArray("Lista");
-				this.idCa = rs.getInt("IdCancion");
+//				this.idCa = rs.getInt("IdCancion");
 				rs.close();
 			}
 			// else No hay ninguno en la tabla
