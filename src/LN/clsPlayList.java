@@ -3,6 +3,11 @@ package LN;
 import java.io.File;
 import java.util.ArrayList;
 
+/**
+ * Clase que representa una lista de reproduccion dentro de la aplicacion
+ * @author Gabriela Garaizabal, Maarten Handels y Laura Llorente
+ *
+ */
 public class clsPlayList 
 {
 
@@ -10,7 +15,11 @@ public class clsPlayList
 	private String nombre;
 	private ArrayList<clsCancion> canciones;
 	
-	
+	/**
+	 * Atributos empleados para una lista de reproduccion
+	 * @param nombre nombre de la lista de reproduccion
+	 * @param canciones canciones que incluye la lista
+	 */
 	public clsPlayList(String nombre, ArrayList<clsCancion> canciones)
 	{
 		this.nombre = nombre;

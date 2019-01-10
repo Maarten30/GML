@@ -19,6 +19,11 @@ import javax.swing.JOptionPane;
 
 import LP.frmInicioSesion;
 
+/**
+ * Clase utilizada para 
+ * @author ALUMNO
+ *
+ */
 public class clsGestor 
 {
 	
@@ -26,6 +31,9 @@ public class clsGestor
 	private Statement statement = null;
 	private ArrayList<clsCancion> canciones = new ArrayList <clsCancion>();
 	
+	/**
+	 * Metodo a traves del cual se inicializa la base de datos
+	 */
 	public void InicializarBD()
 	{
 		clsBD.initBD(); 
@@ -38,7 +46,9 @@ public class clsGestor
 		
 	}
 	
-
+/**
+ * Metodo utilizado para insertar canciones en la base de datos
+ */
 	public void InsertarCanciones()
 	{
 		ResultSet rs = null;
@@ -95,6 +105,9 @@ public class clsGestor
 		
 	}
 	
+	/**
+	 * Metodo utilizado para seleccionar canciones de la base de datos
+	 */
 	public void RecibirCanciones()
 	{
 		ResultSet rs = null;
@@ -138,6 +151,9 @@ public class clsGestor
 		
 	}
 	
+	/**
+	 * Metodo utilizado para enviar correos a los usuarios a la hora de registrarse
+	 */
 	public void enviarCorreo()
 	{
 		try 

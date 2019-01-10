@@ -19,6 +19,11 @@ import javax.swing.JOptionPane;
 import LN.clsUsuario;
 import LP.frmInicioSesion;
 
+/**
+ * Clase diseñada para gestionar la base de datos. 
+ * @author Gabriela Garaizabal, Maarten Handels y Laura Llorente
+ *
+ */
 public class clsBD 
 {
 	private static Logger logger = Logger.getLogger(clsBD.class.getName());
@@ -101,6 +106,9 @@ public class clsBD
 		}
 	}
 	
+	/**
+	 * Crea tabala de listas de reproducción en la base de datos si no existia ya
+	 */
 	public static void crearTablaPlaylist()
 	{
 		try 
@@ -137,6 +145,11 @@ public class clsBD
 		
 	}
 	
+	/**
+	 * Metodo que sirve para verificar si un nombre de usuario ya existe en la base de datos o no
+	 * @param nomUsu nombre de usuario que inserta el usuario por pantalla 
+	 * @return devuelve verdadero si ese nombre de usuario esta en la base de datos y falso si no
+	 */
 	public static boolean comprUsuario (String nomUsu)
 	{
 		boolean devolver = false;
@@ -178,6 +191,13 @@ public class clsBD
 		
 	}
 	
+	
+	/**
+	 * Método que sirve para saber si la contraseña introducida por el usuario es la que corresponde con el nombre de usuario introducido
+	 * @param nomUsu Nombre de usuario que inserta el usuario en la pantalla de inicio de sesion
+	 * @param Contra Contraseña que inserta el usuario por la pantalla de inicio de sesion
+	 * @return Si la contraseña es correcta, este metodo devuelve verdadero, sino falso. 
+	 */
 	public static boolean comprContra (String nomUsu, String Contra)
 	{
 		boolean devolver = true;
@@ -235,15 +255,8 @@ try {
 	}
 		
 	/**
-	 * Añade una canción si no existía previamente. 
-	 * @param file 
-	 * @param nombre
-	 * @param autor
-	 * @param anio
-	 * @param duracion
-	 * @param ListaReproduccion
-	 * @param idCa
-	 * @return
+	 * Añade una cancion si no existia previamente
+	 * @param cancion objeto de la clase cancion
 	 */
 	public static void añadirCancion (clsCancion cancion)
 	{

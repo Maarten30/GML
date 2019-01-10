@@ -1,5 +1,10 @@
 package Excepciones;
 
+/**
+ * Clase que sirve para saber si un usuario no existe dentro de una aplicacion 
+ * @author Gabriela Garaizabal, Maarten Handels y Laura Llorente
+ *
+ */
 public class clsNoExistente extends Exception 
 {
 	private String usuario; 

@@ -1,5 +1,9 @@
 package LN;
 
+/**
+ * Clase en la que se generan las variables que no cambiarán su valor a lo largo del programa
+ * @author Gabriela Garaizabal, Maarten Handels y Laura Llorente
+ */
 public class clsConstantes 
 {
 

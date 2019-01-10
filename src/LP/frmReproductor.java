@@ -34,7 +34,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
 
-
+/**
+ * Clase que sirve para crear la pantalla principal de la aplicacion
+ * @author Gabriela garaizabal, Maarten Handels y Laura Llorente
+ *
+ */
 public class frmReproductor implements LineListener, ActionListener
 { 
 
@@ -65,7 +69,9 @@ public class frmReproductor implements LineListener, ActionListener
 	private String audioFilePath = "test/res/Demi Lovato - Stone Cold (Official Video).wav";
 	long clipTime = 0;
 
-
+	/**
+	 * Metodo en el que se crean todos los elementos que van a aparecer en la pantalla
+	 */
 	public void GUI()
 	{
 		ventanita = new JFrame("Music Player");

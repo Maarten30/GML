@@ -11,7 +11,11 @@ import org.junit.Test;
 import LN.ListadeReproduccion;
 
 
-
+/**
+ * Clase que sirve para hacer test unitarios de las diferentes opciones que ofrece la aplicacion
+ * @author Gabriela Garaizabal, Maarten Handels y Laura Llorente
+ *
+ */
 public class ListadeReproduccionTest
 {
 	private ListadeReproduccion lista1;

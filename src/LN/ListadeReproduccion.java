@@ -8,7 +8,11 @@ import javax.swing.event.ListDataListener;
 
 import LN.clsBD;
 
-
+/**
+ * Clase con los metodos necesarios para el funcionamiento de las listas de reproduccion
+ * @author Gabriela Garaizabal, Maarten Handels y Laura Llorente
+ *
+ */
 public class ListadeReproduccion implements ListModel<String>
 {
 	ArrayList<clsCancion> ficheros;
@@ -22,6 +26,11 @@ public class ListadeReproduccion implements ListModel<String>
 		ficheros = new ArrayList<clsCancion>();
 	}
 	
+	/**
+	 * Metodo para añadir una cancion
+	 * @param f fichero audio
+	 * @param cargarBD
+	 */
 	public void añadir (File f, boolean cargarBD)
 	{
 		clsCancion cancion = new clsCancion( f );
@@ -31,16 +40,28 @@ public class ListadeReproduccion implements ListModel<String>
 
 	}
 	
+	/**
+	 * Metodo para eliminar una lista de reproduccion
+	 */
 	public void eliminarLista()
 	{
 		ficheros.clear();
 	}
 	
+	/**
+	 * Metodo para eliminar una cancion de una lista de reproduccion
+	 * @param posi posicion de la cancion que se desea eliminar
+	 */
 	public void eliminarFichero (int posi)
 	{
 		ficheros.remove(posi);
 	}
 	
+	/**
+	 * Metodo que devuelve la posicion de una cancion dentro de una lista de reproduccion
+	 * @param posi posicion de la cancion
+	 * @return devuelve la posicion de ese fichero
+	 */
 	public clsCancion PosFichero ( int posi ) 
 	{
 		return ficheros.get( posi );

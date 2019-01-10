@@ -33,6 +33,12 @@ import LN.clsCancion;
 import LN.clsGestor;
 import LN.clsPlayList;
 
+/**
+ * Clase para crear la pantalla de inicio de sesión. En ella el usuario tendrá la posibilidad de iniciar sesión o de crearse una 
+ * cuenta en caso de no tenerla. Al crearse una cuenta nueva el usuario recibirá un email de confirmación. 
+ * @author Gabriela Garaizabal, Maarten Handels y Laura Llorente
+ *
+ */
 public class frmInicioSesion extends JFrame implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
@@ -76,7 +82,9 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	
 	private clsGestor gestor; 
 
-	
+	/**
+	 * En este metodo se encuentran todos los elementos necesarios para crear la pantalla de inicio de sesion. 
+	 */
 	public frmInicioSesion() 
 	{	
 		setTitle("Inicio de Sesión");

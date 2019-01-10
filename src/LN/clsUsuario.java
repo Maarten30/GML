@@ -15,6 +15,11 @@ import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
+/**
+ * Clase que representa un usuario dentro de la aplicacion
+ * @author Gabriela Garaizabal, Maarten handels y Laura Llorente
+ *
+ */
 public class clsUsuario implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -31,8 +36,17 @@ public class clsUsuario implements Serializable
 	ArrayList<clsPlayList> listas;
 	int idUs;
 	
-	//CONSTRUCTOR CON PARÁMETROS 
-	
+	 
+	/**
+	 * Atributos empleados para la cancion, constructor con parametros
+	 * @param nombre nombre del usuario
+	 * @param apellido apellido del usuario
+	 * @param email email del usuario
+	 * @param nombreUs nombre de usuario
+	 * @param contrasenya constraseña
+	 * @param listas listas de reproduccion que este posee
+	 * @param idUs
+	 */
 	public clsUsuario(String nombre, String apellido, String email, String nombreUs, String contrasenya, ArrayList<clsPlayList> listas, int idUs) 
 	{
 		this.nombre = nombre;
@@ -44,8 +58,10 @@ public class clsUsuario implements Serializable
 		this.idUs = idUs;
 	}
 	
-	//CONSTRUCTOR VACÍO
 	
+	/**
+	 * Constructor vacio
+	 */
 	public clsUsuario() 
 	{
 		nombre = "";
@@ -176,7 +192,9 @@ public class clsUsuario implements Serializable
 //	}
 			
 	// Dos usuarios son iguales si TODOS sus campos son iguales
-	
+	/**
+	 * Metodo que nos dice si hay dos usuarios iguales, teniendo en cuenta por iguales que tengan todos los atributos repetidos
+	 */
 	public boolean equals( Object o ) 
 	{
 		clsUsuario u2 = null;

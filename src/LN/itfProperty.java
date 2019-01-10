@@ -1,5 +1,10 @@
 package LN;
 
+/**
+ * @author Gabriela Garaizabal, Maarten Handels y Laura Llorente
+ * Interfaz para la independencia entre la LN y la LP.
+ */
+
 	public interface itfProperty 
 	{
 		

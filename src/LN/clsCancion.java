@@ -9,6 +9,11 @@ import java.sql.Statement;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
+/**
+ * Clase que representa una cancion dentro de la aplicacion
+ * @author Gabriela Garaizabal, Maarten handels y Laura Llorente
+ *
+ */
 public class clsCancion implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -26,7 +31,14 @@ public class clsCancion implements Serializable
 	private File file;  
 //	private String ruta;
 	
-	
+	/**
+	 * Atributos empleados para la cancion, constructor con parametros
+	 * @param file fichero de musica
+	 * @param nombre nombre de la cancion
+	 * @param autor autor de la cancion
+	 * @param anio año de creacion de la cancion
+	 * @param duracion duracion de la cancion
+	 */
 	public clsCancion(File file, String nombre, String autor, int anio, float duracion)
 	{
 		this.file = file;
@@ -125,7 +137,9 @@ public class clsCancion implements Serializable
 		this.file = file;
 	}
 
-	//ToString
+	/**
+	 * Metodo que sirve para imprimir un mensaje por pantalla
+	 */
 	@Override
 	public String toString() 
 	{
@@ -138,7 +152,9 @@ public class clsCancion implements Serializable
 				"\nFile=" + file;
 	}
 
-	//Comprobar si ese fichero ya existe en la BD
+	/**
+	 * Metodo que sirve para comprobar si el metodo ya existe en la base de datos
+	 */
 	public boolean existente ( Statement st ) 
 	{
 		try {
@@ -160,7 +176,9 @@ public class clsCancion implements Serializable
 	}
 	
 	
-	//Una vez comprobado, si no esta repetido podemos añadir ese fichero 
+	/**
+	 * Metodo para añadir un fichero una vez comprobado que no existe
+	 */
 	public boolean anyadirFichero( Statement st ) 
 	{
 		if (existente(st)) 
@@ -188,7 +206,9 @@ public class clsCancion implements Serializable
 		}
 	}
 	
-	
+	/**
+	 * Metodo utilizado para modificar filas en la base de datos
+	 */
 	public boolean modificarFila( Statement st ) 
 	{
 		try {
@@ -211,7 +231,9 @@ public class clsCancion implements Serializable
 		}
 	}
 	
-	//Cargar fichero de la tabla
+	/**
+	 * Metodo utilizado para cargar un fichero en la tabla de la base de datos
+	 */
 	public void cargarFicdeTabla( Statement st ) 
 	{
 		try {
