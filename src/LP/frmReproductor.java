@@ -54,6 +54,13 @@ public class frmReproductor implements LineListener, ActionListener
 	private JButton play;
 	private JButton stop;
 	private JButton pausar;
+	private JButton anterior;
+	private JButton avance;
+	private JButton Fin;
+	private JButton principio;
+	private JButton rebobinar;
+	private JButton shuffle;
+	private JButton siguiente;
 	private JList<String> listas= null;
 	private JList<String> listaCanciones= null;
 	private JProgressBar BarraProgreso;
@@ -118,46 +125,62 @@ public class frmReproductor implements LineListener, ActionListener
 		Botonera.setLayout( new FlowLayout( FlowLayout.CENTER ));
 		panelBajo.setLayout( new BorderLayout() );
 		
-//		pausar = new JButton( new ImageIcon( "img/pausa.png") );
-//		play = new JButton( new ImageIcon("img/Play.png") );
-//		stop = new JButton( new ImageIcon("img/stop.png") );
+		pausar = new JButton( new ImageIcon( "src/img/pausa.png") );
+		play = new JButton( new ImageIcon("src/img/Play.png") );
+		stop = new JButton( new ImageIcon("src/img/stop.png") );
+		anterior = new JButton( new ImageIcon("src/img/anterior.png") );
+		avance = new JButton( new ImageIcon("src/img/avance.png") );
+		Fin = new JButton( new ImageIcon("src/img/Fin.png") );
+		rebobinar = new JButton( new ImageIcon("src/img/rebobinar.png") );
+		shuffle = new JButton( new ImageIcon("src/img/shuffle.png") );
+		siguiente = new JButton( new ImageIcon("src/img/siguiente.png") );
+		principio = new JButton( new ImageIcon("src/img/principio.png") );
+		
 		
 	
-		stop = new JButton("Stop");
-		pausar = new JButton("Pausar");
-		play= new JButton("Play");
+//		stop = new JButton("Stop");
+//		pausar = new JButton("Pausar");
+//		play= new JButton("Play");
 		BarraProgreso = new JProgressBar(0, 1000);
 		BarraProgreso.setStringPainted(true);
 		
-//		pausar.setOpaque(false);            // Fondo Transparente (los gráficos son png transparentes)
-//    	pausar.setContentAreaFilled(false); // No rellenar el área
-//    	pausar.setBorderPainted(false);     // No pintar el borde
-//    	pausar.setBorder(null); 
-//    	pausar.setFocusPainted(false);
-//    	pausar.setContentAreaFilled(false);
-//    
-//    	stop.setOpaque(false);            // Fondo Transparente (los gráficos son png transparentes)
-//    	stop.setContentAreaFilled(false); // No rellenar el área
-//    	stop.setBorderPainted(false);     // No pintar el borde
-//    	stop.setBorder(null); 
-//    	stop.setFocusPainted(false);
-//    	stop.setContentAreaFilled(false);
-//    
-//    	
-//    	play.setOpaque(false);            // Fondo Transparente (los gráficos son png transparentes)
-//    	play.setContentAreaFilled(false); // No rellenar el área
-//    	play.setBorderPainted(false);     // No pintar el borde
-//    	play.setBorder(null); 
-//    	play.setFocusPainted(false);
-//    	play.setContentAreaFilled(false);
-//		
+		pausar.setOpaque(false);            // Fondo Transparente (los gráficos son png transparentes)
+    	pausar.setContentAreaFilled(false); // No rellenar el área
+    	pausar.setBorderPainted(false);     // No pintar el borde
+    	pausar.setBorder(null); 
+    	pausar.setFocusPainted(false);
+    	pausar.setContentAreaFilled(false);
+
+    	stop.setOpaque(false);            // Fondo Transparente (los gráficos son png transparentes)
+    	stop.setContentAreaFilled(false); // No rellenar el área
+    	stop.setBorderPainted(false);     // No pintar el borde
+    	stop.setBorder(null); 
+    	stop.setFocusPainted(false);
+    	stop.setContentAreaFilled(false);
+    
+    	
+    	play.setOpaque(false);            // Fondo Transparente (los gráficos son png transparentes)
+    	play.setContentAreaFilled(false); // No rellenar el área
+    	play.setBorderPainted(false);     // No pintar el borde
+    	play.setBorder(null); 
+    	play.setFocusPainted(false);
+    	play.setContentAreaFilled(false);
+		
 		play.addActionListener(this);
 		stop.addActionListener(this);
 		pausar.addActionListener(this);
 		
+		;
+		Botonera.add(anterior);
+		Botonera.add(siguiente);
+		Botonera.add(shuffle);
 		Botonera.add(play);
 		Botonera.add(pausar);
 		Botonera.add(stop);
+		Botonera.add(principio);
+		Botonera.add(rebobinar);
+		Botonera.add(avance);
+		Botonera.add(Fin);
 		Botonera.add(BarraProgreso);
 		
 		splitpanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelListas, panelCanciones);
