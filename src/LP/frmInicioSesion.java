@@ -1,17 +1,15 @@
 package LP;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.File;
+import java.net.URL;
 //import java.util.logging.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
@@ -24,14 +22,12 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import LN.clsBD;
-import LN.clsCancion;
 import LN.clsGestor;
-import LN.clsPlayList;
 
 /**
  * Clase para crear la pantalla de inicio de sesión. En ella el usuario tendrá la posibilidad de iniciar sesión o de crearse una 
@@ -44,8 +40,6 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	private static final long serialVersionUID = 1L;
 	
 //	private static Logger logger = Logger.getLogger(frmInicioSesion.class.getName());
-
-	private JPanel panel;
 	
 	private JLabel lblInicio;
 	private JLabel lblUsu; 
@@ -56,12 +50,14 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	private JLabel lblCorreo;
 	private JLabel lblUsu2;
 	private JLabel lblContra2;
+	private JLabel lblFecha; 
 	
 	private JTextField txtUsu;
 	private JTextField txtNombre;
 	private JTextField txtApe;
 	public static JTextField txtCorreo;
 	public static JTextField txtUsu2;
+	
 	
 	private JPasswordField contraField; 
 	private  JPasswordField contraField2; 
@@ -78,6 +74,9 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	private String usuario;
 	private String contra; 
 	
+	private Image imagenFondo;
+	private URL fondo;
+	
 	private InputMap map; 
 	
 	private clsGestor gestor; 
@@ -92,44 +91,54 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
-	    panel = new JPanel();
-	    add(panel);
 	    
-	    panel.setVisible(true);
-	    panel.setLayout(null);
-	    panel.setBackground(Color.WHITE);
-	     
 		//Inserción de imagen
-		ImageIcon img = new ImageIcon("src/LN/logo.png");
-		JLabel fondo = new JLabel(img);	
-//		JLabel fondo2 = new JLabel(img); 
-//		JLabel fondo3 = new JLabel (img);
-		JLabel fondo4 = new JLabel (img);
-		fondo.setBounds(-10,-20,100,100);
-//		fondo2.setBounds(-10, 440, 100, 100);
-//		fondo3.setBounds(360, -20, 100, 100);
-		fondo4.setBounds(360,440,100,100);
-		panel.add(fondo);
-//		panel.add(fondo2); 
-//		panel.add(fondo3);
-		panel.add(fondo4);
-		fondo.setVisible(true);
+//		ImageIcon img = new ImageIcon("src/LN/logo.png");
+//		JLabel fondo = new JLabel(img);	
+//		JLabel fondo4 = new JLabel (img);
+//		fondo.setBounds(-10,-20,100,100);
+//		fondo4.setBounds(360,440,100,100);
+//		panel.add(fondo);
+//		panel.add(fondo4);
+//		fondo.setVisible(true);
 		
+		//Inserción de la imagen del fondo en el panel 
+	    fondo = this.getClass().getResource("/LN/Imagen_Fondo.png");
+	    imagenFondo = new ImageIcon(fondo).getImage();
+	    Container contenedor = getContentPane();
+	    contenedor.add(panel);
+	    panel.setLayout(null);
+	    
+	    //Atributos para insertar la hora y la fecha 
+	    Calendar cal = Calendar.getInstance(); 
+		String fecha; 
+		Font font = new Font("Century Gothic",Font.BOLD,13); 
+		
+		fecha = cal.get(Calendar.DATE) +"/"+ cal.get(Calendar.MONTH) +"/"+cal.get(Calendar.YEAR); 
+		
+		lblFecha = new JLabel(); 
+		lblFecha.setText(fecha);
+		lblFecha.setBounds(360, 5, 100, 30);
+		lblFecha.setFont(font);
+		lblFecha.setForeground(Color.WHITE);
+		panel.add(lblFecha);
+	    		
 		//Fuentes de letra para la pantalla 
-		Font f1 = new Font("Century Gothic",Font.BOLD,20);
-		Font f2 = new Font("Century Gothic",1,13); 
-		Font f3 = new Font("Century Gothic",1,13); 
+		Font f1 = new Font("Century Gothic",Font.BOLD,22);
+		Font f2 = new Font("Century Gothic",Font.BOLD,15); 
+		Font f3 = new Font("Century Gothic",Font.BOLD,13); 
 		
 		//Creación de la pantalla 
 		lblInicio = new JLabel("INICIAR SESIÓN"); 
 		lblInicio.setFont(f1);
 		lblInicio.setBounds(160,10,220,40);
+		lblInicio.setForeground(Color.white);
 		panel.add(lblInicio);
 				
 		lblUsu = new JLabel("Usuario");
 		lblUsu.setFont(f2);
 		lblUsu.setBounds(20,50,100,50);
+		lblUsu.setForeground(Color.white);
 		panel.add(lblUsu); 
 		
 		txtUsu = new JTextField(); 
@@ -140,6 +149,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		lblContra = new JLabel ("Contraseña"); 
 		lblContra.setFont(f2);
 		lblContra.setBounds(20,100,300,30);
+		lblContra.setForeground(Color.white);
 		panel.add(lblContra);
 		
 		contraField = new JPasswordField();
@@ -156,7 +166,6 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		btnEntrar.setInputMap(0, map);
 		btnEntrar.setFont(f2);
 		btnEntrar.setBounds(200, 150, 100, 30);
-		btnEntrar.setBackground(Color.white);
 		panel.add(btnEntrar);
 		btnEntrar.addActionListener(new ActionListener()
 				{
@@ -197,11 +206,13 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		lblRegistro = new JLabel("REGISTRARSE"); 
 		lblRegistro.setFont(f1);
 		lblRegistro.setBounds(185,200,180,40);
+		lblRegistro.setForeground(Color.white);
 		panel.add(lblRegistro);
 		
 		lblNombre = new JLabel ("Nombre");
 		lblNombre.setFont(f2);
 		lblNombre.setBounds(20,240,100,50);
+		lblNombre.setForeground(Color.white);
 		panel.add(lblNombre); 
 		
 		txtNombre = new JTextField(); 
@@ -212,6 +223,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		lblApe = new JLabel ("Apellido");
 		lblApe.setFont(f2);
 		lblApe.setBounds(20,280,100,50);
+		lblApe.setForeground(Color.white);
 		panel.add(lblApe);
 		
 		txtApe = new JTextField(); 
@@ -222,6 +234,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		lblCorreo = new JLabel ("Correo");
 		lblCorreo.setFont(f2);
 		lblCorreo.setBounds(20,320,100,50);
+		lblCorreo.setForeground(Color.white);
 		panel.add(lblCorreo);
 		
 		txtCorreo = new JTextField(); 
@@ -232,6 +245,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		lblUsu2 = new JLabel ("Usuario");
 		lblUsu2.setFont(f2);
 		lblUsu2.setBounds(20,360,100,50);
+		lblUsu2.setForeground(Color.white);
 		panel.add(lblUsu2);
 		
 		txtUsu2 = new JTextField(); 
@@ -242,6 +256,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		lblContra2 = new JLabel ("Contraseña");
 		lblContra2.setFont(f2);
 		lblContra2.setBounds(20,400,100,50);
+		lblContra2.setForeground(Color.white);
 		panel.add(lblContra2);
 		
 		contraField2 = new JPasswordField();
@@ -254,7 +269,6 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		btnRegistrar.setFont(f2);
 		btnEntrar.setToolTipText("Pulse este botón si desea crearse una cuenta");
 		btnRegistrar.setBounds(200, 460, 100, 30);
-		btnRegistrar.setBackground(Color.WHITE);
 		panel.add(btnRegistrar);
 		btnRegistrar.addActionListener(new ActionListener()
 		{
@@ -287,7 +301,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					    	clsBD.añadirUsuario(nombre, apellido, email, nombreUsu, contrasenya);
 					    	//gestor.correo(email);
 					    	
-					    	gestor.enviarCorreo(email);
+//					    	gestor.enviarCorreo(email);
 					    	JOptionPane.showMessageDialog(null,"Su registro se ha realizado satisfactoriamente","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
 					    	
 					    	dispose();
@@ -307,6 +321,9 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					else
 					{
 						JOptionPane.showMessageDialog(null,"Su Nombre de usuario ya está ocupado","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+						
+						txtUsu2.setText(null);
+						txtUsu2.requestFocus();
 					}
 					
 				
@@ -314,6 +331,19 @@ public class frmInicioSesion extends JFrame implements ActionListener
 			}
 		});
 	}
+	
+	/**
+	 * Método para añadir la imagen de fondo.
+	 */
+	public JPanel panel = new JPanel()
+	{
+		private static final long serialVersionUID = 1L;
+
+		public void paintComponent(Graphics g)
+	    {
+	    	g.drawImage(imagenFondo, 0, 0, getWidth(),getHeight(),this);
+	    }
+	};
 	
 	@Override
 	public void actionPerformed(ActionEvent e) 

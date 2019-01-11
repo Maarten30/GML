@@ -226,7 +226,7 @@ public class frmReproductor implements LineListener, ActionListener
 		avance.addActionListener(this);
 		Fin.addActionListener(this);
 		
-		;
+		
 		Botonera.add(anterior);
 		Botonera.add(siguiente);
 		Botonera.add(shuffle);

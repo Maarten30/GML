@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -158,7 +159,7 @@ public class clsGestor
 		}
 		
 	}
-	
+		
 	// EMAIL CON .JAR DE MAARTEN
 //	public void correo (String correo)
 //	{
@@ -191,7 +192,7 @@ public class clsGestor
 ////		          .withBounceTo("tech@candyshop.com")
 ////		          .signWithDomainKey(privateKeyData, "somemail.com", "selector")
 //		          .buildEmail();
-//		
+//	
 //		
 //
 //		Mailer mailer = MailerBuilder
@@ -211,49 +212,71 @@ public class clsGestor
 	/**
 	 * Metodo utilizado para enviar correos a los usuarios a la hora de registrarse
 	 */
-	public void enviarCorreo(String correo)
-	{
-	      String to = correo;
-	      String user = "gmlmusic3@gmail.com";
-	      String password = "gmlprog3";
-	      String host = "mail.javatpoint.com";  
-	      
-	      Properties props = new Properties();
-	      props.setProperty("mail.smtp.host", host);
-	      props.setProperty("mail.smtp.auth", "true");
-	      props.put("mail.smtp.port","25");
-	      
-	      
-	      Session session = Session.getDefaultInstance(props,  new javax.mail.Authenticator() {  
-	          protected PasswordAuthentication getPasswordAuthentication() 
-	          {  
-	        	   return new PasswordAuthentication(user,password);  
-	          }  
-	        	    }); 
-	      
-		try 
-		{	
-			
-			MimeMessage message = new MimeMessage(session); 
-			
-			
-			System.out.println("El mensaje se ha enviado1");
-			message.setFrom(new InternetAddress(user));
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-			message.setSubject("Creacion de cuenta");
-			message.setText("Bienvenido a GML music, su cuenta se ha creado correctamente");
-			
-			System.out.println("El mensaje se ha enviado2");
-//			Transport.send(message);
-			Transport t = session.getTransport("smtp");
-//			t.connect(user, password);
-			t.connect((String) props.get("mail.smtp.host"),
-					(Integer) props.get("mail.smtp.port"), user, password);
-//			t.connect((String)props.get("mail.smtp.user"), "password");
-			t.sendMessage(message, message.getAllRecipients());
-			
-			System.out.println("El mensaje se ha enviado3");
-			t.close();
+	public void enviarCorreo()
+	{		
+		Properties props = new Properties();
+		props.setProperty("mail.smtp.auth", "true");
+		props.setProperty("mail.smtp.starttls.enable", "true");
+		props.setProperty("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port","587");
+		
+		Session session = Session.getInstance(props,
+		new javax.mail.Authenticator()
+		{
+			protected PasswordAuthentication getPasswordAuthentication()
+			{
+				return new PasswordAuthentication("musicgml3@gmail.com" , "Abc123***"); 
+			}
+		});
+		
+//		try
+//		{
+//			Message message = 
+//		}
+
+		
+		
+//	      String to = correo;
+//	      String user = "gmlmusic3@gmail.com";
+//	      String password = "gmlprog3";
+//	      String host = "mail.javatpoint.com";  
+//	      
+//	      Properties props = new Properties();
+//	      props.setProperty("mail.smtp.host", host);
+//	      props.setProperty("mail.smtp.auth", "true");
+//	      props.put("mail.smtp.port","25");
+//	      
+//	      
+//	      Session session = Session.getDefaultInstance(props,  new javax.mail.Authenticator() {  
+//	          protected PasswordAuthentication getPasswordAuthentication() 
+//	          {  
+//	        	   return new PasswordAuthentication(user,password);  
+//	          }  
+//	        	    }); 
+//	      
+//		try 
+//		{	
+//			
+//			MimeMessage message = new MimeMessage(session); 
+//			
+//			
+//			System.out.println("El mensaje se ha enviado1");
+//			message.setFrom(new InternetAddress(user));
+//			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+//			message.setSubject("Creacion de cuenta");
+//			message.setText("Bienvenido a GML music, su cuenta se ha creado correctamente");
+//			
+//			System.out.println("El mensaje se ha enviado2");
+////			Transport.send(message);
+//			Transport t = session.getTransport("smtp");
+////			t.connect(user, password);
+//			t.connect((String) props.get("mail.smtp.host"),
+//					(Integer) props.get("mail.smtp.port"), user, password);
+////			t.connect((String)props.get("mail.smtp.user"), "password");
+//			t.sendMessage(message, message.getAllRecipients());
+//			
+//			System.out.println("El mensaje se ha enviado3");
+//			t.close();
 			
 			
 			
@@ -298,14 +321,14 @@ public class clsGestor
 //			t.sendMessage(message,message.getRecipients(Message.RecipientType.TO));
 //			t.close();
 			
-			JOptionPane.showMessageDialog(null, "Correo electrónico enviado");
-		
-		} catch (AddressException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//			JOptionPane.showMessageDialog(null, "Correo electrónico enviado");
+//		
+//		} catch (AddressException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (MessagingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 }
