@@ -52,7 +52,6 @@ public class frmReproductor implements LineListener, ActionListener
 	private JScrollPane panelCanciones;
 
 	
-	
 	private JButton play;
 	private JButton stop;
 	private JButton pausar;
