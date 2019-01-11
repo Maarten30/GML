@@ -37,6 +37,8 @@ import javax.swing.JSplitPane;
 import LN.clsCancion;
 
 
+
+
 /**
  * Clase que sirve para crear la pantalla principal de la aplicacion
  * @author Gabriela garaizabal, Maarten Handels y Laura Llorente
@@ -53,10 +55,16 @@ public class frmReproductor implements LineListener, ActionListener
 	private JScrollPane panelCanciones;
 
 	
-	
 	private JButton play;
 	private JButton stop;
 	private JButton pausar;
+	private JButton anterior;
+	private JButton avance;
+	private JButton Fin;
+	private JButton principio;
+	private JButton rebobinar;
+	private JButton shuffle;
+	private JButton siguiente;
 	private JList<String> listas= null;
 	private JList<String> listaCanciones= null;
 	private JProgressBar BarraProgreso;
@@ -127,23 +135,128 @@ public class frmReproductor implements LineListener, ActionListener
 		Botonera.setLayout( new FlowLayout( FlowLayout.CENTER ));
 		panelBajo.setLayout( new BorderLayout() );
 		
+		pausar = new JButton( new ImageIcon( "src/img/pausa.png") );
+		play = new JButton( new ImageIcon("src/img/Play.png") );
+		stop = new JButton( new ImageIcon("src/img/stop.png") );
+		anterior = new JButton( new ImageIcon("src/img/anterior.png") );
+		avance = new JButton( new ImageIcon("src/img/avance.png") );
+		Fin = new JButton( new ImageIcon("src/img/Fin.png") );
+		rebobinar = new JButton( new ImageIcon("src/img/rebobinar.png") );
+		shuffle = new JButton( new ImageIcon("src/img/shuffle.png") );
+		siguiente = new JButton( new ImageIcon("src/img/siguiente.png") );
+		principio = new JButton( new ImageIcon("src/img/principio.png") );
 		
 		
 	
-		stop = new JButton("Stop");
-		pausar = new JButton("Pausar");
-		play = new JButton("Play");
+//		stop = new JButton("Stop");
+//		pausar = new JButton("Pausar");
+//		play= new JButton("Play");
 		BarraProgreso = new JProgressBar(0, 1000);
 		BarraProgreso.setStringPainted(true);
 		
+		pausar.setOpaque(false);            
+    	pausar.setContentAreaFilled(false); 
+    	pausar.setBorderPainted(false);     
+    	pausar.setBorder(null); 
+    	pausar.setFocusPainted(false);
+    	pausar.setContentAreaFilled(false);
+    	pausar.setPressedIcon(new ImageIcon(  "src/img/pausaN.png" ));
+
+    	stop.setOpaque(false);            
+    	stop.setContentAreaFilled(false); 
+    	stop.setBorderPainted(false);    
+    	stop.setBorder(null); 
+    	stop.setFocusPainted(false);
+    	stop.setContentAreaFilled(false);
+    	stop.setPressedIcon(new ImageIcon(  "src/img/stopN.png" ));
+
+    	play.setOpaque(false);            
+    	play.setContentAreaFilled(false); 
+    	play.setBorderPainted(false);     
+    	play.setBorder(null); 
+    	play.setFocusPainted(false);
+    	play.setContentAreaFilled(false);
+    	play.setPressedIcon(new ImageIcon(  "src/img/PlayN.png" ));
+    	
+    	anterior.setOpaque(false);            
+    	anterior.setContentAreaFilled(false); 
+    	anterior.setBorderPainted(false);     
+    	anterior.setBorder(null); 
+    	anterior.setFocusPainted(false);
+    	anterior.setContentAreaFilled(false);
+    	anterior.setPressedIcon(new ImageIcon(  "src/img/anteriorN.png" ));
+    	
+    	avance.setOpaque(false);            
+    	avance.setContentAreaFilled(false); 
+    	avance.setBorderPainted(false);     
+    	avance.setBorder(null); 
+    	avance.setFocusPainted(false);
+    	avance.setContentAreaFilled(false);
+    	avance.setPressedIcon(new ImageIcon(  "src/img/avanceN.png" ));
+    	
+    	Fin.setOpaque(false);            
+    	Fin.setContentAreaFilled(false); 
+    	Fin.setBorderPainted(false);     
+    	Fin.setBorder(null); 
+    	Fin.setFocusPainted(false);
+    	Fin.setContentAreaFilled(false);
+    	Fin.setPressedIcon(new ImageIcon(  "src/img/FinN.png" ));
+    	
+    	rebobinar.setOpaque(false);            
+    	rebobinar.setContentAreaFilled(false); 
+    	rebobinar.setBorderPainted(false);     
+    	rebobinar.setBorder(null); 
+    	rebobinar.setFocusPainted(false);
+    	rebobinar.setContentAreaFilled(false);
+    	rebobinar.setPressedIcon(new ImageIcon(  "src/img/rebobinarN.png" ));
+    	
+    	shuffle.setOpaque(false);            
+    	shuffle.setContentAreaFilled(false); 
+    	shuffle.setBorderPainted(false);     
+    	shuffle.setBorder(null); 
+    	shuffle.setFocusPainted(false);
+    	shuffle.setContentAreaFilled(false);
+    	shuffle.setPressedIcon(new ImageIcon(  "src/img/shuffleN.png" ));
+    	
+    	siguiente.setOpaque(false);            
+    	siguiente.setContentAreaFilled(false); 
+    	siguiente.setBorderPainted(false);     
+    	siguiente.setBorder(null); 
+    	siguiente.setFocusPainted(false);
+    	siguiente.setContentAreaFilled(false);
+    	siguiente.setPressedIcon(new ImageIcon(  "src/img/SiguienteN.png" ));
+    	
+    	principio.setOpaque(false);            
+    	principio.setContentAreaFilled(false); 
+    	principio.setBorderPainted(false);     
+    	principio.setBorder(null); 
+    	principio.setFocusPainted(false);
+    	principio.setContentAreaFilled(false);
+    	principio.setPressedIcon(new ImageIcon(  "src/img/principioN.png" ));
 		
+    	
 		play.addActionListener(this);
 		stop.addActionListener(this);
 		pausar.addActionListener(this);
+		anterior.addActionListener(this);
+		siguiente.addActionListener(this);
+		shuffle.addActionListener(this);
+		principio.addActionListener(this);
+		rebobinar.addActionListener(this);
+		avance.addActionListener(this);
+		Fin.addActionListener(this);
 		
+		
+		Botonera.add(anterior);
+		Botonera.add(siguiente);
+		Botonera.add(shuffle);
 		Botonera.add(play);
 		Botonera.add(pausar);
 		Botonera.add(stop);
+		Botonera.add(principio);
+		Botonera.add(rebobinar);
+		Botonera.add(avance);
+		Botonera.add(Fin);
 		Botonera.add(BarraProgreso);
 		
 		splitpanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelListas, panelCanciones);
