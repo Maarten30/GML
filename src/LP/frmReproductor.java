@@ -3,6 +3,7 @@ package LP;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,6 +33,8 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+
+import LN.clsCancion;
 
 
 /**
@@ -72,7 +75,7 @@ public class frmReproductor implements LineListener, ActionListener
 	/**
 	 * Metodo en el que se crean todos los elementos que van a aparecer en la pantalla
 	 */
-	public void GUI()
+	public void GUI()//ArrayList<clsCancion> canciones)
 	{
 		ventanita = new JFrame("Music Player");
 		ventanita.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -87,10 +90,10 @@ public class frmReproductor implements LineListener, ActionListener
 		panelBajo = new JPanel();
 		Botonera = new JPanel();
 		
-		String nombre = "maarten";
+		String nombre = "Maarten";
 		String nombre2 = "4";
-		String nombre3 = "lucia";
-		String nombre4 = "gab";
+		String nombre3 = "Lucia";
+		String nombre4 = "Gab";
 		
 		DefaultListModel<String> model = new DefaultListModel<>();
 		
@@ -111,6 +114,12 @@ public class frmReproductor implements LineListener, ActionListener
 		model2.addElement(nombre4);
 		
 		listaCanciones = new JList<>(model2);
+		
+		Font f1 = new Font("Century Gothic",Font.BOLD,18);
+		
+		listas.setFont(f1);
+		listaCanciones.setFont(f1);
+		
 		
 		panelListas = new JScrollPane(listas);
 		panelCanciones = new JScrollPane(listaCanciones);
@@ -149,14 +158,7 @@ public class frmReproductor implements LineListener, ActionListener
 		ventanita.setVisible(true);
 		Botonera.setVisible(true);
 		
-	    
-//	    audioClip.addLineListener(new LineListener() {
-//	        public void update(LineEvent event) {
-//	            if (audioClip.isRunning()) {
-//	                AvanceBP();
-//	            }
-//	        }
-//	    });
+	   
 	    
 		BarraProgreso.addMouseListener( new MouseAdapter() {
 			@Override
@@ -172,12 +174,7 @@ public class frmReproductor implements LineListener, ActionListener
 //					// mediaPlayer.setTime( milisegsSalto );
 					
 					float porcentajeSalto = (float)e.getX() / BarraProgreso.getWidth();
-//					System.out.println((long)e.getX());
-//					System.out.println(BarraProgreso.getWidth());
-//					System.out.println(porcentajeSalto);
-//					System.out.println(audioClip.getMicrosecondLength());
 					long Salto = Math.round(audioClip.getMicrosecondLength()*porcentajeSalto);
-//					System.out.println(Salto);
 					audioClip.setMicrosecondPosition( Salto );
 					//BarraProgreso.setValue( (int) (10000.0 * audioClip.getLongFramePosition() / audioClip.getFrameLength()) );
 					//BarraProgreso.repaint();
