@@ -81,7 +81,7 @@ public class clsBD
 	{		
 		try 
 		{
-			statement.executeUpdate("create table usuarios (nombre string, apellido string, email string, nombreUsu string, contrasenya string)");
+			statement.executeUpdate("create table if not exists usuarios (nombre string, apellido string, email string, nombreUsu string, contrasenya string)");
 		} 
 		catch (SQLException e) 
 		{
@@ -97,7 +97,7 @@ public class clsBD
 	{
 		try 
 		{
-			statement.executeUpdate("create table canciones (ruta string, nombre string, autor string, año int, duracion float)");
+			statement.executeUpdate("create table if not exists canciones (ruta string, nombre string, autor string, año int, duracion float)");
 		} 
 		catch (SQLException e) 
 		{
@@ -113,7 +113,7 @@ public class clsBD
 	{
 		try 
 		{
-			statement.executeUpdate("create table playlist (nombre string, cancion string)");
+			statement.executeUpdate("create table if not exists playlist (nombre string, cancion string)");
 		} 
 		catch (SQLException e) 
 		{
@@ -272,7 +272,28 @@ try {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	/**
+	 * Añade una cominacionde playlis-cancion
+	 * @param nombre Nombre de la Playlist
+	 * @param cancion Nombre de la cancion
+	 */
+	public static void añadirCanPlaylist (String nombre, clsCancion cancion)
+	{
+		String sentSQL = "insert into playlist values('"+nombre+"', '"+cancion.getNombre()+"')";
 		
+		try 
+		{
+			statement.executeUpdate(sentSQL);
+	
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
 	//CIERRE DE LA CONEXIÓN
 	/** Cierre de la conexión.
 	 */

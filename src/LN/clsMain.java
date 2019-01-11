@@ -15,9 +15,8 @@ public class clsMain
 		
 		clsGestor gestor = new clsGestor();
 		gestor.InicializarBD();
-		gestor.InsertarCanciones();
 		
-		frmInicioSesion frame = new frmInicioSesion();
+		frmInicioSesion frame = new frmInicioSesion(gestor);
 		frame.setVisible(true);
 	}
 

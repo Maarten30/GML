@@ -35,6 +35,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
 import LN.clsCancion;
+import LN.clsPlayList;
 
 
 
@@ -67,6 +68,8 @@ public class frmReproductor implements LineListener, ActionListener
 	private JButton siguiente;
 	private JList<String> listas= null;
 	private JList<String> listaCanciones= null;
+	private DefaultListModel<String> model = new DefaultListModel<>();
+	private DefaultListModel<String> model2 = new DefaultListModel<>();
 	private JProgressBar BarraProgreso;
 	
 	boolean playCompleted;
@@ -74,17 +77,22 @@ public class frmReproductor implements LineListener, ActionListener
 	
 	private LN.clsUsuario usuario;
 	
+	private int SongIndex = 0;
 	private File audioFile;
 	public Clip audioClip;
-	//private String audioFilePath = "C:/Demi Lovato - Stone Cold (Official Video).wav";
 	private String audioFilePath = "test/res/Demi Lovato - Stone Cold (Official Video).wav";
 	long clipTime = 0;
+	
+	private ArrayList<clsCancion> Canciones;
 
 	/**
 	 * Metodo en el que se crean todos los elementos que van a aparecer en la pantalla
 	 */
-	public void GUI()//ArrayList<clsCancion> canciones)
+	public void GUI(clsPlayList playlist)
 	{
+		
+		Canciones = playlist.getCanciones();
+		
 		ventanita = new JFrame("Music Player");
 		ventanita.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		ventanita.setSize(1350, 720);
@@ -98,30 +106,17 @@ public class frmReproductor implements LineListener, ActionListener
 		panelBajo = new JPanel();
 		Botonera = new JPanel();
 		
-		String nombre = "Maarten";
-		String nombre2 = "4";
-		String nombre3 = "Lucia";
-		String nombre4 = "Gab";
-		
-		DefaultListModel<String> model = new DefaultListModel<>();
-		
-
-		model.addElement(nombre);
-		model.addElement(nombre2);
-		model.addElement(nombre3);
-		model.addElement(nombre4);
-		
+		model.addElement(playlist.getNombre());
+	
 		listas = new JList<>(model);
 		
-		DefaultListModel<String> model2 = new DefaultListModel<>();
-		
+		for(clsCancion a:Canciones)
+		{
+			model2.addElement(a.getNombre());
+		}
 
-		model2.addElement(nombre);
-		model2.addElement(nombre2);
-		model2.addElement(nombre3);
-		model2.addElement(nombre4);
-		
 		listaCanciones = new JList<>(model2);
+		
 		
 		Font f1 = new Font("Century Gothic",Font.BOLD,18);
 		
@@ -307,7 +302,9 @@ public class frmReproductor implements LineListener, ActionListener
 	public void actionPerformed(ActionEvent arg0) {
 		if(arg0.getSource() == play)
 		{
-			play();
+			
+			SongIndex = listaCanciones.getSelectedIndex();
+			play(SongIndex);
 			playing = true;
 			System.out.println(audioClip.getLongFramePosition());
 			AvanceBP();
@@ -328,6 +325,10 @@ public class frmReproductor implements LineListener, ActionListener
 			audioClip.close();
 			
 		}
+		else if(listaCanciones.getSelectedIndex()==0)
+		{
+			
+		}
 	}
 	
 	
@@ -342,10 +343,10 @@ public class frmReproductor implements LineListener, ActionListener
 	
    
 	
-	public void play()//String audioFilePath
+	public void play(int numero)//String audioFilePath
     {
     	
-        audioFile = new File(audioFilePath);
+        audioFile = new File(Canciones.get(numero).getFile().getPath());
  
         try 
         {
@@ -426,14 +427,6 @@ public class frmReproductor implements LineListener, ActionListener
         	AvanceBP();
         }
  
-    }
-    
-    public static void main(String[] args) 
-    {
-    	
-        frmReproductor player = new frmReproductor();
-        player.GUI();
-        
     }
 }
 

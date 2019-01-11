@@ -26,6 +26,12 @@ public class clsPlayList
 		this.canciones = canciones;
 	}
 	
+	public clsPlayList()
+	{
+		this.nombre = "";
+		this.canciones = new ArrayList<clsCancion>();
+	}
+	
 	public clsPlayList(String nombre)
 	{
 		
@@ -47,6 +53,11 @@ public class clsPlayList
 
 	public void setCanciones(ArrayList<clsCancion> canciones) {
 		this.canciones = canciones;
+	}
+	
+	public void añadirCancion(clsCancion cancion)
+	{
+		canciones.add(cancion);
 	}
 	
 	

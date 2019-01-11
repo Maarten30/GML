@@ -105,8 +105,10 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	/**
 	 * En este metodo se encuentran todos los elementos necesarios para crear la pantalla de inicio de sesion. 
 	 */
-	public frmInicioSesion() 
+	public frmInicioSesion(clsGestor Gestor) 
 	{	
+		gestor = Gestor;
+		
 		setTitle("Inicio de Sesión");
 		setSize(460,550);
 		setLocationRelativeTo(null);
@@ -230,8 +232,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 								{
 								contra = new String (contraField.getPassword());
 								JOptionPane.showMessageDialog(null, "Bienvenido a GML music","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
-								frmReproductor pagina = new frmReproductor(); //LLEVAR A LA PANTALLA PRINCIPAL
-								pagina.GUI();
+								gestor.AbrirMenu();
 								}
 								else
 								{
@@ -316,7 +317,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				gestor = new clsGestor();
+				
 				
 				if(txtNombre.getText().isEmpty() || txtApe.getText().isEmpty() || txtCorreo.getText().isEmpty() || txtUsu2.getText().isEmpty() || contraField2.getPassword()==null )
 				{
@@ -349,8 +350,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					    	dispose();
 					    	JOptionPane.showMessageDialog(null, "Bienvenido a GML music","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
 					    	//Llama a la pantalla frmReproductor
-					        frmReproductor player = new frmReproductor();
-					        player.GUI();
+					        gestor.AbrirMenu();
 					    } 
 					    else 
 					    {
