@@ -27,6 +27,7 @@ import javax.swing.JOptionPane;
 //import org.simplejavamail.util.ConfigLoader;
 
 import LP.frmInicioSesion;
+import javafx.scene.control.Alert;
 
 /**
  * Clase utilizada para la ejecucion del programa
@@ -209,29 +210,43 @@ public class clsGestor
 //			mailer.sendMail(email);
 //	}
 	
-	/**
-	 * Metodo utilizado para enviar correos a los usuarios a la hora de registrarse
-	 */
-	public void enviarCorreo()
-	{		
-		Properties props = new Properties();
-		props.setProperty("mail.smtp.auth", "true");
-		props.setProperty("mail.smtp.starttls.enable", "true");
-		props.setProperty("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.port","587");
-		
-		Session session = Session.getInstance(props,
-		new javax.mail.Authenticator()
-		{
-			protected PasswordAuthentication getPasswordAuthentication()
-			{
-				return new PasswordAuthentication("musicgml3@gmail.com" , "Abc123***"); 
-			}
-		});
-		
+//	/**
+//	 * Metodo utilizado para enviar correos a los usuarios a la hora de registrarse
+//	 */
+//	public void enviarCorreo()
+//	{		
+//		Properties props = new Properties();
+//		props.setProperty("mail.smtp.auth", "true");
+//		props.setProperty("mail.smtp.starttls.enable", "true");
+//		props.setProperty("mail.smtp.host", "smtp.gmail.com");
+//		props.put("mail.smtp.port","587");
+//		
+//		Session session = Session.getInstance(props,
+//		new javax.mail.Authenticator()
+//		{
+//			protected PasswordAuthentication getPasswordAuthentication()
+//			{
+//				return new PasswordAuthentication("musicgml3@gmail.com" , "Abc123***"); 
+//			}
+//		});
+//		
 //		try
 //		{
-//			Message message = 
+//			Message message = new MimeMessage(session);
+//			message.setFrom(new InternetAddress("musicgml3@gmail.com"));
+//			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(To));
+//			message.setSubject(Subject);
+//			message.setText(Mensaje);
+//			
+//			Transport.send(message);
+//			
+//			Alert cuadroDialogo = new Alert (Alert.AlertType.INFORMATION);
+//			cuadroDialogo.setTitle("Restableciendo contraseña");
+//			cuadroDialogo.setHeaderText("Se le ha enviado un correo a su contraseña");
+//			
+//		}catch(MessagingException e)
+//		{
+//			
 //		}
 
 		
@@ -331,4 +346,4 @@ public class clsGestor
 //			e.printStackTrace();
 //		}
 	}
-}
+//}

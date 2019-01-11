@@ -8,9 +8,22 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
 //import java.util.logging.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
@@ -23,11 +36,14 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
 import java.util.Calendar;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import LN.clsBD;
 import LN.clsGestor;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 /**
  * Clase para crear la pantalla de inicio de sesión. En ella el usuario tendrá la posibilidad de iniciar sesión o de crearse una 
@@ -64,6 +80,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	
 	private JButton btnEntrar;
 	private JButton btnRegistrar; 
+	private JButton btnContraOlvidada;
 	
 	private String nombre; 
 	private String apellido;
@@ -80,6 +97,10 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	private InputMap map; 
 	
 	private clsGestor gestor; 
+	
+	String To = ""; 
+	String Subject = "Restableciendo contraseña"; 
+	String Mensaje = "Recuerde su contraseña es: "; 
 
 	/**
 	 * En este metodo se encuentran todos los elementos necesarios para crear la pantalla de inicio de sesion. 
@@ -127,6 +148,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		Font f1 = new Font("Century Gothic",Font.BOLD,22);
 		Font f2 = new Font("Century Gothic",Font.BOLD,15); 
 		Font f3 = new Font("Century Gothic",Font.BOLD,13); 
+		Font f4 = new Font("Century Gothic",Font.BOLD,11); 
 		
 		//Creación de la pantalla 
 		lblInicio = new JLabel("INICIAR SESIÓN"); 
@@ -151,6 +173,26 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		lblContra.setBounds(20,100,300,30);
 		lblContra.setForeground(Color.white);
 		panel.add(lblContra);
+		
+		btnContraOlvidada = new JButton ("¿Ha olvidado su contraseña?");
+		btnContraOlvidada.setFont(f4);
+		btnContraOlvidada.setBounds(150,190,200,15);
+		btnContraOlvidada.setToolTipText("Pulse este botón si ha olvidado su contraseña");
+		btnContraOlvidada.setForeground(Color.black);
+		panel.add(btnContraOlvidada);
+		btnContraOlvidada.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent arg0)
+					{
+						try {
+							RestablecerContraseña();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				});
+		
 		
 		contraField = new JPasswordField();
 		contraField.setBounds(110, 105, 300, 25);
@@ -205,7 +247,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 
 		lblRegistro = new JLabel("REGISTRARSE"); 
 		lblRegistro.setFont(f1);
-		lblRegistro.setBounds(185,200,180,40);
+		lblRegistro.setBounds(185,210,180,40);
 		lblRegistro.setForeground(Color.white);
 		panel.add(lblRegistro);
 		
@@ -344,6 +386,93 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	    	g.drawImage(imagenFondo, 0, 0, getWidth(),getHeight(),this);
 	    }
 	};
+	
+	private void RestablecerContraseña() throws IOException
+	{
+		try
+		{
+			usuario = txtUsu.getText(); 
+			int control = 0;
+			if(!(usuario.equals("")))
+			{
+				Connection connection = DriverManager.getConnection("jdbc:sqlite:BD.bd" );
+				Statement estado = connection.createStatement();
+				
+				ResultSet rs = estado.executeQuery("SELECT email,contrasenya from usuarios WHERE nombreUsu="+"'"+usuario+"'");
+				
+				while(rs.next())
+				{
+					To = (rs.getString("email"));
+					Mensaje = Mensaje + (rs.getString("contrasenya"));
+					control = 1;
+				}
+				
+				if(control == 1)
+				{
+					enviarCorreo(); 
+				}
+				else
+				{
+					Alert cuadroDialogo = new Alert(AlertType.ERROR);
+					cuadroDialogo.setTitle("Error");
+					cuadroDialogo.setHeaderText("Nombre de usuario no existe"); 
+				}
+			}
+				
+				else
+				{
+					Alert cuadroDialogo = new Alert(AlertType.ERROR);
+					cuadroDialogo.setTitle("Error");
+					cuadroDialogo.setHeaderText("Debe escribir el nombre de usuario"); 
+				}
+		}
+				
+		
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Metodo utilizado para enviar correos a los usuarios a la hora de registrarse
+	 */
+	public void enviarCorreo()
+	{		
+		Properties props = new Properties();
+		props.setProperty("mail.smtp.auth", "true");
+		props.setProperty("mail.smtp.starttls.enable", "true");
+		props.setProperty("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port","587");
+		
+		Session session = Session.getInstance(props,
+		new javax.mail.Authenticator()
+		{
+			protected PasswordAuthentication getPasswordAuthentication()
+			{
+				return new PasswordAuthentication("musicgml3@gmail.com" , "Abc123***"); 
+			}
+		});
+		
+		try
+		{
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("musicgml3@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(To));
+			message.setSubject(Subject);
+			message.setText(Mensaje);
+			
+			Transport.send(message);
+			
+			Alert cuadroDialogo = new Alert (Alert.AlertType.INFORMATION);
+			cuadroDialogo.setTitle("Restableciendo contraseña");
+			cuadroDialogo.setHeaderText("Se le ha enviado un correo a su contraseña");
+			
+		}catch(MessagingException e)
+		{
+			
+		}
+	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) 
