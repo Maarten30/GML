@@ -68,7 +68,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	private JLabel lblContra2;
 	private JLabel lblFecha; 
 	
-	private JTextField txtUsu;
+	public static JTextField txtUsu;
 	private JTextField txtNombre;
 	private JTextField txtApe;
 	public static JTextField txtCorreo;

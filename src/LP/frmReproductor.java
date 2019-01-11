@@ -51,12 +51,17 @@ public class frmReproductor implements LineListener, ActionListener
 	private JFrame ventanita;
 	private JPanel panelBajo;
 	private JPanel Botonera;
+	private JPanel panelSup;
+	private JPanel inicio;
 	private JSplitPane splitpanel;
 	private JScrollPane panelListas;
 	private JScrollPane panelCanciones;
 
+	private JLabel inicio1;
+	private JLabel usuario1;
 	
 	private JButton play;
+	private JButton like;
 	private JButton stop;
 	private JButton pausar;
 	private JButton anterior;
@@ -103,8 +108,10 @@ public class frmReproductor implements LineListener, ActionListener
 		JLabel backgroundImage = new JLabel(jungleBackground);
 		ventanita.add(backgroundImage);
 		
+		panelSup = new JPanel();
 		panelBajo = new JPanel();
 		Botonera = new JPanel();
+		inicio = new JPanel();
 		
 		model.addElement(playlist.getNombre());
 	
@@ -119,16 +126,39 @@ public class frmReproductor implements LineListener, ActionListener
 		
 		
 		Font f1 = new Font("Century Gothic",Font.BOLD,18);
+		Font f2 = new Font("Century Gothic",Font.BOLD,25);
 		
 		listas.setFont(f1);
 		listaCanciones.setFont(f1);
 		
+		inicio1= new JLabel("¡BIENVENIDO " +  frmInicioSesion.txtUsu.getText() +" A GML MUSIC!");
+		inicio1.setFont(f2);
+		inicio.add(inicio1, BorderLayout.CENTER);
+		
+		JButton musica = new JButton(new ImageIcon ("src/LN/logo.png"));
+		musica.setOpaque(true);                
+    	musica.setBorder(null);           
+    	musica.setContentAreaFilled(false); 
+    	musica.setBorderPainted(false);     
+    	musica.setFocusPainted(false);
+    	musica.setContentAreaFilled(false);
+    	
+		inicio.add(musica, BorderLayout.WEST);
+		
+//		usuario1 = new JLabel(frmInicioSesion.txtUsu.getText());
+//		usuario1.setFont(f1);
+//		inicio.add(usuario1);
+		
+    	
 		
 		panelListas = new JScrollPane(listas);
 		panelCanciones = new JScrollPane(listaCanciones);
 		
 		Botonera.setLayout( new FlowLayout( FlowLayout.CENTER ));
 		panelBajo.setLayout( new BorderLayout() );
+		
+		inicio.setLayout( new FlowLayout( FlowLayout.CENTER ));
+		panelSup.setLayout(new BorderLayout());
 		
 		pausar = new JButton( new ImageIcon( "src/img/pausa.png") );
 		play = new JButton( new ImageIcon("src/img/Play.png") );
@@ -140,6 +170,7 @@ public class frmReproductor implements LineListener, ActionListener
 		shuffle = new JButton( new ImageIcon("src/img/shuffle.png") );
 		siguiente = new JButton( new ImageIcon("src/img/siguiente.png") );
 		principio = new JButton( new ImageIcon("src/img/principio.png") );
+		like = new JButton( new ImageIcon("src/img/like.png") );
 		
 		
 	
@@ -156,6 +187,15 @@ public class frmReproductor implements LineListener, ActionListener
     	pausar.setFocusPainted(false);
     	pausar.setContentAreaFilled(false);
     	pausar.setPressedIcon(new ImageIcon(  "src/img/pausaN.png" ));
+    	
+    	like.setOpaque(false);            
+    	like.setContentAreaFilled(false); 
+    	like.setBorderPainted(false);     
+    	like.setBorder(null); 
+    	like.setFocusPainted(false);
+    	like.setContentAreaFilled(false);
+    	like.setPressedIcon(new ImageIcon(  "src/img/likeN.png" ));
+//    	like.setRolloverIcon(new ImageIcon(  "src/img/likeN.png" ) );
 
     	stop.setOpaque(false);            
     	stop.setContentAreaFilled(false); 
@@ -240,6 +280,7 @@ public class frmReproductor implements LineListener, ActionListener
 		rebobinar.addActionListener(this);
 		avance.addActionListener(this);
 		Fin.addActionListener(this);
+		like.addActionListener(this);
 		
 		
 		Botonera.add(anterior);
@@ -252,14 +293,18 @@ public class frmReproductor implements LineListener, ActionListener
 		Botonera.add(rebobinar);
 		Botonera.add(avance);
 		Botonera.add(Fin);
+		Botonera.add(like);
 		Botonera.add(BarraProgreso);
 		
 		splitpanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelListas, panelCanciones);
 		splitpanel.setResizeWeight(0.5);
 		
+		panelSup.add(inicio, BorderLayout.CENTER);
+		
 		panelBajo.add(Botonera, BorderLayout.NORTH );
 		panelBajo.add(BarraProgreso, BorderLayout.SOUTH );
 		
+		ventanita.getContentPane().add(panelSup, BorderLayout.NORTH);
 		ventanita.getContentPane().add(panelBajo, BorderLayout.SOUTH);
 		ventanita.getContentPane().add(splitpanel);
 		
