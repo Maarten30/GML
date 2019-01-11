@@ -34,6 +34,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
 
+
+
 /**
  * Clase que sirve para crear la pantalla principal de la aplicacion
  * @author Gabriela garaizabal, Maarten Handels y Laura Llorente
@@ -150,6 +152,7 @@ public class frmReproductor implements LineListener, ActionListener
     	pausar.setBorder(null); 
     	pausar.setFocusPainted(false);
     	pausar.setContentAreaFilled(false);
+    	pausar.setPressedIcon(new ImageIcon(  "src/img/pausaN.png" ));
 
     	stop.setOpaque(false);            
     	stop.setContentAreaFilled(false); 
@@ -157,6 +160,7 @@ public class frmReproductor implements LineListener, ActionListener
     	stop.setBorder(null); 
     	stop.setFocusPainted(false);
     	stop.setContentAreaFilled(false);
+    	stop.setPressedIcon(new ImageIcon(  "src/img/stopN.png" ));
 
     	play.setOpaque(false);            
     	play.setContentAreaFilled(false); 
@@ -164,6 +168,7 @@ public class frmReproductor implements LineListener, ActionListener
     	play.setBorder(null); 
     	play.setFocusPainted(false);
     	play.setContentAreaFilled(false);
+    	play.setPressedIcon(new ImageIcon(  "src/img/PlayN.png" ));
     	
     	anterior.setOpaque(false);            
     	anterior.setContentAreaFilled(false); 
@@ -171,6 +176,7 @@ public class frmReproductor implements LineListener, ActionListener
     	anterior.setBorder(null); 
     	anterior.setFocusPainted(false);
     	anterior.setContentAreaFilled(false);
+    	anterior.setPressedIcon(new ImageIcon(  "src/img/anteriorN.png" ));
     	
     	avance.setOpaque(false);            
     	avance.setContentAreaFilled(false); 
@@ -178,6 +184,7 @@ public class frmReproductor implements LineListener, ActionListener
     	avance.setBorder(null); 
     	avance.setFocusPainted(false);
     	avance.setContentAreaFilled(false);
+    	avance.setPressedIcon(new ImageIcon(  "src/img/avanceN.png" ));
     	
     	Fin.setOpaque(false);            
     	Fin.setContentAreaFilled(false); 
@@ -185,6 +192,7 @@ public class frmReproductor implements LineListener, ActionListener
     	Fin.setBorder(null); 
     	Fin.setFocusPainted(false);
     	Fin.setContentAreaFilled(false);
+    	Fin.setPressedIcon(new ImageIcon(  "src/img/FinN.png" ));
     	
     	rebobinar.setOpaque(false);            
     	rebobinar.setContentAreaFilled(false); 
@@ -192,6 +200,7 @@ public class frmReproductor implements LineListener, ActionListener
     	rebobinar.setBorder(null); 
     	rebobinar.setFocusPainted(false);
     	rebobinar.setContentAreaFilled(false);
+    	rebobinar.setPressedIcon(new ImageIcon(  "src/img/rebobinarN.png" ));
     	
     	shuffle.setOpaque(false);            
     	shuffle.setContentAreaFilled(false); 
@@ -199,6 +208,7 @@ public class frmReproductor implements LineListener, ActionListener
     	shuffle.setBorder(null); 
     	shuffle.setFocusPainted(false);
     	shuffle.setContentAreaFilled(false);
+    	shuffle.setPressedIcon(new ImageIcon(  "src/img/shuffleN.png" ));
     	
     	siguiente.setOpaque(false);            
     	siguiente.setContentAreaFilled(false); 
@@ -206,6 +216,7 @@ public class frmReproductor implements LineListener, ActionListener
     	siguiente.setBorder(null); 
     	siguiente.setFocusPainted(false);
     	siguiente.setContentAreaFilled(false);
+    	siguiente.setPressedIcon(new ImageIcon(  "src/img/SiguienteN.png" ));
     	
     	principio.setOpaque(false);            
     	principio.setContentAreaFilled(false); 
@@ -213,6 +224,7 @@ public class frmReproductor implements LineListener, ActionListener
     	principio.setBorder(null); 
     	principio.setFocusPainted(false);
     	principio.setContentAreaFilled(false);
+    	principio.setPressedIcon(new ImageIcon(  "src/img/principioN.png" ));
 		
     	
 		play.addActionListener(this);
