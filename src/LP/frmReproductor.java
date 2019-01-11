@@ -36,6 +36,7 @@ import javax.swing.JSplitPane;
 
 import LN.clsCancion;
 import LN.clsPlayList;
+import LN.clsUsuario;
 
 
 
@@ -80,8 +81,6 @@ public class frmReproductor implements LineListener, ActionListener
 	boolean playCompleted;
 	boolean playing;
 	
-	private LN.clsUsuario usuario;
-	
 	private int SongIndex = 0;
 	private File audioFile;
 	public Clip audioClip;
@@ -89,14 +88,16 @@ public class frmReproductor implements LineListener, ActionListener
 	long clipTime = 0;
 	
 	private ArrayList<clsCancion> Canciones;
+	private clsUsuario UsuarioActual;
 
 	/**
 	 * Metodo en el que se crean todos los elementos que van a aparecer en la pantalla
 	 */
-	public void GUI(clsPlayList playlist)
+	public void GUI(clsUsuario usuario)
 	{
 		
-		Canciones = playlist.getCanciones();
+		UsuarioActual = usuario;
+	//	Canciones = playlist.getCanciones();
 		
 		ventanita = new JFrame("Music Player");
 		ventanita.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -113,11 +114,14 @@ public class frmReproductor implements LineListener, ActionListener
 		Botonera = new JPanel();
 		inicio = new JPanel();
 		
-		model.addElement(playlist.getNombre());
+		for(clsPlayList a:UsuarioActual.getListas())
+		{
+			model.addElement(a.getNombre());
+		}
 	
 		listas = new JList<>(model);
 		
-		for(clsCancion a:Canciones)
+		for(clsCancion a:UsuarioActual.getListas().get(0).getCanciones())
 		{
 			model2.addElement(a.getNombre());
 		}

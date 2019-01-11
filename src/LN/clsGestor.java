@@ -43,6 +43,7 @@ public class clsGestor
 	private Statement statement = null;
 	private ArrayList<clsCancion> canciones = new ArrayList<clsCancion>();
 	private clsPlayList playlist = new clsPlayList();
+	private clsUsuario usuarioActual;
 	
 	/**
 	 * Metodo a traves del cual se inicializa la base de datos
@@ -268,6 +269,91 @@ public class clsGestor
 			
 	}
 	
+	public void RecontruirUsuario(String usuario, String contraseña)
+	{
+		
+		ResultSet rs = null;
+		try 
+		{
+			rs = statement.executeQuery("SELECT * FROM usuarios WHERE nombreUsu ='" +usuario+"' AND contrasenya ='" +contraseña+"'");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try 
+		{
+			
+			usuarioActual = new clsUsuario(rs.getString("nombre"), rs.getString("apellido"), rs.getString("email"), rs.getString("nombreUsu"), rs.getString("contrasenya"));
+		
+		} catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		ResultSet rs2 = null;
+		
+		try 
+		{
+			rs2 = statement.executeQuery("SELECT DISTINCT playlist FROM usuarios WHERE nombreUsu ='" +usuario+"' AND contrasenya ='" +contraseña+"'");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try 
+		{
+			while(rs2.next())
+			{
+				String nombreplay = rs2.getString("playlist");
+				clsPlayList listnueva = new clsPlayList(nombreplay);
+				
+				ResultSet rs3 = null;
+				try 
+				{
+					rs3 = statement.executeQuery("SELECT cancion FROM playlist WHERE nombre = '"+nombreplay+"'");
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try
+				{
+				
+					while(rs3.next())
+					{
+						String cancion = rs3.getString("cancion");
+						
+						
+						for(clsCancion a:canciones)
+						{
+							
+							if(a.getNombre().equalsIgnoreCase(cancion))
+							{
+								listnueva.añadirCancion(a);
+							}
+						}
+						
+					}
+
+					usuarioActual.añadirPlaylist(listnueva);
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+				
+					
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public void AbrirMenu()
 	{
 		
@@ -277,7 +363,7 @@ public class clsGestor
 		}
 		frmReproductor Pantalla = new frmReproductor();
 		
-		Pantalla.GUI(playlist);
+		Pantalla.GUI(usuarioActual);
 		
 		
 	}

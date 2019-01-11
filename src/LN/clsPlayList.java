@@ -36,7 +36,7 @@ public class clsPlayList
 	{
 		
 		this.nombre = nombre;
-		canciones = null;
+		canciones = new ArrayList<clsCancion>();
 	}
 
 	public String getNombre() {

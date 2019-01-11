@@ -230,9 +230,10 @@ public class frmInicioSesion extends JFrame implements ActionListener
 								
 								if (clsBD.comprContra(txtUsu.getText(),String.valueOf(contraField.getPassword())) == true)
 								{
-								contra = new String (contraField.getPassword());
-								JOptionPane.showMessageDialog(null, "Bienvenido a GML music","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
-								gestor.AbrirMenu();
+									contra = new String (contraField.getPassword());
+									JOptionPane.showMessageDialog(null, "Bienvenido a GML music","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+									gestor.RecontruirUsuario(usuario, contra);
+									gestor.AbrirMenu();
 								}
 								else
 								{
@@ -341,7 +342,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 						Matcher mather = pattern.matcher(email);
 					    if (mather.find() == true) 
 					    {				
-					    	clsBD.añadirUsuario(nombre, apellido, email, nombreUsu, contrasenya);
+					    	clsBD.añadirUsuario(nombre, apellido, email, nombreUsu, contrasenya, new String("TODAS"));
 					    	//gestor.correo(email);
 					    	
 //					    	gestor.enviarCorreo(email);
@@ -350,6 +351,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					    	dispose();
 					    	JOptionPane.showMessageDialog(null, "Bienvenido a GML music","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
 					    	//Llama a la pantalla frmReproductor
+					    	gestor.RecontruirUsuario(nombreUsu, contrasenya);
 					        gestor.AbrirMenu();
 					    } 
 					    else 

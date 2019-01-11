@@ -34,7 +34,6 @@ public class clsUsuario implements Serializable
 	String contrasenya;
 	String email;
 	ArrayList<clsPlayList> listas;
-	int idUs;
 	
 	 
 	/**
@@ -45,7 +44,6 @@ public class clsUsuario implements Serializable
 	 * @param nombreUs nombre de usuario
 	 * @param contrasenya constraseña
 	 * @param listas listas de reproduccion que este posee
-	 * @param idUs
 	 */
 	public clsUsuario(String nombre, String apellido, String email, String nombreUs, String contrasenya, ArrayList<clsPlayList> listas, int idUs) 
 	{
@@ -55,7 +53,16 @@ public class clsUsuario implements Serializable
 		this.nombreUs = nombreUs;
 		this.contrasenya = contrasenya;
 		this.listas = listas;
-		this.idUs = idUs;
+	}
+	
+	public clsUsuario(String nombre, String apellido, String email, String nombreUs, String contrasenya) 
+	{
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.email = email;
+		this.nombreUs = nombreUs;
+		this.contrasenya = contrasenya;
+		this.listas = new ArrayList<clsPlayList>();
 	}
 	
 	
@@ -69,8 +76,7 @@ public class clsUsuario implements Serializable
 		email = "";
 		nombreUs = ""; 
 		contrasenya = ""; 
-		listas = null;
-		idUs = 0; 
+		listas = null; 
 	}
 		
 	//GETTERS Y SETTERS 
@@ -125,15 +131,6 @@ public class clsUsuario implements Serializable
 		this.contrasenya = contraseña;
 	}
 		
-	public int getIdUs() 
-	{
-		return idUs;
-	}
-
-	public void setIdUs(int idUs) 
-	{
-		this.idUs = idUs;
-	}
 		
 	public ArrayList<clsPlayList> getListas()
 	{
@@ -144,6 +141,11 @@ public class clsUsuario implements Serializable
 	{
 		this.listas = listas;
 	}
+	
+	public void añadirPlaylist(clsPlayList a)
+	{
+		listas.add(a);
+	}
 
 	//TOSTRING
 	
@@ -153,8 +155,7 @@ public class clsUsuario implements Serializable
 		return "Nombre: " + nombre + 
 				"\nApellido: "+ apellido + 
 				"\nNombreUs: " + nombreUs +
-				"\nLista Email: " + email + 
-				"\nidUs: " + idUs;
+				"\nLista Email: " + email;
 	}
 	
 	//Crea y devuelve un nuevo Usuario partiendo de los datos de una línea separados por comas
