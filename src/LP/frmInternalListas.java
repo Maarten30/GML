@@ -99,15 +99,53 @@ public class frmInternalListas extends JFrame implements ActionListener
 		listas.setFont(f1);
 		
 		btnAñadir = new JButton("Añadir");
-		btnAñadir.addActionListener(this);
+		btnAñadir.addActionListener(new ActionListener()
+		{
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				frame.dispose();
+				UsuarioActual.getListas().get(ListIndex).añadirCancion(Cancion);
+		
+				
+			}
+			
+		});
 		
 		btnCreayAñade = new JButton("Crear y añadir");
 		btnCreayAñade.setBounds(325, 190, 150, 30);
-		btnCreayAñade.addActionListener(this);
+		btnCreayAñade.addActionListener(new ActionListener()
+		{
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				frame.dispose();
+				String nombre = txtLista.getText();
+				clsPlayList NewLista = new clsPlayList(nombre);
+				NewLista.añadirCancion(Cancion);
+				UsuarioActual.añadirPlaylist(NewLista);
+		
+				
+			}
+			
+		});
 		frame.add(btnCreayAñade);
 		
 		btnCancelar = new JButton("Cancelar");
-		btnCancelar.addActionListener(this);
+		btnCancelar.addActionListener(new ActionListener()
+		{
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				frame.dispose();
+		
+				
+			}
+			
+		});
 		
 		botonera.add(btnAñadir);
 		botonera.add(btnCancelar);
@@ -144,25 +182,25 @@ public class frmInternalListas extends JFrame implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent arg0) 
 	{
-		if(arg0.getSource() == btnAñadir)
-		{
-			System.out.println("Entra en el añadir");
-			this.dispose();
-			UsuarioActual.getListas().get(ListIndex).añadirCancion(Cancion);
-			this.dispose();
-		}
-		else if(arg0.getSource() == btnCreayAñade)
-		{
-			System.out.println("Boton crea y añade");
-			this.dispose();
-			String nombre = txtLista.getText();
-			clsPlayList NewLista = new clsPlayList(nombre);
-			NewLista.añadirCancion(Cancion);
-			UsuarioActual.añadirPlaylist(NewLista);
-			this.dispose();
-			
-			
-		}
+//		if(arg0.getSource() == btnAñadir)
+//		{
+//			System.out.println("Entra en el añadir");
+//			this.dispose();
+//			UsuarioActual.getListas().get(ListIndex).añadirCancion(Cancion);
+//			this.dispose();
+//		}
+//		else if(arg0.getSource() == btnCreayAñade)
+//		{
+//			System.out.println("Boton crea y añade");
+//			this.dispose();
+//			String nombre = txtLista.getText();
+//			clsPlayList NewLista = new clsPlayList(nombre);
+//			NewLista.añadirCancion(Cancion);
+//			UsuarioActual.añadirPlaylist(NewLista);
+//			this.dispose();
+//			
+//			
+//		}
 		
 	}
 	
