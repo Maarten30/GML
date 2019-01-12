@@ -36,6 +36,8 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import LN.clsCancion;
 import LN.clsPlayList;
@@ -86,6 +88,8 @@ public class frmReproductor implements LineListener, ActionListener
 	boolean playing;
 	
 	private int SongIndex = 0;
+	private int aux = 0;
+	
 	private File audioFile;
 	public Clip audioClip;
 	private String audioFilePath = "test/res/Demi Lovato - Stone Cold (Official Video).wav";
@@ -125,9 +129,11 @@ public class frmReproductor implements LineListener, ActionListener
 	
 		listas = new JList<>(model);
 		
+		Canciones = UsuarioActual.getListas().get(0).getCanciones();
+		
 		for(clsCancion a:UsuarioActual.getListas().get(0).getCanciones())
 		{
-			model2.addElement(a.getNombre());
+			model2.addElement(a.getNombre() + " - " + a.getAutor());
 		}
 
 		listaCanciones = new JList<>(model2);
@@ -349,16 +355,48 @@ public class frmReproductor implements LineListener, ActionListener
 				}
 			}
 		});
+		listaCanciones.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent arg0) {
+                if (!arg0.getValueIsAdjusting()) 
+                {
+                	SongIndex = listaCanciones.getSelectedIndex();
+                }
+      
+            }
+        });
+		
+		listas.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent arg0) {
+                if (!arg0.getValueIsAdjusting()) 
+                {
+                	for(clsCancion a:UsuarioActual.getListas().get(listas.getSelectedIndex()).getCanciones())
+            		{
+            			model2.addElement(a.getNombre() + " - " + a.getAutor());
+            		}
+                }
+            }
+        });
+		
 	
 	}
 	
 	public void actionPerformed(ActionEvent arg0) {
 		if(arg0.getSource() == play)
 		{
-			
-			SongIndex = listaCanciones.getSelectedIndex();
+			if(listaCanciones.getSelectedIndex()!=aux)
+			{
+				playing = false;
+				audioClip.stop();
+				clipTime = 0;
+				audioClip.close();
+			}
 			play(SongIndex);
 			playing = true;
+			aux = listaCanciones.getSelectedIndex();
 			System.out.println(audioClip.getLongFramePosition());
 			AvanceBP();
 			
@@ -398,7 +436,10 @@ public class frmReproductor implements LineListener, ActionListener
 	
 	public void play(int numero)//String audioFilePath
     {
-    	
+    	for(clsCancion a:Canciones)
+    	{
+    		System.out.println(a.getNombre());
+    	}
         audioFile = new File(Canciones.get(numero).getFile().getPath());
  
         try 
