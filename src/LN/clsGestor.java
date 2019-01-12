@@ -6,30 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Properties;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.swing.JOptionPane;
-
-//import org.simplejavamail.email.Email;
-//import org.simplejavamail.email.EmailBuilder;
-//import org.simplejavamail.mailer.Mailer;
-//import org.simplejavamail.mailer.MailerBuilder;
-//import org.simplejavamail.mailer.config.TransportStrategy;
-//import org.simplejavamail.util.ConfigLoader;
-
-
-import LP.frmInicioSesion;
 import LP.frmReproductor;
-import javafx.scene.control.Alert;
 
 /**
  * Clase utilizada para la ejecucion del programa
@@ -38,7 +16,6 @@ import javafx.scene.control.Alert;
  */
 public class clsGestor 
 {
-	
 	private Connection conection = null;
 	private Statement statement = null;
 	private ArrayList<clsCancion> canciones = new ArrayList<clsCancion>();
@@ -113,56 +90,101 @@ public class clsGestor
 			File file8= new File("test/res/ACDC - Highway To Hell.wav");
 			clsCancion cancion8 = new clsCancion(file8,  "Highway To Hell", "ACDC", "src/img/acdc.png");
 			
-			File file10= new File("test/res/ACDC - T.N.T..wav");
-			clsCancion cancion10 = new clsCancion(file10,  "T.N.T.", "ACDC", "src/img/acdc.png");
+			File file9= new File("test/res/ACDC - T.N.T..wav");
+			clsCancion cancion9 = new clsCancion(file9,  "T.N.T.", "ACDC", "src/img/acdc.png");
 			
-			File file11= new File("test/res/ACDC - Thunderstruck.wav");
-			clsCancion cancion11 = new clsCancion(file11,  "Thunderstruck", "ACDC","src/img/acdc.png");
+			File file10= new File("test/res/ACDC - Thunderstruck.wav");
+			clsCancion cancion10 = new clsCancion(file10,  "Thunderstruck", "ACDC","src/img/acdc.png");
 			
-			File file12= new File("test/res/ACDC - Whole Lotta Rosie.wav");
-			clsCancion cancion12 = new clsCancion(file12,  "Whole Lotta Rosie", "ACDC", "src/img/acdc.png");
+			File file11= new File("test/res/ACDC - Whole Lotta Rosie.wav");
+			clsCancion cancion11 = new clsCancion(file11,  "Whole Lotta Rosie", "ACDC", "src/img/acdc.png");
 			
-			File file13= new File("test/res/ACDC - Thunderstruck.wav");
-			clsCancion cancion13 = new clsCancion(file13,  "Thunderstruck", "ACDC", "src/img/acdc.png");
+			File file12= new File("test/res/ACDC - Thunderstruck.wav");
+			clsCancion cancion12 = new clsCancion(file12,  "Thunderstruck", "ACDC", "src/img/acdc.png");
 			
-			File file14= new File("test/res/ACDC - You Shook Me All Night Long.wav");
-			clsCancion cancion14 = new clsCancion(file14,  "You Shook Me All Night Long", "ACDC", "src/img/acdc.png");
+			File file13= new File("test/res/ACDC - You Shook Me All Night Long.wav");
+			clsCancion cancion13 = new clsCancion(file13,  "You Shook Me All Night Long", "ACDC", "src/img/acdc.png");
 			
-			File file15= new File("test/res/Macklemore  Ryan Lewis - Cant Hold Us feat. Ray Dalton (live on triple j).wav");
-			clsCancion cancion15 = new clsCancion(file15,  "Cant Hold Us", "Macklemore  Ryan Lewis", "src/img/macklemore.png");
+			File file14= new File("test/res/Macklemore  Ryan Lewis - Cant Hold Us feat. Ray Dalton (live on triple j).wav");
+			clsCancion cancion14 = new clsCancion(file14,  "Cant Hold Us", "Macklemore  Ryan Lewis", "src/img/macklemore.png");
 			
-			File file16= new File("test/res/Macklemore  Ryan Lewis - Same Love Feat. Tegan and Sara [HD VERSION LIVE FROM OSHEAGA 2013].wav");
-			clsCancion cancion16= new clsCancion(file16,  "Same Love", "Macklemore  Ryan Lewis", "src/img/macklemore.png");
+			File file15= new File("test/res/Macklemore  Ryan Lewis - Same Love Feat. Tegan and Sara [HD VERSION LIVE FROM OSHEAGA 2013].wav");
+			clsCancion cancion15= new clsCancion(file15,  "Same Love", "Macklemore  Ryan Lewis", "src/img/macklemore.png");
 			
-			File file17= new File("test/res/MACKLEMORE FEAT DAVE B  TRAVIS THOMPSON - CORNER STORE (Official Music Video).wav");
-			clsCancion cancion17 = new clsCancion(file17,  "CORNER STORE", "MACKLEMORE FEAT DAVE B  TRAVIS THOMPSON", "src/img/macklemore.png");
+			File file16= new File("test/res/MACKLEMORE FEAT DAVE B  TRAVIS THOMPSON - CORNER STORE (Official Music Video).wav");
+			clsCancion cancion16 = new clsCancion(file16,  "CORNER STORE", "MACKLEMORE FEAT DAVE B  TRAVIS THOMPSON", "src/img/macklemore.png");
 			
-			File file18= new File("test/res/MACKLEMORE FEAT KESHA - GOOD OLD DAYS (OFFICIAL MUSIC VIDEO).wav");
-			clsCancion cancion18 = new clsCancion(file18,  "GOOD OLD DAYS", "MACKLEMORE FEAT KESHA ", "src/img/macklemore.png");
+			File file17= new File("test/res/MACKLEMORE FEAT KESHA - GOOD OLD DAYS (OFFICIAL MUSIC VIDEO).wav");
+			clsCancion cancion17= new clsCancion(file17,  "GOOD OLD DAYS", "MACKLEMORE FEAT KESHA ", "src/img/macklemore.png");
 			
-			File file19= new File("test/res/MACKLEMORE FEAT LIL YACHTY - MARMALADE (OFFICIAL MUSIC VIDEO).wav");
-			clsCancion cancion19 = new clsCancion(file19,  "MARMALADE", "MACKLEMORE FEAT LIL YACHTY", "src/img/macklemore.png");
+			File file18= new File("test/res/MACKLEMORE FEAT LIL YACHTY - MARMALADE (OFFICIAL MUSIC VIDEO).wav");
+			clsCancion cancion18= new clsCancion(file18,  "MARMALADE", "MACKLEMORE FEAT LIL YACHTY", "src/img/macklemore.png");
 			
-			File file20= new File("test/res/MACKLEMORE FEAT SKYLAR GREY - GLORIOUS (OFFICIAL MUSIC VIDEO).wav");
-			clsCancion cancion20 = new clsCancion(file20,  "GLORIOUS", "MACKLEMORE FEAT SKYLAR GREY", "src/img/macklemore.png");
+			File file19= new File("test/res/MACKLEMORE FEAT SKYLAR GREY - GLORIOUS (OFFICIAL MUSIC VIDEO).wav");
+			clsCancion cancion19 = new clsCancion(file19,  "GLORIOUS", "MACKLEMORE FEAT SKYLAR GREY", "src/img/macklemore.png");
 			
-			File file23= new File("test/res/Queen - Love Of My Life (Official Video).wav");
-			clsCancion cancion23 = new clsCancion(file23,  "Love Of My Life", "Queen", "src/img/queen.png");
+			File file20= new File("test/res/Queen - Love Of My Life (Official Video).wav");
+			clsCancion cancion20 = new clsCancion(file20,  "Love Of My Life", "Queen", "src/img/queen.png");
 			
-			File file24= new File("test/res/The Beatles - Come Together.wav");
-			clsCancion cancion24 = new clsCancion(file24,  "Come Together", "The Beatles", "src/img/beatles.png");
+			File file21= new File("test/res/The Beatles - Come Together.wav");
+			clsCancion cancion21 = new clsCancion(file21,  "Come Together", "The Beatles", "src/img/beatles.png");
 			
-			File file25= new File("test/res/The Beatles - Dont Let Me Down.wav");
-			clsCancion cancion25 = new clsCancion(file25,  "Dont Let Me Down", "The Beatles", "src/img/beatles.png");
+			File file22= new File("test/res/The Beatles - Dont Let Me Down.wav");
+			clsCancion cancion22 = new clsCancion(file22,  "Dont Let Me Down", "The Beatles", "src/img/beatles.png");
 			
-			File file26= new File("test/res/The Beatles - Help.wav");
-			clsCancion cancion26 = new clsCancion(file26,  "Help", "The Beatles", "src/img/beatles.png");
+			File file23= new File("test/res/The Beatles - Help.wav");
+			clsCancion cancion23 = new clsCancion(file23,  "Help", "The Beatles", "src/img/beatles.png");
 			
-			File file28= new File("test/res/The Beatles - Yellow Submarine.wav");
-			clsCancion cancion28 = new clsCancion(file28,  "Yellow Submarine", "The Beatles", "src/img/beatles.png");
+			File file24= new File("test/res/The Beatles - Yellow Submarine.wav");
+			clsCancion cancion24 = new clsCancion(file24,  "Yellow Submarine", "The Beatles", "src/img/beatles.png");
 			
-			File file29= new File("test/res/Yesterday (With Spoken Word Intro  Live From Studio 50, New York City  1965).wav");
-			clsCancion cancion29 = new clsCancion(file29,  "Yesterday", "The Beatles", "src/img/beatles.png");
+			File file25= new File("test/res/Yesterday (With Spoken Word Intro  Live From Studio 50, New York City  1965).wav");
+			clsCancion cancion25= new clsCancion(file25,  "Yesterday", "The Beatles", "src/img/beatles.png");
+
+			File file26= new File("test/res/Imagine Dragons - Demons (Official).wav");
+			clsCancion cancion26= new clsCancion(file26,  "Demons", "Imagine Dragons", "src/img/imagine.png");
+			
+			File file27= new File("test/res/Imagine Dragons - Natural.wav");
+			clsCancion cancion27= new clsCancion(file27,  "Natural", "Imagine Dragons", "src/img/imagine.png");
+			
+			File file28= new File("test/res/Imagine Dragons - Next To Me (Audio).wav");
+			clsCancion cancion28= new clsCancion(file28,  "Next To Me", "Imagine Dragons", "src/img/imagine.png");
+
+			File file29= new File("test/res/Imagine Dragons - Thunder.wav");
+			clsCancion cancion29= new clsCancion(file29,  "Thunder", "Imagine Dragons", "src/img/imagine.png");
+
+			File file30= new File("test/res/Imagine Dragons - Whatever It Takes.wav");
+			clsCancion cancion30= new clsCancion(file30,  "Whatever It Takes", "Imagine Dragons", "src/img/imagine.png");
+
+			File file31= new File("test/res/Imagine Dragons - Zero (From the Original Motion Picture Ralph Breaks The Internet).wav");
+			clsCancion cancion31= new clsCancion(file31,  "Zero", "Imagine Dragons", "src/img/imagine.png");
+
+			File file32= new File("test/res/Kygo  Imagine Dragons - Born To Be Yours (Lyric Video).wav");
+			clsCancion cancion32= new clsCancion(file32,  "Born To Be Yours", "Imagine Dragons", "src/img/imagine.png");
+
+			File file33= new File("test/res/Passenger  He Leaves You Cold (Acoustic Live from Unityville, PA).wav");
+			clsCancion cancion33= new clsCancion(file33,  "He Leaves You Cold", "Passenger", "src/img/passenger.png");
+
+			File file34= new File("test/res/Passenger  Hell Or High Water (Official Video).wav");
+			clsCancion cancion34= new clsCancion(file34,  "Hell Or High Water", "Passenger", "src/img/passenger.png");
+
+			File file35= new File("test/res/Passenger  Simple Song (Official Video).wav");
+			clsCancion cancion35= new clsCancion(file35,  "Simple Song", "Passenger", "src/img/passenger.png");
+
+			File file36= new File("test/res/Passenger  Survivors (Official Video).wav");
+			clsCancion cancion36= new clsCancion(file36,  "Survivors", "Passenger", "src/img/passenger.png");
+
+			File file37= new File("test/res/Passenger  Why Cant I Change (Official Video).wav");
+			clsCancion cancion37= new clsCancion(file37,  "Why Cant I Change", "Passenger", "src/img/passenger.png");
+
+			File file38= new File("test/res/Passenger - Hearts On Fire (Official Video).wav");
+			clsCancion cancion38= new clsCancion(file38,  "Hearts On Fire", "Passenger", "src/img/passenger.png");
+
+			File file39= new File("test/res/Passenger - Holes (Official Video).wav");
+			clsCancion cancion39= new clsCancion(file39,  "Holes", "Passenger", "src/img/passenger.png");
+
+			File file40= new File("test/res/Passenger - The Wrong Direction - Official video.wav");
+			clsCancion cancion40= new clsCancion(file40,  "The Wrong Direction", "Passenger", "src/img/passenger.png");
 			
 			clsBD.añadirCancion(cancion1);
 			clsBD.añadirCancion(cancion2);
@@ -172,6 +194,7 @@ public class clsGestor
 			clsBD.añadirCancion(cancion6);
 			clsBD.añadirCancion(cancion7);
 			clsBD.añadirCancion(cancion8);
+			clsBD.añadirCancion(cancion9);
 			clsBD.añadirCancion(cancion10);
 			clsBD.añadirCancion(cancion11);
 			clsBD.añadirCancion(cancion12);
@@ -183,12 +206,26 @@ public class clsGestor
 			clsBD.añadirCancion(cancion18);
 			clsBD.añadirCancion(cancion19);
 			clsBD.añadirCancion(cancion20);
+			clsBD.añadirCancion(cancion21);
+			clsBD.añadirCancion(cancion22);
 			clsBD.añadirCancion(cancion23);
 			clsBD.añadirCancion(cancion24);
 			clsBD.añadirCancion(cancion25);
 			clsBD.añadirCancion(cancion26);
+			clsBD.añadirCancion(cancion27);
 			clsBD.añadirCancion(cancion28);
 			clsBD.añadirCancion(cancion29);
+			clsBD.añadirCancion(cancion30);
+			clsBD.añadirCancion(cancion31);
+			clsBD.añadirCancion(cancion32);
+			clsBD.añadirCancion(cancion33);
+			clsBD.añadirCancion(cancion34);
+			clsBD.añadirCancion(cancion35);
+			clsBD.añadirCancion(cancion36);
+			clsBD.añadirCancion(cancion37);
+			clsBD.añadirCancion(cancion38);
+			clsBD.añadirCancion(cancion39);
+			clsBD.añadirCancion(cancion40);
 		}
 		
 		
@@ -338,8 +375,7 @@ public class clsGestor
 		for(clsCancion a:playlist.getCanciones())
 		{
 			System.out.println("CANCIONES EN LA PLAYLIST" + a.getNombre());
-		}
-			
+		}	
 	}
 	
 	public void RecontruirUsuario(String usuario, String contraseña)
@@ -356,7 +392,6 @@ public class clsGestor
 		
 		try 
 		{
-			
 			usuarioActual = new clsUsuario(rs.getString("nombre"), rs.getString("apellido"), rs.getString("email"), rs.getString("nombreUsu"), rs.getString("contrasenya"));
 		
 		} catch (SQLException e) 
@@ -414,11 +449,7 @@ public class clsGestor
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
-				
-				
-				
-					
+				}	
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -436,11 +467,8 @@ public class clsGestor
 		}
 		frmReproductor Pantalla = new frmReproductor();
 		
-		Pantalla.GUI(usuarioActual);
+		Pantalla.GUI(usuarioActual);	
 		
-		
-	}
-		
-	
-	}
-//}
+	}	
+}
+
