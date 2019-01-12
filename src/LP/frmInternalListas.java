@@ -12,9 +12,11 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -36,6 +38,10 @@ public class frmInternalListas extends JFrame implements ActionListener
 	
 	private JButton btnAñadir; 
 	private JButton btnCancelar;
+	private JButton btnCreayAñade;
+	
+	private JLabel lblAñadir;
+	private JTextField txtLista;
 	
 	private clsUsuario UsuarioActual;
 	
@@ -54,13 +60,24 @@ public class frmInternalListas extends JFrame implements ActionListener
 		UsuarioActual = usuario;
 		Cancion = cancion;
 		
-
+		Font f1 = new Font("Century Gothic",Font.BOLD,18);
+		Font f2 = new Font("Century Gothic",Font.BOLD,14);
+		
 		frame = new JFrame("Tus listas de reproduccion:");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setSize(500, 300);
 		frame.getContentPane().setBackground(new Color(240, 240, 240));
 		
-
+		lblAñadir = new JLabel("Añadir a nueva lista:"); 
+		lblAñadir.setFont(f2);
+		lblAñadir.setBounds(10, 170, 150, 20);
+		lblAñadir.setForeground(Color.black);
+		frame.add(lblAñadir);
+		
+		txtLista = new JTextField(); 
+		txtLista.setBounds(20, 190, 300, 30);
+		txtLista.setFont(f2);
+		frame.add(txtLista);
 		
 		botonera = new JPanel();
 		panelBajo = new JPanel();
@@ -76,11 +93,15 @@ public class frmInternalListas extends JFrame implements ActionListener
 		
 		listas = new JList<>(model);
 		
-		Font f1 = new Font("Century Gothic",Font.BOLD,18);
 		listas.setFont(f1);
 		
 		btnAñadir = new JButton("Añadir");
 		btnAñadir.addActionListener(this);
+		
+		btnCreayAñade = new JButton("Crear y añadir");
+		btnCreayAñade.setBounds(325, 190, 150, 30);
+		btnCreayAñade.addActionListener(this);
+		frame.add(btnCreayAñade);
 		
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(this);
