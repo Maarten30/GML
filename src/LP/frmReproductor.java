@@ -30,12 +30,16 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -51,7 +55,7 @@ import LN.clsUsuario;
  * @author Gabriela garaizabal, Maarten Handels y Laura Llorente
  *
  */
-public class frmReproductor implements LineListener, ActionListener
+public class frmReproductor extends JFrame implements LineListener, ActionListener
 { 
 	private static Logger logger = Logger.getLogger(frmReproductor.class.getName());
 	
@@ -67,22 +71,26 @@ public class frmReproductor implements LineListener, ActionListener
 	private JLabel inicio1;
 	private JLabel usuario1;
 	
+	
 	private JButton play;
 	private JButton like;
 	private JButton stop;
 	private JButton pausar;
-	private JButton anterior;
+//	private JButton anterior;
 	private JButton avance;
 	private JButton Fin;
 	private JButton principio;
 	private JButton rebobinar;
 	private JButton shuffle;
-	private JButton siguiente;
+//	private JButton siguiente;
+	private JButton anadir;
 	private JList<String> listas= null;
 	private JList<String> listaCanciones= null;
 	private DefaultListModel<String> model = new DefaultListModel<>();
 	private DefaultListModel<String> model2 = new DefaultListModel<>();
 	private JProgressBar BarraProgreso;
+	private JTextArea display;
+	private String newline = "\n";
 	
 	boolean playCompleted;
 	boolean playing;
@@ -183,12 +191,13 @@ public class frmReproductor implements LineListener, ActionListener
 		pausar = new JButton( new ImageIcon( "src/img/pausa.png") );
 		play = new JButton( new ImageIcon("src/img/Play.png") );
 		stop = new JButton( new ImageIcon("src/img/stop.png") );
-		anterior = new JButton( new ImageIcon("src/img/anterior.png") );
+		anadir = new JButton (new ImageIcon ("src/img/añadir.png"));
+//		anterior = new JButton( new ImageIcon("src/img/anterior.png") );
 		avance = new JButton( new ImageIcon("src/img/avance.png") );
 		Fin = new JButton( new ImageIcon("src/img/Fin.png") );
 		rebobinar = new JButton( new ImageIcon("src/img/rebobinar.png") );
 		shuffle = new JButton( new ImageIcon("src/img/shuffle.png") );
-		siguiente = new JButton( new ImageIcon("src/img/siguiente.png") );
+//		siguiente = new JButton( new ImageIcon("src/img/siguiente.png") );
 		principio = new JButton( new ImageIcon("src/img/principio.png") );
 		like = new JButton( new ImageIcon("src/img/like.png") );
 		
@@ -233,13 +242,21 @@ public class frmReproductor implements LineListener, ActionListener
     	play.setContentAreaFilled(false);
     	play.setPressedIcon(new ImageIcon(  "src/img/PlayN.png" ));
     	
-    	anterior.setOpaque(false);            
-    	anterior.setContentAreaFilled(false); 
-    	anterior.setBorderPainted(false);     
-    	anterior.setBorder(null); 
-    	anterior.setFocusPainted(false);
-    	anterior.setContentAreaFilled(false);
-    	anterior.setPressedIcon(new ImageIcon(  "src/img/anteriorN.png" ));
+    	anadir.setOpaque(false);            
+    	anadir.setContentAreaFilled(false); 
+    	anadir.setBorderPainted(false);     
+    	anadir.setBorder(null); 
+    	anadir.setFocusPainted(false);
+    	anadir.setContentAreaFilled(false);
+    	anadir.setPressedIcon(new ImageIcon(  "src/img/añadirN.png" ));
+    	
+//    	anterior.setOpaque(false);            
+//    	anterior.setContentAreaFilled(false); 
+//    	anterior.setBorderPainted(false);     
+//    	anterior.setBorder(null); 
+//    	anterior.setFocusPainted(false);
+//    	anterior.setContentAreaFilled(false);
+//    	anterior.setPressedIcon(new ImageIcon(  "src/img/anteriorN.png" ));
     	
     	avance.setOpaque(false);            
     	avance.setContentAreaFilled(false); 
@@ -273,13 +290,13 @@ public class frmReproductor implements LineListener, ActionListener
     	shuffle.setContentAreaFilled(false);
     	shuffle.setPressedIcon(new ImageIcon(  "src/img/shuffleN.png" ));
     	
-    	siguiente.setOpaque(false);            
-    	siguiente.setContentAreaFilled(false); 
-    	siguiente.setBorderPainted(false);     
-    	siguiente.setBorder(null); 
-    	siguiente.setFocusPainted(false);
-    	siguiente.setContentAreaFilled(false);
-    	siguiente.setPressedIcon(new ImageIcon(  "src/img/SiguienteN.png" ));
+//    	siguiente.setOpaque(false);            
+//    	siguiente.setContentAreaFilled(false); 
+//    	siguiente.setBorderPainted(false);     
+//    	siguiente.setBorder(null); 
+//    	siguiente.setFocusPainted(false);
+//    	siguiente.setContentAreaFilled(false);
+//    	siguiente.setPressedIcon(new ImageIcon(  "src/img/SiguienteN.png" ));
     	
     	principio.setOpaque(false);            
     	principio.setContentAreaFilled(false); 
@@ -293,8 +310,9 @@ public class frmReproductor implements LineListener, ActionListener
 		play.addActionListener(this);
 		stop.addActionListener(this);
 		pausar.addActionListener(this);
-		anterior.addActionListener(this);
-		siguiente.addActionListener(this);
+//		anterior.addActionListener(this);
+//		siguiente.addActionListener(this);
+		anadir.addActionListener(this);
 		shuffle.addActionListener(this);
 		principio.addActionListener(this);
 		rebobinar.addActionListener(this);
@@ -303,8 +321,9 @@ public class frmReproductor implements LineListener, ActionListener
 		like.addActionListener(this);
 		
 		
-		Botonera.add(anterior);
-		Botonera.add(siguiente);
+//		Botonera.add(anterior);
+//		Botonera.add(siguiente);
+		Botonera.add(anadir);
 		Botonera.add(shuffle);
 		Botonera.add(play);
 		Botonera.add(pausar);
@@ -481,6 +500,14 @@ public class frmReproductor implements LineListener, ActionListener
 			System.out.println(audioClip.getLongFramePosition());
 			AvanceBP();
 		}
+		else if(arg0.getSource() == anadir)
+		{
+			frmInternalListas intListas = new frmInternalListas(UsuarioActual);
+//			intListas.frmInternalListas(UsuarioActual);
+        	intListas.setVisible(true);
+        	intListas.toFront();
+        	
+		}
 		
 		
 		
@@ -602,6 +629,8 @@ public class frmReproductor implements LineListener, ActionListener
 			logger.log(Level.SEVERE, "Error en la creación del fichero log");
 		}
 	}
+
+	
 }
 
 
