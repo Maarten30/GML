@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -21,17 +22,21 @@ import LP.frmReproductor;
  * @author Gabriela Garaizabal, Maarten Handels y Laura Llorente
  *
  */
-public class clsGestorTest
+public class clsBDTest
 {
 	private clsCancion cancion1;
 	private clsCancion cancion2;
+	private clsUsuario Usuario1;
+	private clsPlayList Listas1;
 	
 	
 	private Connection con;
 	private Statement st;
+	private ResultSetMetaData rsmd;
 	
 	private final File ACDC = new File( "test/res/ACDC - Back in Black.wav");
 	private final File Beatles = new File( "test/res/The Beatles - Help.wav");
+	
 	
 	@Before
 	public void setUp() 
@@ -39,7 +44,10 @@ public class clsGestorTest
 		cancion1 = new clsCancion(ACDC);
 		cancion2 = new clsCancion(Beatles);
 		
+		Usuario1 = new clsUsuario();
 		
+		Listas1 = new clsPlayList();
+
 		clsBD.initBD(); 
 	    clsBD.crearTablaUsuarios();
 	    clsBD.crearTablaCanciones();
@@ -47,9 +55,6 @@ public class clsGestorTest
 	    
 		con = clsBD.getConnection();
 		st = clsBD.getStatement();
-		
-		
-	
 	}
 	
 	@After
@@ -59,7 +64,7 @@ public class clsGestorTest
 //	}
 	
 	@Test
-	public void TestAñadir() 
+	public void TestAñadirCancion() 
 	{
 		String nombre = "Back in Black"; 
 		ResultSet rs = null;
@@ -82,12 +87,40 @@ public class clsGestorTest
 
 	}
 
-//	@Test
-//	public void TestEliminar() 
-//	{
-//		lista2.eliminarFichero(1);
-//		assertEquals( lista2.getSize(), 1);
-//	}
+	
+	@Test
+	public void TestAñadirPersona() 
+	{
+
+
+		
+	}
+	
+	@Test
+	public void TestAñadirPlaylist() 
+	{
+		 String lista ="TODAS";
+		 ResultSet rs = null;
+			try 
+			{
+				rs = st.executeQuery("SELECT nombre FROM playlist WHERE cancion = 'Back IN Black'");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			String name = "";
+			try {
+				name = rs.getString("nombre");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			clsBD.añadirCanPlaylist(name, cancion1);
+			assertEquals( lista, name);
+		
+	}
+	
+	
 
 
 }

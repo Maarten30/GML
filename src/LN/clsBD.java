@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.*;
@@ -21,6 +22,9 @@ public class clsBD
 	
 	private static Connection connection = null;
 	public static Statement statement = null;
+	public static PreparedStatement stpr = null;
+	static ResultSet rs = null;
+	static ResultSetMetaData rsmd = null;
 	
 
 	/** Inicializa una base de datos y devuelve una conexión con ella.
@@ -303,4 +307,66 @@ try {
 		}
 	}
 	
+	public static void insertarBD(String sql_Query)
+		{
+			try
+			{
+				stpr = connection.prepareStatement(sql_Query);
+				int filas = stpr.executeUpdate(sql_Query);
+				System.out.println(filas + "insertadas en la BD");
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			
+		}
+	
+	public static ResultSet cogerDB (String sql_Query)
+	{
+		try
+		{
+			rs = getStatement().executeQuery(sql_Query);
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return rs;
+		
+	}
+	
+	public static void enseñarBD (String sql_Query)
+	{
+		try
+		{
+			rs = getStatement().executeQuery(sql_Query);
+			int numColumna = rsmd.getColumnCount();
+			
+			while(rs.next())
+			{
+				for (int i =1; 1<= numColumna; i++)
+				{
+					System.out.println(rs.getString(i) +"\t");
+				}
+			}
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static void eliminarBD (String sql_Query)
+	{
+		try
+		{
+			stpr = connection.prepareStatement(sql_Query);
+			int filas = stpr.executeUpdate(sql_Query);
+			System.out.println(filas + "eliminadas de la BD");
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
 }
+	
