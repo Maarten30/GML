@@ -150,14 +150,18 @@ public class frmReproductor implements LineListener, ActionListener
 		inicio.add(inicio1, BorderLayout.CENTER);
 		
 		JButton musica = new JButton(new ImageIcon ("src/img/Imagen1.png"));
+		JLabel FotoCan = new JLabel(new ImageIcon (UsuarioActual.getListas().get(0).getCanciones().get(0).getRutaImg()));
 		musica.setOpaque(true);                
     	musica.setBorder(null);           
     	musica.setContentAreaFilled(false); 
     	musica.setBorderPainted(false);     
     	musica.setFocusPainted(false);
     	musica.setContentAreaFilled(false);
-    	musica.setSize(musica.getWidth()/2, musica.getHeight()/2);
     	
+    	FotoCan.setOpaque(true);                
+    	FotoCan.setBorder(null);           
+    	
+    	inicio.add(FotoCan);
 		inicio.add(musica, FlowLayout.LEFT);
 		
 		
