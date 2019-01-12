@@ -1,23 +1,14 @@
 package LN;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-//import java.util.HashSet;
-//import java.util.StringTokenizer;
 import java.util.logging.*;
 
 import javax.swing.JOptionPane;
-
-
-//import LN.clsCancion;
-import LN.clsUsuario;
-import LP.frmInicioSesion;
 
 /**
  * Clase diseñada para gestionar la base de datos. 
