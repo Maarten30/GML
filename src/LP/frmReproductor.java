@@ -11,6 +11,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.FileHandler;
@@ -38,11 +42,13 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import LN.clsBD;
 import LN.clsCancion;
 import LN.clsPlayList;
 import LN.clsUsuario;
@@ -70,6 +76,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 
 	private JLabel inicio1;
 	private JLabel usuario1;
+	private JLabel lblBuscar;
 	
 	
 	private JButton play;
@@ -84,10 +91,16 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	private JButton shuffle;
 //	private JButton siguiente;
 	private JButton anadir;
+	private JButton btnBuscar;
+	
+	private JTextField txtBuscar;
+	
 	private JList<String> listas= null;
 	private JList<String> listaCanciones= null;
+	
 	private DefaultListModel<String> model = new DefaultListModel<>();
 	private DefaultListModel<String> model2 = new DefaultListModel<>();
+	
 	private JProgressBar BarraProgreso;
 	private JTextArea display;
 	private String newline = "\n";
@@ -109,6 +122,10 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	
 	private ArrayList<clsCancion> Canciones;
 	private clsUsuario UsuarioActual;
+	
+	private ResultSet rs = null;
+	private Statement st = null;
+	private Connection con = null;
 
 	/**
 	 * Metodo en el que se crean todos los elementos que van a aparecer en la pantalla
@@ -133,6 +150,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		panelBajo = new JPanel();
 		Botonera = new JPanel();
 		inicio = new JPanel();
+		inicio.setLayout(null);
 		
 		for(clsPlayList a:UsuarioActual.getListas())
 		{
@@ -177,7 +195,6 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
     	
     	inicio.add(FotoCan);
 		inicio.add(musica, FlowLayout.LEFT);
-		
 		
 //		usuario1 = new JLabel(frmInicioSesion.txtUsu.getText());
 //		usuario1.setFont(f1);
@@ -356,8 +373,23 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		ventanita.setVisible(true);
 		Botonera.setVisible(true);
 		
-	   
-	    
+		//Componentes del buscador
+		btnBuscar = new JButton("Buscar");
+		inicio.add(btnBuscar, FlowLayout.LEFT);
+		btnBuscar.addActionListener(new ActionListener()
+		{
+			
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				buscarCancion();
+			}
+			
+		});
+		
+		txtBuscar = new JTextField();
+		txtBuscar.setSize(300, 20);
+		inicio.add(txtBuscar, FlowLayout.LEFT);
+	   	    
 		BarraProgreso.addMouseListener( new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -636,6 +668,30 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
         {
         	AvanceBP();
         }
+    }
+    
+	public void InicializarBD()
+	{
+		clsBD.initBD(); 
+	    clsBD.crearTablaUsuarios();
+	    clsBD.crearTablaCanciones();
+	    clsBD.crearTablaPlaylist();
+	    
+	    con = clsBD.getConnection();
+		st = clsBD.getStatement();
+	}
+    
+    public void buscarCancion()
+    {   
+    	String texto = txtBuscar.getText();
+    	try 
+    	{
+			rs = st.executeQuery("SELECT * from playlist WHERE cancion = '"+texto+"'");
+		} 
+    	catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
 	private static final boolean AÑADIR_FIC_LOG = false;
