@@ -128,6 +128,7 @@ public class frmInternalListas extends JFrame implements ActionListener
 	            	ListIndex = listas.getSelectedIndex();
 	            	
 	            }
+	            
 	  
 	        }
 	    });
@@ -143,6 +144,16 @@ public class frmInternalListas extends JFrame implements ActionListener
 		if(arg0.getSource() == "Añadir")
 		{
 			UsuarioActual.getListas().get(ListIndex).añadirCancion(Cancion);
+			frame.dispose();
+		}
+		else if(arg0.getSource() == "Crear y añadir")
+		{
+			String nombre = txtLista.getText();
+			clsPlayList NewLista = new clsPlayList(nombre);
+			NewLista.añadirCancion(Cancion);
+			UsuarioActual.añadirPlaylist(NewLista);
+			frame.dispose();
+			
 		}
 		
 	}

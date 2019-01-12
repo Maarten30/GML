@@ -392,7 +392,6 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
             public void valueChanged(ListSelectionEvent arg0) {
                 if (!arg0.getValueIsAdjusting()) 
                 {
-                	System.out.println(listaCanciones.getSelectedIndex());
                 	SongIndex = listaCanciones.getSelectedIndex();
                 }
       
@@ -405,9 +404,9 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
             public void valueChanged(ListSelectionEvent arg0) {
                 if (!arg0.getValueIsAdjusting()) 
                 {
-                	
-                	CargarCanciones(listas.getSelectedIndex());
-            		
+                	ListIndex = listas.getSelectedIndex();
+                	Canciones = UsuarioActual.getListas().get(ListIndex).getCanciones();
+                	CargarCanciones(ListIndex);
                 }
             }
         });
@@ -518,6 +517,8 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			intListas =  new frmInternalListas();
 			clsCancion cancion = UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex);
 			intListas.frmInternalListas(UsuarioActual, cancion);
+			System.out.println("Esto sigueee");
+			
 		}
 		
 		
@@ -541,6 +542,15 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		for(clsCancion a:UsuarioActual.getListas().get(numero).getCanciones())
 		{
 			model2.addElement(a.getNombre() + " - " + a.getAutor());
+		}
+		
+	}
+	
+	public void CargarListas()
+	{
+		for(clsPlayList a:UsuarioActual.getListas())
+		{
+			model.addElement(a.getNombre());
 		}
 		
 	}
