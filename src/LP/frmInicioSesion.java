@@ -16,6 +16,8 @@ import java.util.logging.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -36,6 +38,7 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -123,14 +126,12 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	    panel.setLayout(null);
 	    
 	    //Atributos para insertar la hora y la fecha 
-	    Calendar cal = Calendar.getInstance(); 
-		String fecha; 
-		Font font = new Font("Century Gothic",Font.BOLD,13); 
-		
-		fecha = cal.get(Calendar.DATE) +"/"+ cal.get(Calendar.MONTH) +"/"+cal.get(Calendar.YEAR); 
-		
+	    SimpleDateFormat fecha = new SimpleDateFormat( "dd/MM/yyyy" );
+	    Date d1 = new Date();
+	    Font font = new Font("Century Gothic",Font.BOLD,13); 
+	
 		lblFecha = new JLabel(); 
-		lblFecha.setText(fecha);
+		lblFecha.setText(fecha.format(d1));
 		lblFecha.setBounds(360, 5, 100, 30);
 		lblFecha.setFont(font);
 		lblFecha.setForeground(Color.WHITE);
