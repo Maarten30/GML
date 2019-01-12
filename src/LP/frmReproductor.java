@@ -86,6 +86,7 @@ public class frmReproductor implements LineListener, ActionListener
 	
 	boolean playCompleted;
 	boolean playing;
+	boolean PrimeraVez = true;
 	
 	private int SongIndex = 0;
 	private int aux = 0;
@@ -131,10 +132,9 @@ public class frmReproductor implements LineListener, ActionListener
 		
 		Canciones = UsuarioActual.getListas().get(0).getCanciones();
 		
-		for(clsCancion a:UsuarioActual.getListas().get(0).getCanciones())
-		{
-			model2.addElement(a.getNombre() + " - " + a.getAutor());
-		}
+		int numero = 0;
+		
+		CargarCanciones(numero); 
 
 		listaCanciones = new JList<>(model2);
 		
@@ -363,6 +363,7 @@ public class frmReproductor implements LineListener, ActionListener
             public void valueChanged(ListSelectionEvent arg0) {
                 if (!arg0.getValueIsAdjusting()) 
                 {
+                	System.out.println(listaCanciones.getSelectedIndex());
                 	SongIndex = listaCanciones.getSelectedIndex();
                 }
       
@@ -375,10 +376,9 @@ public class frmReproductor implements LineListener, ActionListener
             public void valueChanged(ListSelectionEvent arg0) {
                 if (!arg0.getValueIsAdjusting()) 
                 {
-                	for(clsCancion a:UsuarioActual.getListas().get(listas.getSelectedIndex()).getCanciones())
-            		{
-            			model2.addElement(a.getNombre() + " - " + a.getAutor());
-            		}
+                	
+                	CargarCanciones(listas.getSelectedIndex());
+            		
                 }
             }
         });
@@ -389,16 +389,22 @@ public class frmReproductor implements LineListener, ActionListener
 	public void actionPerformed(ActionEvent arg0) {
 		if(arg0.getSource() == play)
 		{
-			if(listaCanciones.getSelectedIndex()!=aux)
+			System.out.println("PEooooooo" + SongIndex);
+			if(SongIndex!=aux)
 			{
-				playing = false;
-				audioClip.stop();
-				clipTime = 0;
-				audioClip.close();
+				if(PrimeraVez==false)
+				{
+					playing = false;
+					audioClip.stop();
+					clipTime = 0;
+					audioClip.close();
+				}
 			}
+			PrimeraVez = false;
 			play(SongIndex);
 			playing = true;
-			aux = listaCanciones.getSelectedIndex();
+			
+			aux = SongIndex;
 			System.out.println(audioClip.getLongFramePosition());
 			AvanceBP();
 			
@@ -418,10 +424,62 @@ public class frmReproductor implements LineListener, ActionListener
 			audioClip.close();
 			
 		}
-		else if(listaCanciones.getSelectedIndex()==0)
+		else if(arg0.getSource() == Fin)
 		{
-			
+			if(model2.size()==SongIndex+1)
+			{
+				SongIndex = 0;
+			}
+			else
+			{
+				SongIndex = SongIndex+1;
+			}
+			System.out.println("EL PRIMER NUMERO ES " + SongIndex);
+			System.out.println("EL SEGUNDO NUMERO ES " + aux);
+			if(SongIndex!=aux)
+			{
+				playing = false;
+				audioClip.stop();
+				clipTime = 0;
+				audioClip.close();
+			}
+			play(SongIndex);
+			playing = true;
+			aux = SongIndex;
+			System.out.println(audioClip.getLongFramePosition());
+			AvanceBP();
 		}
+		else if(arg0.getSource() == principio)
+		{
+			boolean primeraPos = false;
+			
+			if(SongIndex!=0)
+			{
+				SongIndex = SongIndex -1;
+			}
+			else
+			{
+				primeraPos = true;
+			}
+			
+			System.out.println("EL PRIMER NUMERO ES " + SongIndex);
+			System.out.println("EL SEGUNDO NUMERO ES " + aux);
+			if(SongIndex!=aux || primeraPos == true)
+			{
+				playing = false;
+				audioClip.stop();
+				clipTime = 0;
+				audioClip.close();
+			}
+			play(SongIndex);
+			playing = true;
+			aux = SongIndex;
+			System.out.println(audioClip.getLongFramePosition());
+			AvanceBP();
+		}
+		
+		
+		
 	}
 	
 	
@@ -431,6 +489,18 @@ public class frmReproductor implements LineListener, ActionListener
 		BarraProgreso.repaint();
 		
 		//lMensaje2.setText( formatoHora.format( new Date(mediaPlayer.getTime()-3600000L) ) );
+	}
+	
+	public void CargarCanciones(int numero)
+	{
+		
+		model2.removeAllElements();
+		
+		for(clsCancion a:UsuarioActual.getListas().get(numero).getCanciones())
+		{
+			model2.addElement(a.getNombre() + " - " + a.getAutor());
+		}
+		
 	}
 	
 	
@@ -493,14 +563,6 @@ public class frmReproductor implements LineListener, ActionListener
 	    });
          
     }
-	
-	public void CargarPath()
-	{
-		
-		//ArrayList<PlayList> listas = usuario.getListas();
-		
-		
-	}
      
     @Override
     public void update(LineEvent event) 
