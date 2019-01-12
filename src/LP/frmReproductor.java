@@ -40,9 +40,12 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.event.ListSelectionEvent;
@@ -95,6 +98,8 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	private JButton btnBuscar;
 	
 	private JTextField txtBuscar;
+	
+	private JSlider barraSlid;
 	
 	private JList<String> listas= null;
 	private JList<String> listaCanciones= null;
@@ -368,6 +373,21 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		
 		ventanita.setVisible(true);
 		Botonera.setVisible(true);
+		
+		barraSlid = new JSlider( JSlider.HORIZONTAL,0,100,60 );
+		
+	    barraSlid.setValue( 0 );
+	    barraSlid.setPaintTicks( true );
+	    barraSlid.setMajorTickSpacing( 20 );
+	    barraSlid.setMinorTickSpacing( 5 );
+	    barraSlid.addChangeListener( new ChangeListener() 
+	    {
+	      public void stateChanged( ChangeEvent evt ) {
+	        BarraProgreso.setValue(barraSlid.getValue() );
+	      }
+	    } );
+	    Botonera.add( barraSlid );
+	    panelBajo.add(barraSlid, BorderLayout.SOUTH );
 		
 		//Componentes del buscador
 		btnBuscar = new JButton("Buscar");
