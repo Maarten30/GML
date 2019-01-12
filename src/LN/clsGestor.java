@@ -113,9 +113,6 @@ public class clsGestor
 			File file8= new File("test/res/ACDC - Highway To Hell.wav");
 			clsCancion cancion8 = new clsCancion(file8,  "Highway To Hell", "ACDC", "src/img/acdc.png");
 			
-			File file9= new File("test/res/ACDC - Let There Be Rock.wav");
-			clsCancion cancion9 = new clsCancion(file9,  "Let There Be Rock", "ACDC", "src/img/acdc.png");
-			
 			File file10= new File("test/res/ACDC - T.N.T..wav");
 			clsCancion cancion10 = new clsCancion(file10,  "T.N.T.", "ACDC", "src/img/acdc.png");
 			
@@ -149,12 +146,6 @@ public class clsGestor
 			File file20= new File("test/res/MACKLEMORE FEAT SKYLAR GREY - GLORIOUS (OFFICIAL MUSIC VIDEO).wav");
 			clsCancion cancion20 = new clsCancion(file20,  "GLORIOUS", "MACKLEMORE FEAT SKYLAR GREY", "src/img/macklemore.png");
 			
-			File file21= new File("test/res/MACKLEMORE X RYAN LEWIS - AND WE DANCED [OFFICIAL VIDEO].wav");
-			clsCancion cancion21 = new clsCancion(file21,  "AND WE DANCED", "MACKLEMORE X RYAN LEWIS", "src/img/macklemore.png");
-			
-			File file22= new File("test/res/Queen - Bohemian Rhapsody (Official Video).wav");
-			clsCancion cancion22 = new clsCancion(file22,  "Bohemian Rhapsody", "Queen", "src/img/queen.png");
-			
 			File file23= new File("test/res/Queen - Love Of My Life (Official Video).wav");
 			clsCancion cancion23 = new clsCancion(file23,  "Love Of My Life", "Queen", "src/img/queen.png");
 			
@@ -166,9 +157,6 @@ public class clsGestor
 			
 			File file26= new File("test/res/The Beatles - Help.wav");
 			clsCancion cancion26 = new clsCancion(file26,  "Help", "The Beatles", "src/img/beatles.png");
-			
-			File file27= new File("test/res/The Beatles - Hey Jude.wav");
-			clsCancion cancion27 = new clsCancion(file27,  "Hey Jude", "The Beatles", "src/img/beatles.png");
 			
 			File file28= new File("test/res/The Beatles - Yellow Submarine.wav");
 			clsCancion cancion28 = new clsCancion(file28,  "Yellow Submarine", "The Beatles", "src/img/beatles.png");
@@ -184,7 +172,6 @@ public class clsGestor
 			clsBD.añadirCancion(cancion6);
 			clsBD.añadirCancion(cancion7);
 			clsBD.añadirCancion(cancion8);
-			clsBD.añadirCancion(cancion9);
 			clsBD.añadirCancion(cancion10);
 			clsBD.añadirCancion(cancion11);
 			clsBD.añadirCancion(cancion12);
@@ -196,13 +183,10 @@ public class clsGestor
 			clsBD.añadirCancion(cancion18);
 			clsBD.añadirCancion(cancion19);
 			clsBD.añadirCancion(cancion20);
-			clsBD.añadirCancion(cancion21);
-			clsBD.añadirCancion(cancion22);
 			clsBD.añadirCancion(cancion23);
 			clsBD.añadirCancion(cancion24);
 			clsBD.añadirCancion(cancion25);
 			clsBD.añadirCancion(cancion26);
-			clsBD.añadirCancion(cancion27);
 			clsBD.añadirCancion(cancion28);
 			clsBD.añadirCancion(cancion29);
 		}
