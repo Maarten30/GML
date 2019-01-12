@@ -52,6 +52,9 @@ public class frmInternalListas extends JFrame implements ActionListener
 	private clsCancion Cancion;
 	private int ListIndex = 0; 
 	
+	private boolean actividad = true;
+	
+	
 	/**
 	 * Método en el que se meten los componentes que van a aparecer en el internal frame
 	 */
@@ -141,21 +144,31 @@ public class frmInternalListas extends JFrame implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent arg0) 
 	{
-		if(arg0.getSource() == "Añadir")
+		if(arg0.getSource() == btnAñadir)
 		{
+			System.out.println("Entra en el añadir");
+			this.dispose();
 			UsuarioActual.getListas().get(ListIndex).añadirCancion(Cancion);
-			frame.dispose();
+			this.dispose();
 		}
-		else if(arg0.getSource() == "Crear y añadir")
+		else if(arg0.getSource() == btnCreayAñade)
 		{
+			System.out.println("Boton crea y añade");
+			this.dispose();
 			String nombre = txtLista.getText();
 			clsPlayList NewLista = new clsPlayList(nombre);
 			NewLista.añadirCancion(Cancion);
 			UsuarioActual.añadirPlaylist(NewLista);
-			frame.dispose();
+			this.dispose();
+			
 			
 		}
 		
+	}
+	
+	public boolean Actividad()
+	{
+		return actividad;
 	}
 
 }

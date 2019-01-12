@@ -70,6 +70,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	private JPanel Botonera;
 	private JPanel panelSup;
 	private JPanel inicio;
+	private JPanel Buscador;
 	private JSplitPane splitpanel;
 	private JScrollPane panelListas;
 	private JScrollPane panelCanciones;
@@ -150,6 +151,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		panelBajo = new JPanel();
 		Botonera = new JPanel();
 		inicio = new JPanel();
+		Buscador = new JPanel();
 		inicio.setLayout(null);
 		
 		for(clsPlayList a:UsuarioActual.getListas())
@@ -215,20 +217,11 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		play = new JButton( new ImageIcon("src/img/Play.png") );
 		stop = new JButton( new ImageIcon("src/img/stop.png") );
 		anadir = new JButton (new ImageIcon ("src/img/añadir.png"));
-//		anterior = new JButton( new ImageIcon("src/img/anterior.png") );
-//		avance = new JButton( new ImageIcon("src/img/avance.png") );
 		Fin = new JButton( new ImageIcon("src/img/Fin.png") );
-//		rebobinar = new JButton( new ImageIcon("src/img/rebobinar.png") );
 		shuffle = new JButton( new ImageIcon("src/img/shuffle.png") );
-//		siguiente = new JButton( new ImageIcon("src/img/siguiente.png") );
 		principio = new JButton( new ImageIcon("src/img/principio.png") );
 		like = new JButton( new ImageIcon("src/img/like.png") );
-		
-		
-	
-//		stop = new JButton("Stop");
-//		pausar = new JButton("Pausar");
-//		play= new JButton("Play");
+
 		BarraProgreso = new JProgressBar(0, 1000);
 		BarraProgreso.setStringPainted(true);
 		
@@ -343,6 +336,8 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		Fin.addActionListener(this);
 		like.addActionListener(this);
 		
+		txtBuscar = new JTextField();
+		txtBuscar.setVisible(true);
 		
 //		Botonera.add(anterior);
 //		Botonera.add(siguiente);
@@ -357,6 +352,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		Botonera.add(Fin);
 		Botonera.add(like);
 		Botonera.add(BarraProgreso);
+		Botonera.add(txtBuscar);
 		
 		splitpanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelListas, panelCanciones);
 		splitpanel.setResizeWeight(0.5);
@@ -375,7 +371,10 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		
 		//Componentes del buscador
 		btnBuscar = new JButton("Buscar");
-		inicio.add(btnBuscar, FlowLayout.LEFT);
+		Buscador.add(btnBuscar);
+		//Buscador.add(txtBuscar);
+		Buscador.setVisible(true);
+		inicio.add(Buscador, FlowLayout.LEFT);
 		btnBuscar.addActionListener(new ActionListener()
 		{
 			
@@ -386,9 +385,9 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			
 		});
 		
-		txtBuscar = new JTextField();
-		txtBuscar.setSize(300, 20);
-		inicio.add(txtBuscar, FlowLayout.LEFT);
+		
+		//txtBuscar.setSize(300, 20);
+		//inicio.add(txtBuscar, BorderLayout.EAST);
 	   	    
 		BarraProgreso.addMouseListener( new MouseAdapter() {
 			@Override
@@ -549,11 +548,10 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			intListas =  new frmInternalListas();
 			clsCancion cancion = UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex);
 			intListas.frmInternalListas(UsuarioActual, cancion);
+			
 			System.out.println("Esto sigueee");
 			
 		}
-		
-		
 		
 	}
 	
