@@ -1,4 +1,4 @@
-package ReproductordeMusica;
+package LN;
 
 import static org.junit.Assert.assertEquals;
 
