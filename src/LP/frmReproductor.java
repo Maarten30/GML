@@ -194,9 +194,9 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		stop = new JButton( new ImageIcon("src/img/stop.png") );
 		anadir = new JButton (new ImageIcon ("src/img/añadir.png"));
 //		anterior = new JButton( new ImageIcon("src/img/anterior.png") );
-		avance = new JButton( new ImageIcon("src/img/avance.png") );
+//		avance = new JButton( new ImageIcon("src/img/avance.png") );
 		Fin = new JButton( new ImageIcon("src/img/Fin.png") );
-		rebobinar = new JButton( new ImageIcon("src/img/rebobinar.png") );
+//		rebobinar = new JButton( new ImageIcon("src/img/rebobinar.png") );
 		shuffle = new JButton( new ImageIcon("src/img/shuffle.png") );
 //		siguiente = new JButton( new ImageIcon("src/img/siguiente.png") );
 		principio = new JButton( new ImageIcon("src/img/principio.png") );
@@ -259,13 +259,13 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 //    	anterior.setContentAreaFilled(false);
 //    	anterior.setPressedIcon(new ImageIcon(  "src/img/anteriorN.png" ));
     	
-    	avance.setOpaque(false);            
-    	avance.setContentAreaFilled(false); 
-    	avance.setBorderPainted(false);     
-    	avance.setBorder(null); 
-    	avance.setFocusPainted(false);
-    	avance.setContentAreaFilled(false);
-    	avance.setPressedIcon(new ImageIcon(  "src/img/avanceN.png" ));
+//    	avance.setOpaque(false);            
+//    	avance.setContentAreaFilled(false); 
+//    	avance.setBorderPainted(false);     
+//    	avance.setBorder(null); 
+//    	avance.setFocusPainted(false);
+//    	avance.setContentAreaFilled(false);
+//    	avance.setPressedIcon(new ImageIcon(  "src/img/avanceN.png" ));
     	
     	Fin.setOpaque(false);            
     	Fin.setContentAreaFilled(false); 
@@ -275,13 +275,13 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
     	Fin.setContentAreaFilled(false);
     	Fin.setPressedIcon(new ImageIcon(  "src/img/FinN.png" ));
     	
-    	rebobinar.setOpaque(false);            
-    	rebobinar.setContentAreaFilled(false); 
-    	rebobinar.setBorderPainted(false);     
-    	rebobinar.setBorder(null); 
-    	rebobinar.setFocusPainted(false);
-    	rebobinar.setContentAreaFilled(false);
-    	rebobinar.setPressedIcon(new ImageIcon(  "src/img/rebobinarN.png" ));
+//    	rebobinar.setOpaque(false);            
+//    	rebobinar.setContentAreaFilled(false); 
+//    	rebobinar.setBorderPainted(false);     
+//    	rebobinar.setBorder(null); 
+//    	rebobinar.setFocusPainted(false);
+//    	rebobinar.setContentAreaFilled(false);
+//    	rebobinar.setPressedIcon(new ImageIcon(  "src/img/rebobinarN.png" ));
     	
     	shuffle.setOpaque(false);            
     	shuffle.setContentAreaFilled(false); 
@@ -316,8 +316,8 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		anadir.addActionListener(this);
 		shuffle.addActionListener(this);
 		principio.addActionListener(this);
-		rebobinar.addActionListener(this);
-		avance.addActionListener(this);
+//		rebobinar.addActionListener(this);
+//		avance.addActionListener(this);
 		Fin.addActionListener(this);
 		like.addActionListener(this);
 		
@@ -330,8 +330,8 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		Botonera.add(pausar);
 		Botonera.add(stop);
 		Botonera.add(principio);
-		Botonera.add(rebobinar);
-		Botonera.add(avance);
+//		Botonera.add(rebobinar);
+//		Botonera.add(avance);
 		Botonera.add(Fin);
 		Botonera.add(like);
 		Botonera.add(BarraProgreso);
