@@ -15,7 +15,10 @@ import javax.swing.JInternalFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
+import LN.clsCancion;
 import LN.clsPlayList;
 import LN.clsUsuario;
 
@@ -40,13 +43,16 @@ public class frmInternalListas extends JFrame implements ActionListener
 	private JPanel botonera;
 	private JFrame frame;
 	private JScrollPane panelListas;
+	private clsCancion Cancion;
+	private int ListIndex = 0; 
 	
 	/**
 	 * Método en el que se meten los componentes que van a aparecer en el internal frame
 	 */
-	public void frmInternalListas(clsUsuario usuario)
+	public void frmInternalListas(clsUsuario usuario, clsCancion cancion)
 	{
 		UsuarioActual = usuario;
+		Cancion = cancion;
 		
 
 		frame = new JFrame("Tus listas de reproduccion:");
@@ -63,18 +69,15 @@ public class frmInternalListas extends JFrame implements ActionListener
 		panelBajo.setLayout( new BorderLayout() );
 		
 		
-//		for(clsPlayList a:UsuarioActual.getListas())
-//		{
-//			model.addElement(a.getNombre());
-//		}
-//		
-//		listas = new JList<>(model);
-//		
-//		Font f1 = new Font("Century Gothic",Font.BOLD,18);
-//		listas.setFont(f1);
-//		
-//		panelListas = new JScrollPane(listas);
-//		panel.add(panelListas);
+		for(clsPlayList a:UsuarioActual.getListas())
+		{
+			model.addElement(a.getNombre());
+		}
+		
+		listas = new JList<>(model);
+		
+		Font f1 = new Font("Century Gothic",Font.BOLD,18);
+		listas.setFont(f1);
 		
 		btnAñadir = new JButton("Añadir");
 		btnAñadir.addActionListener(this);
@@ -85,18 +88,41 @@ public class frmInternalListas extends JFrame implements ActionListener
 		botonera.add(btnAñadir);
 		botonera.add(btnCancelar);
 		
+		panelListas = new JScrollPane(listas);
+		
 		panelBajo.add(botonera, BorderLayout.NORTH );
 		frame.add(panelBajo, BorderLayout.SOUTH);
+		frame.getContentPane().add(panelListas);
 		
 		frame.setVisible(true);
 		botonera.setVisible(true);
+		
+		listas.addListSelectionListener(new ListSelectionListener() {
+
+	        @Override
+	        public void valueChanged(ListSelectionEvent arg0) {
+	            if (!arg0.getValueIsAdjusting()) 
+	            {
+	            	
+	            	ListIndex = listas.getSelectedIndex();
+	            	
+	            }
+	  
+	        }
+	    });
 	
 	}
 	
+	
+	
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
+	public void actionPerformed(ActionEvent arg0) 
+	{
+		if(arg0.getSource() == "Añadir")
+		{
+			UsuarioActual.getListas().get(ListIndex).añadirCancion(Cancion);
+		}
 		
 	}
 

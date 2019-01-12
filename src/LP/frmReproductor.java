@@ -99,7 +99,8 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	
 	private int SongIndex = 0;
 	private int aux = 0;
-	frmInternalListas intListas;
+	private int ListIndex = 0;
+	private frmInternalListas intListas;
 	
 	private File audioFile;
 	public Clip audioClip;
@@ -147,6 +148,8 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		CargarCanciones(numero); 
 
 		listaCanciones = new JList<>(model2);
+		
+		listaCanciones.setSelectedIndex(0);
 		
 		
 		Font f1 = new Font("Century Gothic",Font.BOLD,18);
@@ -513,9 +516,8 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		else if(arg0.getSource() == anadir)
 		{
 			intListas =  new frmInternalListas();
-			intListas.frmInternalListas(UsuarioActual);
-
-        	
+			clsCancion cancion = UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex);
+			intListas.frmInternalListas(UsuarioActual, cancion);
 		}
 		
 		
