@@ -13,6 +13,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -48,7 +51,8 @@ import LN.clsUsuario;
  */
 public class frmReproductor implements LineListener, ActionListener
 { 
-
+	private static Logger logger = Logger.getLogger(frmReproductor.class.getName());
+	
 	private JFrame ventanita;
 	private JPanel panelBajo;
 	private JPanel Botonera;
@@ -475,8 +479,20 @@ public class frmReproductor implements LineListener, ActionListener
         {
         	AvanceBP();
         }
- 
     }
+    
+	private static final boolean AÑADIR_FIC_LOG = false;
+	
+	static
+	{
+		try
+		{
+			logger.addHandler(new FileHandler(frmReproductor.class.getName() + ".log.xml", AÑADIR_FIC_LOG));
+		}catch(SecurityException | IOException e)
+		{
+			logger.log(Level.SEVERE, "Error en la creación del fichero log");
+		}
+	}
 }
 
 

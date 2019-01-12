@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
-//import java.util.logging.*;
+import java.util.logging.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -55,7 +55,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 	
-//	private static Logger logger = Logger.getLogger(frmInicioSesion.class.getName());
+	private static Logger logger = Logger.getLogger(frmInicioSesion.class.getName());
 	
 	private JLabel lblInicio;
 	private JLabel lblUsu; 
@@ -115,16 +115,6 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	    
-		//Inserción de imagen
-//		ImageIcon img = new ImageIcon("src/LN/logo.png");
-//		JLabel fondo = new JLabel(img);	
-//		JLabel fondo4 = new JLabel (img);
-//		fondo.setBounds(-10,-20,100,100);
-//		fondo4.setBounds(360,440,100,100);
-//		panel.add(fondo);
-//		panel.add(fondo4);
-//		fondo.setVisible(true);
-		
 		//Inserción de la imagen del fondo en el panel 
 	    fondo = this.getClass().getResource("/LN/Imagen_Fondo.png");
 	    imagenFondo = new ImageIcon(fondo).getImage();
@@ -187,6 +177,8 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					public void actionPerformed(ActionEvent arg0) 
 					{
 						RestablecerContraseña();
+					    logger.log(Level.INFO, "Restableciendo contraseña.");
+
 					}
 				});
 	
@@ -226,17 +218,21 @@ public class frmInicioSesion extends JFrame implements ActionListener
 								{
 									contra = new String (contraField.getPassword());
 									JOptionPane.showMessageDialog(null, "Bienvenido a GML music","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+									logger.log(Level.INFO, "La contraseña es correcta y entra en la pantalla principal.");
 									gestor.RecontruirUsuario(usuario, contra);
 									gestor.AbrirMenu();
 								}
 								else
 								{
 									JOptionPane.showMessageDialog(null,"La contraseña introducida es incorrecta","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+									logger.log(Level.INFO, "La contraseña introducida no es la correcta.");
 								}
 							}
 							else
 							{
 								JOptionPane.showMessageDialog(null,"Ese nombre de usuario no esta registrado en la aplicacion","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+								logger.log(Level.INFO, "El nombre de usuario introducido no existe.");
+
 							}
 					}
 				}});	
@@ -337,6 +333,8 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					    if (mather.find() == true) 
 					    {				
 					    	clsBD.añadirUsuario(nombre, apellido, email, nombreUsu, contrasenya, new String("TODAS"));
+							logger.log(Level.INFO, "Añadido de un nuevo usuario.");
+
 
 					    	JOptionPane.showMessageDialog(null,"Su registro se ha realizado satisfactoriamente","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
 					    	
@@ -352,14 +350,18 @@ public class frmInicioSesion extends JFrame implements ActionListener
 								
 							txtCorreo.setText(null);
 							txtCorreo.requestFocus();
+							logger.log(Level.INFO, "El correo ingresado no es válido.");
+
 					    }
 					}
 					else
 					{
-						JOptionPane.showMessageDialog(null,"Su Nombre de usuario ya está ocupado","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null,"Su nombre de usuario ya está ocupado","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
 						
 						txtUsu2.setText(null);
 						txtUsu2.requestFocus();
+						logger.log(Level.INFO, "Nombre de usuario ocupado.");
+
 					}
 				}
 			}
@@ -376,10 +378,12 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		public void paintComponent(Graphics g)
 	    {
 	    	g.drawImage(imagenFondo, 0, 0, getWidth(),getHeight(),this);
+			logger.log(Level.INFO, "Añadido de la imagen al panel principal.");
+
 	    }
 	};
 	
-	private void RestablecerContraseña() 
+	public void RestablecerContraseña() 
 	{
 		try
 		{
@@ -468,4 +472,18 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		// TODO Auto-generated method stub
 		
 	}
+	
+	private static final boolean AÑADIR_FIC_LOG = false;
+	
+	static
+	{
+		try
+		{
+			logger.addHandler(new FileHandler(frmInicioSesion.class.getName() + ".log.xml", AÑADIR_FIC_LOG));
+		}catch(SecurityException | IOException e)
+		{
+			logger.log(Level.SEVERE, "Error en la creación del fichero log");
+		}
+	}
+	
 }
