@@ -91,7 +91,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	private JProgressBar BarraProgreso;
 	private JTextArea display;
 	private String newline = "\n";
-	private JLabel FotoCan;
+	private JLabel FotoCan = new JLabel();
 	
 	boolean playCompleted;
 	boolean playing;
@@ -160,7 +160,8 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		inicio.add(inicio1, BorderLayout.CENTER);
 		
 		JButton musica = new JButton(new ImageIcon ("src/img/Imagen1.png"));
-		FotoCan = new JLabel(new ImageIcon (UsuarioActual.getListas().get(0).getCanciones().get(0).getRutaImg()));
+		ImageIcon icon = new ImageIcon(UsuarioActual.getListas().get(0).getCanciones().get(0).getRutaImg());
+		FotoCan.setIcon(icon);
 		musica.setOpaque(true);                
     	musica.setBorder(null);           
     	musica.setContentAreaFilled(false); 
@@ -460,6 +461,8 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			{
 				SongIndex = SongIndex+1;
 			}
+			ImageIcon icon = new ImageIcon(UsuarioActual.getListas().get(0).getCanciones().get(SongIndex).getRutaImg());
+			FotoCan.setIcon(icon);
 			System.out.println("EL PRIMER NUMERO ES " + SongIndex);
 			System.out.println("EL SEGUNDO NUMERO ES " + aux);
 			if(SongIndex!=aux)
@@ -488,9 +491,8 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 				primeraPos = true;
 			}
 			
-			FotoCan.removeAll();
-			
-			FotoCan = new JLabel(new ImageIcon (UsuarioActual.getListas().get(SongIndex).getCanciones().get(0).getRutaImg()));
+			ImageIcon icon = new ImageIcon(UsuarioActual.getListas().get(0).getCanciones().get(SongIndex).getRutaImg());
+			FotoCan.setIcon(icon);
 			
 			System.out.println("EL PRIMER NUMERO ES " + SongIndex);
 			System.out.println("EL SEGUNDO NUMERO ES " + aux);
