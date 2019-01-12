@@ -184,18 +184,12 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		panel.add(btnContraOlvidada);
 		btnContraOlvidada.addActionListener(new ActionListener()
 				{
-					public void actionPerformed(ActionEvent arg0)
+					public void actionPerformed(ActionEvent arg0) 
 					{
-						try {
-							RestablecerContraseña();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						RestablecerContraseña();
 					}
 				});
-		
-		
+	
 		contraField = new JPasswordField();
 		contraField.setBounds(110, 105, 300, 25);
 		contraField.setFont(f2);
@@ -343,9 +337,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					    if (mather.find() == true) 
 					    {				
 					    	clsBD.añadirUsuario(nombre, apellido, email, nombreUsu, contrasenya, new String("TODAS"));
-					    	//gestor.correo(email);
-					    	
-//					    	gestor.enviarCorreo(email);
+
 					    	JOptionPane.showMessageDialog(null,"Su registro se ha realizado satisfactoriamente","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
 					    	
 					    	dispose();
@@ -369,8 +361,6 @@ public class frmInicioSesion extends JFrame implements ActionListener
 						txtUsu2.setText(null);
 						txtUsu2.requestFocus();
 					}
-					
-				
 				}
 			}
 		});
@@ -389,7 +379,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	    }
 	};
 	
-	private void RestablecerContraseña() throws IOException
+	private void RestablecerContraseña() 
 	{
 		try
 		{
@@ -415,17 +405,14 @@ public class frmInicioSesion extends JFrame implements ActionListener
 				}
 				else
 				{
-					Alert cuadroDialogo = new Alert(AlertType.ERROR);
-					cuadroDialogo.setTitle("Error");
-					cuadroDialogo.setHeaderText("Nombre de usuario no existe"); 
+					JOptionPane.showMessageDialog(null,"Nombre de usuario no existe","RESTABLECER CONTRASEÑA",JOptionPane.ERROR_MESSAGE);
 				}
 			}
 				
 				else
 				{
-					Alert cuadroDialogo = new Alert(AlertType.ERROR);
-					cuadroDialogo.setTitle("Error");
-					cuadroDialogo.setHeaderText("Debe escribir el nombre de usuario"); 
+					JOptionPane.showMessageDialog(null,"Debe escribir el nombre de usuario","RESTABLECER CONTRASEÑA",JOptionPane.ERROR_MESSAGE);
+
 				}
 		}
 				
@@ -465,10 +452,9 @@ public class frmInicioSesion extends JFrame implements ActionListener
 			message.setText(Mensaje);
 			
 			Transport.send(message);
-			
-			Alert cuadroDialogo = new Alert (Alert.AlertType.INFORMATION);
-			cuadroDialogo.setTitle("Restableciendo contraseña");
-			cuadroDialogo.setHeaderText("Se le ha enviado un correo a su contraseña");
+
+			JOptionPane.showMessageDialog(null,"El correo ya te ha sido enviado","RESTABLECER CONTRASEÑA",JOptionPane.INFORMATION_MESSAGE);
+
 			
 		}catch(MessagingException e)
 		{
