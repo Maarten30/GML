@@ -143,15 +143,17 @@ public class frmReproductor implements LineListener, ActionListener
 		inicio1.setFont(f2);
 		inicio.add(inicio1, BorderLayout.CENTER);
 		
-		JButton musica = new JButton(new ImageIcon ("src/LN/logo.png"));
+		JButton musica = new JButton(new ImageIcon ("src/img/Imagen1.png"));
 		musica.setOpaque(true);                
     	musica.setBorder(null);           
     	musica.setContentAreaFilled(false); 
     	musica.setBorderPainted(false);     
     	musica.setFocusPainted(false);
     	musica.setContentAreaFilled(false);
+    	musica.setSize(musica.getWidth()/2, musica.getHeight()/2);
     	
-		inicio.add(musica, BorderLayout.WEST);
+		inicio.add(musica, FlowLayout.LEFT);
+		
 		
 //		usuario1 = new JLabel(frmInicioSesion.txtUsu.getText());
 //		usuario1.setFont(f1);

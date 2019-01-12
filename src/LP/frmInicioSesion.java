@@ -116,7 +116,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	    
 		//Inserción de la imagen del fondo en el panel 
-	    fondo = this.getClass().getResource("/LN/Imagen_Fondo.png");
+	    fondo = this.getClass().getResource("/img/Logo_Pantalla.png");
 	    imagenFondo = new ImageIcon(fondo).getImage();
 	    Container contenedor = getContentPane();
 	    contenedor.add(panel);
@@ -217,10 +217,13 @@ public class frmInicioSesion extends JFrame implements ActionListener
 								if (clsBD.comprContra(txtUsu.getText(),String.valueOf(contraField.getPassword())) == true)
 								{
 									contra = new String (contraField.getPassword());
+									dispose();
 									JOptionPane.showMessageDialog(null, "Bienvenido a GML music","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
 									logger.log(Level.INFO, "La contraseña es correcta y entra en la pantalla principal.");
 									gestor.RecontruirUsuario(usuario, contra);
 									gestor.AbrirMenu();
+									
+									
 								}
 								else
 								{
