@@ -16,7 +16,6 @@ import java.util.logging.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import javax.mail.Message;
@@ -37,7 +36,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 import java.util.regex.Matcher;
@@ -45,8 +43,6 @@ import java.util.regex.Pattern;
 
 import LN.clsBD;
 import LN.clsGestor;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 
 /**
  * Clase para crear la pantalla de inicio de sesión. En ella el usuario tendrá la posibilidad de iniciar sesión o de crearse una 
@@ -92,7 +88,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	private String contrasenya;
 	
 	private String usuario;
-	private String contra; 
+	private String contra;
 	
 	private Image imagenFondo;
 	private URL fondo;
@@ -101,9 +97,16 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	
 	private clsGestor gestor; 
 	
+	//Para el correo de recuerdo contraseña
 	String To = ""; 
 	String Subject = "Restableciendo contraseña"; 
 	String Mensaje = "Recuerde su contraseña es: "; 
+	
+	//Para el correo de confirmación de registro
+	String To2 = ""; 
+	String Subject2 = "Bienvenido a GML"; 
+	String Mensaje2 = "Bienvenido a GML"; 
+	
 
 	/**
 	 * En este metodo se encuentran todos los elementos necesarios para crear la pantalla de inicio de sesion. 
@@ -178,7 +181,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					public void actionPerformed(ActionEvent arg0) 
 					{
 						RestablecerContraseña();
-					    logger.log(Level.INFO, "Restableciendo contraseña.");
+					    logger.log(Level.INFO, "Recordando contraseña.");
 
 					}
 				});
@@ -335,15 +338,17 @@ public class frmInicioSesion extends JFrame implements ActionListener
 						 
 						Matcher mather = pattern.matcher(email);
 					    if (mather.find() == true) 
-					    {				
+					    {	
 					    	clsBD.añadirUsuario(nombre, apellido, email, nombreUsu, contrasenya, new String("TODAS"));
+					    	 
 							logger.log(Level.INFO, "Añadido de un nuevo usuario.");
-
-
+							
 					    	JOptionPane.showMessageDialog(null,"Su registro se ha realizado satisfactoriamente","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
 					    	
+					    	CorreoRegistro();
 					    	
 					    	JOptionPane.showMessageDialog(null, "Bienvenido a GML music","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+					    	
 					    	//Llama a la pantalla frmReproductor
 					    	gestor.RecontruirUsuario(nombreUsu, contrasenya);
 					        gestor.AbrirMenu();
@@ -414,18 +419,17 @@ public class frmInicioSesion extends JFrame implements ActionListener
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(null,"Nombre de usuario no existe","RESTABLECER CONTRASEÑA",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null,"Nombre de usuario no existe","CONTRASEÑA",JOptionPane.ERROR_MESSAGE);
 				}
 			}
 				
 				else
 				{
-					JOptionPane.showMessageDialog(null,"Debe escribir el nombre de usuario","RESTABLECER CONTRASEÑA",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null,"Debe escribir el nombre de usuario","CONTRASEÑA",JOptionPane.ERROR_MESSAGE);
 
 				}
 		}
 				
-		
 		catch(SQLException e)
 		{
 			e.printStackTrace();
@@ -433,7 +437,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	}
 	
 	/**
-	 * Metodo utilizado para enviar correos a los usuarios a la hora de registrarse
+	 * Metodo utilizado para enviar correos a los usuarios cuando se les olvide la contraseña
 	 */
 	public void enviarCorreo()
 	{		
@@ -462,9 +466,75 @@ public class frmInicioSesion extends JFrame implements ActionListener
 			
 			Transport.send(message);
 
-			JOptionPane.showMessageDialog(null,"El correo ya te ha sido enviado","RESTABLECER CONTRASEÑA",JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null,"El correo ya se le ha enviado","CONTRASEÑA",JOptionPane.INFORMATION_MESSAGE);
 
 			
+		}catch(MessagingException e)
+		{
+			
+		}
+	}
+	
+	public void CorreoRegistro() 
+	{
+		try
+		{
+			usuario = txtUsu2.getText(); 
+			int control = 0;
+			if(!(usuario.equals("")))
+			{
+					Connection connection = DriverManager.getConnection("jdbc:sqlite:BD.bd" );
+					Statement estado = connection.createStatement();
+					
+					ResultSet rs = estado.executeQuery("SELECT email from usuarios WHERE nombreUsu="+"'"+usuario+"'");
+					
+					while(rs.next())
+					{
+						To2 = (rs.getString("email"));
+						control = 1;
+					}
+					
+					if(control == 1)
+					{
+					enviarCorreo2(); 
+					}
+				}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public void enviarCorreo2()
+	{		
+		Properties props = new Properties();
+		props.setProperty("mail.smtp.auth", "true");
+		props.setProperty("mail.smtp.starttls.enable", "true");
+		props.setProperty("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port","587");
+		
+		Session session = Session.getInstance(props,
+		new javax.mail.Authenticator()
+		{
+			protected PasswordAuthentication getPasswordAuthentication()
+			{
+				return new PasswordAuthentication("musicgml3@gmail.com" , "Abc123***"); 
+			}
+		});
+		
+		try
+		{
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("musicgml3@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(To2));
+			message.setSubject(Subject2);
+			message.setText(Mensaje2);
+			
+			Transport.send(message);
+
+			JOptionPane.showMessageDialog(null,"Se le ha enviado un correo de confirmación al correo","CONFIRMACIÓN REGISTRO",JOptionPane.INFORMATION_MESSAGE);
+
 		}catch(MessagingException e)
 		{
 			
