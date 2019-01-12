@@ -1,11 +1,13 @@
 package Excepciones;
 
+import java.sql.SQLException;
+
 /**
  * Clase que sirve para comprobar si existe un usuario en la aplicacion
  * @author Gabriela Garaizabal, Maarten Handels y Laura Llorente
  *
  */
-public class clsExistente extends Exception
+public class clsExistente extends SQLException
 {
 	private String usuario; 
 	

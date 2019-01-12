@@ -9,7 +9,7 @@ public class clsNoExistente extends Exception
 {
 	private String usuario; 
 	
-	public clsNoExistente(String usuario) 
+	public clsNoExistente() 
 	{
 		this.usuario = usuario; 
 	}
