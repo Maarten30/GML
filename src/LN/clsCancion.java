@@ -24,11 +24,10 @@ public class clsCancion implements Serializable
 	
 	private String nombre;
 	private String autor;
-	private int anio;
-	private float duracion;
 	private String[] ListaReproduccion; //Esto ya no hace falta no?
 //	private int idCa;
-	private File file;  
+	private File file; 
+	private String rutaImg;
 //	private String ruta;
 	
 	/**
@@ -39,13 +38,12 @@ public class clsCancion implements Serializable
 	 * @param anio año de creacion de la cancion
 	 * @param duracion duracion de la cancion
 	 */
-	public clsCancion(File file, String nombre, String autor, int anio, float duracion)
+	public clsCancion(File file, String nombre, String autor, String rutaImg)
 	{
 		this.file = file;
 		this.nombre= nombre;
 		this.autor = autor;
-		this.anio = anio;
-		this.duracion = duracion;
+		this.rutaImg = rutaImg;
 //		this.idCa = idCa;
 //		this.ruta = ruta;
 	}
@@ -55,8 +53,7 @@ public class clsCancion implements Serializable
 		file = fl;
 		nombre = "";
 		autor = "";
-		anio = 0;
-		duracion = 0.0f;
+		rutaImg = "";
 //		ruta = "";
 	}
 	
@@ -80,25 +77,7 @@ public class clsCancion implements Serializable
 		this.autor = autor;
 	}
 
-	public int getAnio() 
-	{
-		return anio;
-	}
 
-	public void setAnio(int anio) 
-	{
-		this.anio = anio;
-	}
-
-	public float getDuracion() 
-	{
-		return duracion;
-	}
-
-	public void setDuracion(float duracion) 
-	{
-		this.duracion = duracion;
-	}
 
 //	public int getIdCa() 
 //	{
@@ -109,6 +88,14 @@ public class clsCancion implements Serializable
 //	{
 //		this.idCa = idCa;
 //	}	
+
+	public String getRutaImg() {
+		return rutaImg;
+	}
+
+	public void setRutaImg(String rutaImg) {
+		this.rutaImg = rutaImg;
+	}
 
 	public String[] getListaReproduccion() 
 	{
@@ -145,8 +132,6 @@ public class clsCancion implements Serializable
 	{
 		return "Nombre: " + nombre + 
 				"\nAutor: " + autor + 
-				"\nAnio: " + anio + 
-				"\nDuracion: " + duracion +
 				"\nListaReproduccion: " + Arrays.toString(ListaReproduccion) + 
 //				"\nidCa: " + idCa + 
 				"\nFile=" + file;
@@ -191,8 +176,6 @@ public class clsCancion implements Serializable
 					"'" + file.getAbsolutePath() + "', " +
 					"'" + nombre + "', " +
 					"'" + autor + "', " +
-					 + anio + ","  +
-					 + duracion + ", " +
 					"'" + ListaReproduccion + "', " + ")";
 			
 			System.out.println( sentSQL ); 
@@ -215,8 +198,6 @@ public class clsCancion implements Serializable
 			String sentSQL = "update canciones set " +
 					"nombre = '" + nombre + "', " +
 					"autor = '" + autor + "', " +
-					"anio = " + anio + ","  +
-					"duracion = " + duracion + 
 					"Lista = '" + ListaReproduccion + "'," +
 //					"idCancion =" + idCa +
 					"where (fichero = '" + file.getAbsolutePath() + "')";
@@ -244,8 +225,6 @@ public class clsCancion implements Serializable
 			if (rs.next()) {  
 				this.nombre = rs.getString( "nombre" );
 				this.autor = rs.getString( "autor" );
-				this.anio = rs.getInt( "anio" );
-				this.duracion = rs.getFloat( "duracion" );
 			//	this.ListaReproduccion = rs.getArray("Lista");
 //				this.idCa = rs.getInt("IdCancion");
 				rs.close();

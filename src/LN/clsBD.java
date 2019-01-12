@@ -97,7 +97,7 @@ public class clsBD
 	{
 		try 
 		{
-			statement.executeUpdate("create table if not exists canciones (ruta string, nombre string, autor string, año int, duracion float)");
+			statement.executeUpdate("create table if not exists canciones (ruta string, nombre string, autor string, imagen string)");
 		} 
 		catch (SQLException e) 
 		{
@@ -260,7 +260,7 @@ try {
 	 */
 	public static void añadirCancion (clsCancion cancion)
 	{
-		String sentSQL = "insert into canciones values('" +cancion.getFile().getPath()+"', '"+cancion.getNombre()+"', '"+cancion.getAutor()+"' ,'"+cancion.getAnio()+"', '"+cancion.getDuracion()+"' )";
+		String sentSQL = "insert into canciones values('" +cancion.getFile().getPath()+"', '"+cancion.getNombre()+"', '"+cancion.getAutor()+"' ,'"+cancion.getRutaImg()+"' )";
 		
 		try 
 		{
