@@ -98,6 +98,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	
 	private int SongIndex = 0;
 	private int aux = 0;
+	frmInternalListas intListas;
 	
 	private File audioFile;
 	public Clip audioClip;
@@ -502,10 +503,9 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		}
 		else if(arg0.getSource() == anadir)
 		{
-			frmInternalListas intListas = new frmInternalListas(UsuarioActual);
-//			intListas.frmInternalListas(UsuarioActual);
-        	intListas.setVisible(true);
-        	intListas.toFront();
+			intListas =  new frmInternalListas();
+			intListas.frmInternalListas(UsuarioActual);
+
         	
 		}
 		

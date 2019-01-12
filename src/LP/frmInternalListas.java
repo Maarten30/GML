@@ -1,6 +1,7 @@
 package LP;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -37,23 +38,23 @@ public class frmInternalListas extends JFrame implements ActionListener
 	
 	private JPanel panelBajo;
 	private JPanel botonera;
-	private JPanel panel;
+	private JFrame frame;
 	private JScrollPane panelListas;
 	
 	/**
 	 * Método en el que se meten los componentes que van a aparecer en el internal frame
 	 */
-	public frmInternalListas(clsUsuario usuario)
+	public void frmInternalListas(clsUsuario usuario)
 	{
 		UsuarioActual = usuario;
 		
-		setTitle("Tus listas de reproduccion:"); 
-		setBounds(5, 5, 500, 300);
+
+		frame = new JFrame("Tus listas de reproduccion:");
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setSize(500, 300);
+		frame.getContentPane().setBackground(new Color(240, 240, 240));
 		
-		panel = new JPanel();
-		panel.setBounds(0, 0, 400, 200);
-		setContentPane(panel);
-		panel.setLayout(null);
+
 		
 		botonera = new JPanel();
 		panelBajo = new JPanel();
@@ -61,7 +62,6 @@ public class frmInternalListas extends JFrame implements ActionListener
 		botonera.setLayout( new FlowLayout( FlowLayout.CENTER ));
 		panelBajo.setLayout( new BorderLayout() );
 		
-		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 //		for(clsPlayList a:UsuarioActual.getListas())
 //		{
@@ -77,29 +77,19 @@ public class frmInternalListas extends JFrame implements ActionListener
 //		panel.add(panelListas);
 		
 		btnAñadir = new JButton("Añadir");
-//		btnAñadir.setBounds(330, 237, 89, 23);
-//		panel.add(btnAñadir);
-//		btnAñadir.setActionCommand("Añadir");
 		btnAñadir.addActionListener(this);
 		
 		btnCancelar = new JButton("Cancelar");
-//		btnCancelar.setBounds(330, 237, 89, 23);
-//		panel.add(btnCancelar);
-//		btnCancelar.setActionCommand("Cancelar");
 		btnCancelar.addActionListener(this);
 		
 		botonera.add(btnAñadir);
 		botonera.add(btnCancelar);
 		
 		panelBajo.add(botonera, BorderLayout.NORTH );
-		panel.add(panelBajo, BorderLayout.SOUTH);
+		frame.add(panelBajo, BorderLayout.SOUTH);
 		
-		panel.setVisible(true);
+		frame.setVisible(true);
 		botonera.setVisible(true);
-		
-//		panel.repaint();
-		
-		
 	
 	}
 	
