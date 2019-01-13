@@ -60,7 +60,9 @@ public class clsBDTest
 	@After
 	public void tearDown() 
 	{
-		
+//		clsBD.eliminarCancion(cancion1);
+//		clsBD.eliminarUsuario(Usuario1);
+//		clsBD.eliminarPlaylist(Listas1, cancion);
 	}
 	
 	@Test

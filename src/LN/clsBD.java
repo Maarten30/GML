@@ -270,7 +270,7 @@ try {
 	
 	
 	/**
-	 * Añade una cominacionde playlis-cancion
+	 * Añade una combinacion de playlis-cancion
 	 * @param nombre Nombre de la Playlist
 	 * @param cancion Nombre de la cancion
 	 */
@@ -288,6 +288,60 @@ try {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void eliminarCancion( clsCancion cancion)
+	{
+		String sentSQL = "DELETE * FROM canciones WHERE ruta ='"+cancion.getFile().getPath()+"'";;
+		
+		try 
+		{
+			while (rs.next())
+			{
+			statement.executeUpdate(sentSQL);
+			}
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public static void eliminarUsuario( clsUsuario usuario)
+	{
+		String sentSQL = "DELETE * FROM usuarios WHERE nombreUsu ='"+usuario.getNombreUs()+"'";
+		
+		try 
+		{
+			while (rs.next())
+			{
+			statement.executeUpdate(sentSQL);
+			}
+	
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public static void eliminarPlaylist( clsPlayList playlist, clsCancion cancion)
+	{
+		String sentSQL = "DELETE * FROM playlist WHERE (cancion ='"+cancion.getNombre()+"' AND nombre ='"+playlist.getNombre()+"')";
+		
+		try 
+		{
+			while (rs.next())
+			{
+			statement.executeUpdate(sentSQL);
+			}
+	
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
 	
 	//CIERRE DE LA CONEXIÓN
 	/** Cierre de la conexión.
