@@ -114,9 +114,17 @@ public class frmBuscador extends JFrame implements ActionListener
 				@Override
 				public void actionPerformed(ActionEvent arg0) 
 				{
+					SongIndex = listaCanciones.getSelectedIndex();
 					intListas =  new frmInternalListas();
-					clsCancion cancion = UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex);
-					intListas.frmInternalListas(UsuarioActual, cancion);
+					
+					for(clsCancion c : UsuarioActual.getListas().get(0).getCanciones())
+					{
+						if(model.getElementAt(SongIndex).equals(listaCanciones.getName()))
+						{
+							intListas.frmInternalListas(UsuarioActual, c);
+						}
+					}
+//					System.out.println("FADJFOADSFJKAFD " + cancion.getNombre());
 					// TODO Auto-generated method stub
 					
 				}
