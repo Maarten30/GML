@@ -91,7 +91,28 @@ public class clsBDTest
 	@Test
 	public void TestAñadirPersona() 
 	{
-
+		String nombreUs = "Laura17";
+		clsBD.añadirUsuario("Laura", "Llorente", "laullorente17@gmail.com", "Laura17", "135", "TODAS");
+		ResultSet rs = null;
+		try 
+		{
+			rs = st.executeQuery("SELECT nombreUsu FROM usuarios WHERE nombreUsu='" + nombreUs +"'");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		String us = "";
+		try {
+			while(rs.next())
+			{	
+			us = rs.getString("nombreUsu");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		assertEquals( us, nombreUs  );
 
 		
 	}
@@ -103,7 +124,7 @@ public class clsBDTest
 		 ResultSet rs = null;
 			try 
 			{
-				rs = st.executeQuery("SELECT nombre FROM playlist WHERE cancion = 'Back IN Black'");
+				rs = st.executeQuery("SELECT nombre FROM playlist WHERE cancion = 'Back in Black'");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

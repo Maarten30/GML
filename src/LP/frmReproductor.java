@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -355,7 +356,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		//txtBuscar.setVisible(true);
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.setBounds(getBounds());
-		Buscador.setBackground(Color.BLACK);
+		Buscador.setBackground(Color.BLACK); //Lo pongo asi para distinguir el panel
 		System.out.println(Buscador.getLocation());
 		Buscador.add(btnBuscar);
 		Buscador.add(txtBuscar);
@@ -541,6 +542,20 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			System.out.println("Esto sigueee");
 			
 		}
+//		else if (arg0.getSource() == shuffle)
+//		{
+//			
+//		 int r = (int) Math.random()*41; //Porque hay 40 canciones, asique por uno mas
+//		 SongIndex = r;
+//			
+//		}
+//		else if (arg0.getSource() == like)
+//		{
+//			
+//		 
+//			
+//		}
+		
 		
 	}
 	
