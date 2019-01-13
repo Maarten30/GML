@@ -345,7 +345,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 
 		//REFRESCAR
 		
-		Refrescar = new JLabel ("Refrescar listas de reproduccion:");
+		Refrescar = new JLabel ("Pulse para Refrescar las listas: ");
 		Refrescar.setFont(f3);
 		panelInicio.add(btnRefrescar, FlowLayout.LEFT);
 		panelInicio.add(Refrescar, FlowLayout.LEFT);
