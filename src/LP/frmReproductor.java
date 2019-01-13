@@ -91,6 +91,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	private JLabel lblBuscar;
 	private JLabel lblFotoCan = new JLabel();
 	private JLabel lblVol;
+	private JLabel Refrescar;
 	
 	private JButton btnPlay;
 	private JButton btnLike;
@@ -135,6 +136,8 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	private int aux = 0;
 	private int ListIndex = 0;
 	private int CancionAnterior = 0;
+	private ImageIcon ImageIcon;
+	private ImageIcon ImageIconP;
 	
 	private File audioFile;
 	public Clip audioClip;
@@ -194,6 +197,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		
 		Font f1 = new Font("Century Gothic",Font.BOLD,18);
 		Font f2 = new Font("Century Gothic",Font.BOLD,25);
+		Font f3 = new Font("Century Gothic",Font.BOLD,14);
 		
 		listas.setFont(f1);
 		listaCanciones.setFont(f1);
@@ -204,7 +208,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		
 		//IMAGEN IZQUIERDA
 		
-		JButton musica = new JButton(new ImageIcon ("src/img/Imagen1.png"));
+		JButton musica = new JButton(new ImageIcon ("src/img/Imagen1G.png"));
 		for(clsCancion a:UsuarioActual.getListas().get(0).getCanciones())
 		{
 			System.out.println(a.getNombre());
@@ -254,6 +258,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		
 		BarraProgreso = new JProgressBar(0, 1000);
 		BarraProgreso.setStringPainted(true);
+		
 		
 		//BOTONES 
 		
@@ -363,8 +368,22 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		panelBotonera.add(btnFin);
 		panelBotonera.add(btnLike);
 		panelBotonera.add(BarraProgreso);
-		panelBotonera.add(btnRefrescar);
 		panelBotonera.add(btnBuscar);
+		
+		
+		
+	//REFRESCAR
+		
+		Refrescar = new JLabel ("Refrescar listas de reproduccion:");
+		Refrescar.setFont(f3);
+		panelInicio.add(btnRefrescar, FlowLayout.LEFT);
+		panelInicio.add(Refrescar, FlowLayout.LEFT);
+		
+		
+		//IMAGENES SHUFFLE
+		
+		ImageIcon = new ImageIcon("src/img/shuffle.png");
+		ImageIconP = new ImageIcon("src/img/shuffleN.png");
 		
 		
 		//SPLITPANE
@@ -689,15 +708,19 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		}
 		else if(arg0.getSource() == btnShuffle)
 		{
+			
+			
 			if(aleatorio == false)
 			{
 				aleatorio = true;
 				System.out.println("Se ha puesto en aleatorio");
+				btnShuffle.setIcon(new ImageIcon("src/img/shuffleN.png"));
 			}
 			else
 			{
 				aleatorio = false;
 				System.out.println("Se ha puesto en orden normal");
+				btnShuffle.setIcon(new ImageIcon("src/img/shuffle.png"));
 			}
 			
 		}
