@@ -72,6 +72,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	
 	private JFrame frmVentanita;
 	private frmInternalListas intListas;
+	private frmBuscador buscador;
 	
 	private JPanel panelBajo;
 	private JPanel panelBotonera;
@@ -140,6 +141,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	
 	private ArrayList<clsCancion> Canciones;
 	private clsUsuario UsuarioActual;
+	private clsCancion cancion;
 	
 	private ResultSet rs = null;
 	private Statement st = null;
@@ -243,6 +245,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		btnPrincipio = new JButton( new ImageIcon("src/img/principio.png") );
 		btnLike = new JButton( new ImageIcon("src/img/like.png") );
 		btnRefrescar = new JButton(new ImageIcon("src/img/Refrescar.png"));
+		btnBuscar = new JButton(new ImageIcon("src/img/buscar.png"));
 		
 		
 		//BARRA DE PROGRESO CANCION
@@ -324,6 +327,14 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
     	btnRefrescar.setFocusPainted(false);
     	btnRefrescar.setContentAreaFilled(false);
     	btnRefrescar.setPressedIcon(new ImageIcon(  "src/img/RefrescarN.png" ));
+    	
+    	btnBuscar.setOpaque(false);            
+    	btnBuscar.setContentAreaFilled(false); 
+    	btnBuscar.setBorderPainted(false);     
+    	btnBuscar.setBorder(null); 
+    	btnBuscar.setFocusPainted(false);
+    	btnBuscar.setContentAreaFilled(false);
+    	btnBuscar.setPressedIcon(new ImageIcon(  "src/img/buscarN.png" ));
 		
     	// LISTENERS BOTONES
     	
@@ -336,6 +347,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		btnFin.addActionListener(this);
 		btnLike.addActionListener(this);
 		btnRefrescar.addActionListener(this);
+		btnBuscar.addActionListener(this);
 
 		//BOTONERA
 		
@@ -350,6 +362,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		panelBotonera.add(btnLike);
 		panelBotonera.add(BarraProgreso);
 		panelBotonera.add(btnRefrescar);
+		panelBotonera.add(btnBuscar);
 		
 		
 		//SPLITPANE
@@ -369,35 +382,6 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		frmVentanita.setVisible(true);
 		panelBotonera.setVisible(true);
 		
-		//BUSCADOR
-
-//	    txtBuscar = new JTextField();
-//	    txtBuscar1 = new JTextField();
-//	    txtBuscar1.setBounds(100, 20, 100, 25);
-//		//txtBuscar.setVisible(true);
-//		btnBuscar = new JButton("Buscar");
-//		btnBuscar.setBounds(getBounds());
-//		panelBuscador.setBackground(Color.BLACK); //Lo pongo asi para distinguir el panel
-//		System.out.println(panelBuscador.getLocation());
-//		panelBuscador.add(btnBuscar);
-//		panelBuscador.add(txtBuscar);
-//		panelBuscador.setVisible(true);
-////		inicio.add(btnBuscar, FlowLayout.LEFT);
-////		inicio.add(txtBuscar, FlowLayout.LEFT);
-//		panelInicio.add(txtBuscar1);
-//		panelInicio.add(panelBuscador, FlowLayout.LEFT);
-//		btnBuscar.addActionListener(new ActionListener()
-//		{
-//			
-//			public void actionPerformed(ActionEvent arg0) 
-//			{
-//				buscarCancion();
-//			}
-//			
-//		});
-		//txtBuscar.setSize(300, 20);
-		//inicio.add(txtBuscar, BorderLayout.EAST);
-	    
 	    //VOLUMEN
 		
 		g = new GridBagConstraints();
@@ -421,8 +405,6 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 					{
 						lblVol.setText("Volumen "+slide.getValue()+" %");
 //						slide.setValue(auidoClip);
-						
-
 					}
 				});
 
@@ -623,6 +605,11 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			clsCancion cancion = UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex);
 			intListas.frmInternalListas(UsuarioActual, cancion);
 			
+		}
+		else if(arg0.getSource() == btnBuscar)
+		{
+			buscador =  new frmBuscador();
+			buscador.frmBuscador();		
 		}
 		else if(arg0.getSource() == btnRefrescar)
 		{

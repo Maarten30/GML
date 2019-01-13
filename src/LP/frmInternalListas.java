@@ -35,6 +35,8 @@ import LN.clsUsuario;
  */
 public class frmInternalListas extends JFrame implements ActionListener
 {
+	private static final long serialVersionUID = 1L;
+
 	private static Logger logger = Logger.getLogger(frmInternalListas.class.getName());
 	
 	private JList<String> listas= null;
@@ -80,6 +82,7 @@ public class frmInternalListas extends JFrame implements ActionListener
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setSize(500, 300);
 		frame.getContentPane().setBackground(new Color(240, 240, 240));
+		frame.setVisible(true);
 		
 		lblAñadir = new JLabel("Añadir a nueva lista:"); 
 		lblAñadir.setFont(f2);
