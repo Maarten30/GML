@@ -234,7 +234,8 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		btnShuffle = new JButton( new ImageIcon("src/img/shuffle.png") );
 		btnPrincipio = new JButton( new ImageIcon("src/img/principio.png") );
 		btnLike = new JButton( new ImageIcon("src/img/like.png") );
-		btnRefrescar = new JButton("Refrescar");
+		btnRefrescar = new JButton(new ImageIcon("src/img/Refrescar.png"));
+		
 		
 		//BARRA DE PROGRESO CANCION
 		
@@ -307,6 +308,14 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
     	btnPrincipio.setFocusPainted(false);
     	btnPrincipio.setContentAreaFilled(false);
     	btnPrincipio.setPressedIcon(new ImageIcon(  "src/img/principioN.png" ));
+    	
+    	btnRefrescar.setOpaque(false);            
+    	btnRefrescar.setContentAreaFilled(false); 
+    	btnRefrescar.setBorderPainted(false);     
+    	btnRefrescar.setBorder(null); 
+    	btnRefrescar.setFocusPainted(false);
+    	btnRefrescar.setContentAreaFilled(false);
+    	btnRefrescar.setPressedIcon(new ImageIcon(  "src/img/RefrescarN.png" ));
 		
     	// LISTENERS BOTONES
     	
@@ -322,6 +331,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 
 		//BOTONERA
 		
+		
 		panelBotonera.add(btnAnadir);
 		panelBotonera.add(btnShuffle);
 		panelBotonera.add(btnPlay);
@@ -332,6 +342,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		panelBotonera.add(btnLike);
 		panelBotonera.add(BarraProgreso);
 		panelBotonera.add(btnRefrescar);
+		
 		
 		//SPLITPANE
 		

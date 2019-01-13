@@ -58,10 +58,10 @@ public class clsBDTest
 	}
 	
 	@After
-//	public void tearDown() 
-//	{
-//		lista2.eliminarLista();
-//	}
+	public void tearDown() 
+	{
+		
+	}
 	
 	@Test
 	public void TestAñadirCancion() 
