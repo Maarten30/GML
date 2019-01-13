@@ -232,7 +232,6 @@ public class clsGestor
 		{
 			while(rs.next())
 			{
-				System.out.println("HA ENTRADO EN EL RS.NEXT");
 				String nombre = rs.getString("nombre");
 				
 				
@@ -400,7 +399,6 @@ public class clsGestor
 		{
 			while(rs2.next())
 			{
-				System.out.println("Funcionaaaaa :" + rs2.getString("playlist"));
 				String añadir = rs2.getString("playlist");
 				playlistsss.add(añadir);
 			}

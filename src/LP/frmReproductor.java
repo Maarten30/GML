@@ -189,7 +189,6 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		JButton musica = new JButton(new ImageIcon ("src/img/Imagen1G.png"));
 		for(clsCancion a:UsuarioActual.getListas().get(0).getCanciones())
 		{
-			System.out.println(a.getNombre());
 		}
 			
 		ImageIcon icon = new ImageIcon(UsuarioActual.getListas().get(0).getCanciones().get(0).getRutaImg());
@@ -564,7 +563,6 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			playing = false;
 			audioClip.stop();
 			clipTime = 0;
-			System.out.println(clipTime);
 			audioClip.close();
 			
 		}
@@ -591,8 +589,6 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			ImageIcon icon = new ImageIcon(UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex).getRutaImg());
 			lblFotoCan.setIcon(icon);
 			
-			System.out.println("EL PRIMER NUMERO ES " + SongIndex);
-			System.out.println("EL SEGUNDO NUMERO ES " + aux);
 			if(SongIndex!=aux)
 			{
 				playing = false;
@@ -603,7 +599,6 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			play(SongIndex);
 			playing = true;
 			aux = SongIndex;
-			System.out.println(audioClip.getLongFramePosition());
 			AvanceBP();
 		}
 		else if(arg0.getSource() == btnPrincipio)
@@ -630,8 +625,6 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			ImageIcon icon = new ImageIcon(UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex).getRutaImg());
 			lblFotoCan.setIcon(icon);
 			
-			System.out.println("EL PRIMER NUMERO ES " + SongIndex);
-			System.out.println("EL SEGUNDO NUMERO ES " + aux);
 			if(SongIndex!=aux || primeraPos == true)
 			{
 				playing = false;
@@ -643,7 +636,6 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			play(SongIndex);
 			playing = true;
 			aux = SongIndex;
-			System.out.println(audioClip.getLongFramePosition());
 			AvanceBP();
 		}
 		else if(arg0.getSource() == btnAnadir)
@@ -670,13 +662,11 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			if(aleatorio == false)
 			{
 				aleatorio = true;
-				System.out.println("Se ha puesto en aleatorio");
 				btnShuffle.setIcon(new ImageIcon("src/img/shuffleN.png"));
 			}
 			else
 			{
 				aleatorio = false;
-				System.out.println("Se ha puesto en orden normal");
 				btnShuffle.setIcon(new ImageIcon("src/img/shuffle.png"));
 			}
 			
@@ -839,13 +829,11 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
             	playing = false;
     			audioClip.stop();
     			clipTime = 0;
-    			System.out.println(clipTime);
     			audioClip.close();
     			
     			if(aleatorio==true)
     			{
     				int randomNum = ThreadLocalRandom.current().nextInt(0, model2.getSize() + 1);
-    				System.out.println(randomNum);
     				SongIndex = randomNum;
     			}
     			else
