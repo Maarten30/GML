@@ -13,8 +13,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import LP.frmReproductor;
-
 
 
 /**
@@ -28,7 +26,6 @@ public class clsBDTest
 	private clsCancion cancion2;
 	private clsUsuario Usuario1;
 	private clsPlayList Listas1;
-	
 	
 	private Connection con;
 	private Statement st;
@@ -60,9 +57,7 @@ public class clsBDTest
 	@After
 	public void tearDown() 
 	{
-//		clsBD.eliminarCancion(cancion1);
-//		clsBD.eliminarUsuario(Usuario1);
-//		clsBD.eliminarPlaylist(Listas1, cancion);
+
 	}
 	
 	@Test
@@ -78,10 +73,12 @@ public class clsBDTest
 		}
 		
 		String ruta = "";
-		try {
+		try 
+		{
 			ruta = rs.getString("ruta");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (SQLException e) 
+		{
 			e.printStackTrace();
 		}
 		clsBD.añadirCancion(cancion1);
@@ -99,24 +96,25 @@ public class clsBDTest
 		try 
 		{
 			rs = st.executeQuery("SELECT nombreUsu FROM usuarios WHERE nombreUsu='" + nombreUs +"'");
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) 
+		{
 			e.printStackTrace();
 		}
 		
 		String us = "";
-		try {
+		try 
+		{
 			while(rs.next())
 			{	
 			us = rs.getString("nombreUsu");
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (SQLException e) 
+		{
 			e.printStackTrace();
 		}
-		
 		assertEquals( us, nombreUs  );
-
-		
 	}
 	
 	@Test
@@ -132,18 +130,15 @@ public class clsBDTest
 			}
 			
 			String name = "";
-			try {
+			try 
+			{
 				name = rs.getString("nombre");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+			} 
+			catch (SQLException e) 
+			{
 				e.printStackTrace();
 			}
 			clsBD.añadirCanPlaylist(name, cancion1);
 			assertEquals( lista, name);
-		
 	}
-	
-	
-
-
 }

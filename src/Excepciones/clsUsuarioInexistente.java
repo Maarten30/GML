@@ -1,7 +1,7 @@
 package Excepciones;
 
 /**
- * Clase que sirve para saber si un usuario no existe dentro de una aplicacion 
+ * Clase que sirve para saber si un usuario no existe dentro de la aplicación
  * @author Gabriela Garaizabal, Maarten Handels y Laura Llorente
  *
  */

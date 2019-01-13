@@ -55,11 +55,6 @@ import LN.clsBD;
 import LN.clsCancion;
 import LN.clsPlayList;
 import LN.clsUsuario;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-
-
-
 
 /**
  * Clase que sirve para crear la pantalla principal de la aplicacion
@@ -87,8 +82,6 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	private JScrollPane panelCanciones;
 
 	private JLabel lblInicio1;
-	private JLabel lblUsuario1;
-	private JLabel lblBuscar;
 	private JLabel lblFotoCan = new JLabel();
 	private JLabel lblVol;
 	private JLabel Refrescar;
@@ -97,22 +90,15 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	private JButton btnLike;
 	private JButton btnStop;
 	private JButton btnPausar;
-//	private JButton anterior;
-	private JButton btnAvance;
 	private JButton btnFin;
 	private JButton btnPrincipio;
-	private JButton btnRebobinar;
 	private JButton btnShuffle;
-//	private JButton siguiente;
 	private JButton btnAnadir;
 	private JButton btnBuscar;
 	private JButton btnRefrescar;
 	
 	private JTextField txtBuscar;
-	private JTextField txtBuscar1;
-	private JTextArea display;
 	
-	private JSlider barraSlid;
 	private JSlider slide;
 	private JProgressBar BarraProgreso;
 	
@@ -121,9 +107,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	
 	private DefaultListModel<String> model = new DefaultListModel<>();
 	private DefaultListModel<String> model2 = new DefaultListModel<>();
-	
-	private String newline = "\n";
-	
+		
 	private GridBagConstraints g;
 	
 	boolean playCompleted;
@@ -159,17 +143,11 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	{
 		
 		UsuarioActual = usuario;
-	//	Canciones = playlist.getCanciones();
 		
 		frmVentanita = new JFrame("Music Player");
 		frmVentanita.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmVentanita.setSize(1350, 720);
-		//ventanita.pack();
 		frmVentanita.getContentPane().setBackground(new Color(240, 240, 240));
-		
-//		ImageIcon jungleBackground = new ImageIcon("C:/imagenSpoti.png");
-//		JLabel backgroundImage = new JLabel(jungleBackground);
-//		frmVentanita.add(backgroundImage);
 		
 		panelSup = new JPanel();
 		panelBajo = new JPanel();
@@ -253,12 +231,10 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		btnRefrescar = new JButton(new ImageIcon("src/img/Refrescar.png"));
 		btnBuscar = new JButton(new ImageIcon("src/img/buscar.png"));
 		
-		
 		//BARRA DE PROGRESO CANCION
 		
 		BarraProgreso = new JProgressBar(0, 1000);
 		BarraProgreso.setStringPainted(true);
-		
 		
 		//BOTONES 
 		
@@ -277,7 +253,6 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
     	btnLike.setFocusPainted(false);
     	btnLike.setContentAreaFilled(false);
     	btnLike.setPressedIcon(new ImageIcon(  "src/img/likeN.png" ));
-//    	like.setRolloverIcon(new ImageIcon(  "src/img/likeN.png" ) );
 
     	btnStop.setOpaque(false);            
     	btnStop.setContentAreaFilled(false); 
@@ -357,8 +332,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		btnBuscar.addActionListener(this);
 
 		//BOTONERA
-		
-		
+
 		panelBotonera.add(btnAnadir);
 		panelBotonera.add(btnShuffle);
 		panelBotonera.add(btnPlay);
@@ -369,23 +343,19 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		panelBotonera.add(btnLike);
 		panelBotonera.add(BarraProgreso);
 		panelBotonera.add(btnBuscar);
-		
-		
-		
-	//REFRESCAR
+
+		//REFRESCAR
 		
 		Refrescar = new JLabel ("Refrescar listas de reproduccion:");
 		Refrescar.setFont(f3);
 		panelInicio.add(btnRefrescar, FlowLayout.LEFT);
 		panelInicio.add(Refrescar, FlowLayout.LEFT);
-		
-		
+
 		//IMAGENES SHUFFLE
 		
 		ImageIcon = new ImageIcon("src/img/shuffle.png");
 		ImageIconP = new ImageIcon("src/img/shuffleN.png");
-		
-		
+
 		//SPLITPANE
 		
 		splitPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelListas, panelCanciones);
@@ -430,8 +400,6 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			
 		}));
 			
-		
-		
 		slide.addChangeListener(new ChangeListener()
 				{
 					public void stateChanged(ChangeEvent event)
@@ -471,12 +439,6 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	                	{
 							
 	                	}
-						
-						
-
-						//gainControl.setValue(-20.0f);
-						//lblVol.setText("Volumen "+slide.getValue()+" %");
-//						slide.setValue(auidoClip);
 					}
 				});
 
@@ -484,42 +446,28 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		
 		BarraProgreso.addMouseListener( new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (audioClip.isOpen()) {
-//					// Seek en el vÃ­deo
-//					float porcentajeSalto = (float)e.getX() / BarraProgreso.getWidth();
-//					mediaPlayer.setPosition( porcentajeSalto );
-//			    	visualizaTiempoRep();
-//					// Otra manera de hacerlo con los milisegundos:
-//					// long milisegsSalto = mediaPlayer.getLength();
-//					// milisegsSalto = Math.round( milisegsSalto * porcentajeSalto );
-//					// mediaPlayer.setTime( milisegsSalto );
-					
+			public void mouseClicked(MouseEvent e) 
+			{
+				if (audioClip.isOpen()) 
+				{
 					float porcentajeSalto = (float)e.getX() / BarraProgreso.getWidth();
 					long Salto = Math.round(audioClip.getMicrosecondLength()*porcentajeSalto);
 					audioClip.setMicrosecondPosition( Salto );
-					//BarraProgreso.setValue( (int) (10000.0 * audioClip.getLongFramePosition() / audioClip.getFrameLength()) );
-					//BarraProgreso.repaint();
 				    AvanceBP();
-					// Otra manera de hacerlo con los milisegundos:
-					// long milisegsSalto = mediaPlayer.getLength();
-					// milisegsSalto = Math.round( milisegsSalto * porcentajeSalto );
-					// mediaPlayer.setTime( milisegsSalto );
 				}
 			}
 		});
 		
 		//SELECTION LISTENER CANCIONES
 		
-		listaCanciones.addListSelectionListener(new ListSelectionListener() {
-
+		listaCanciones.addListSelectionListener(new ListSelectionListener() 
+		{
             @Override
             public void valueChanged(ListSelectionEvent arg0) {
                 if (!arg0.getValueIsAdjusting()) 
                 {
                 	SongIndex = listaCanciones.getSelectedIndex();
                 }
-      
             }
         });
 		
@@ -781,13 +729,9 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 				UsuarioActual.añadirPlaylist(fav);
 				clsBD.añadirUsuario(UsuarioActual.getNombre(), UsuarioActual.getApellido(), UsuarioActual.getEmail(),
 						UsuarioActual.getNombreUs(), UsuarioActual.getContrasena(), fav.getNombre());
-				clsBD.añadirCanPlaylist(fav.getNombre(), UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex));
-				
-				
+				clsBD.añadirCanPlaylist(fav.getNombre(), UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex));	
 			}
-			
 		}
-
 	}
 	
 	
@@ -795,20 +739,16 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	{
 		BarraProgreso.setValue( (int) (1000.0 * audioClip.getLongFramePosition() / audioClip.getFrameLength()) );
 		BarraProgreso.repaint();
-		
-		//lMensaje2.setText( formatoHora.format( new Date(mediaPlayer.getTime()-3600000L) ) );
 	}
 	
 	public void CargarCanciones(int numero)
 	{
-		
 		model2.removeAllElements();
 		
 		for(clsCancion a:UsuarioActual.getListas().get(numero).getCanciones())
 		{
 			model2.addElement(a.getNombre() + " - " + a.getAutor());
 		}
-		
 	}
 	
 	public void CargarListas()
@@ -818,17 +758,10 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		{
 			model.addElement(a.getNombre());
 		}
-		
 	}
-	
-	
-   
-	
-	public void play(int numero)//String audioFilePath
-    {
-		
-		System.out.println("Empieza cancion");
-		
+
+	public void play(int numero)
+    {		
         audioFile = new File(Canciones.get(numero).getFile().getPath());
  
         try 
@@ -851,36 +784,35 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
             
             gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);
             
-            
-             
-
-            
             if(audioClip.getMicrosecondPosition()==audioClip.getMicrosecondLength())
 			{
 				clipTime=0;
 			}
-             
-//            audioClip.close();
-             
-        } catch (UnsupportedAudioFileException ex) {
-            System.out.println("The specified audio file is not supported.");
+                          
+        }
+        catch (UnsupportedAudioFileException ex) 
+        {
             ex.printStackTrace();
-        } catch (LineUnavailableException ex) {
-            System.out.println("Audio line for playing back is unavailable.");
+        } 
+        catch (LineUnavailableException ex) 
+        {
             ex.printStackTrace();
-        } catch (IOException ex) {
-            System.out.println("Error playing the audio file.");
+        } 
+        catch (IOException ex) 
+        {
             ex.printStackTrace();
         }
         
-        audioClip.addLineListener(new LineListener() {
-	        public void update(LineEvent event) {
-	            if (audioClip.isRunning()) {
+        audioClip.addLineListener(new LineListener() 
+        {
+	        public void update(LineEvent event) 
+	        {
+	            if (audioClip.isRunning()) 
+	            {
 	                AvanceBP();
 	            }
 	        }
 	    });
-         
     }
      
     @Override
@@ -891,12 +823,11 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
          
         if (type == LineEvent.Type.START) 
         {
-            System.out.println("Song playing.");
              
-        } else if (type == LineEvent.Type.STOP) 
+        } 
+        else if (type == LineEvent.Type.STOP) 
         {
             playCompleted = true;
-            System.out.println("Song paused.");
             
             Long numero = audioClip.getMicrosecondLength();
             Long numero2 = audioClip.getMicrosecondPosition();
@@ -905,21 +836,19 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
             if(numero.equals(numero2))
             {
             	
-            	System.out.println("Ha llegado al final");
             	playing = false;
     			audioClip.stop();
     			clipTime = 0;
     			System.out.println(clipTime);
     			audioClip.close();
     			
-    			
     			if(aleatorio==true)
     			{
-    				System.out.println("Se ha metido en siguiente aleatorio");
     				int randomNum = ThreadLocalRandom.current().nextInt(0, model2.getSize() + 1);
     				System.out.println(randomNum);
     				SongIndex = randomNum;
-    			}else
+    			}
+    			else
     			{
     				if(model2.size()==SongIndex+1)
     				{
@@ -929,10 +858,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
     				{
     					SongIndex = SongIndex+1;
     				}	
-    				
     			}
-    			
-    			
     			
     			play(SongIndex);
     			ImageIcon icon = new ImageIcon(UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex).getRutaImg());
@@ -941,7 +867,6 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
     			AvanceBP();
             }
         }
-        
         
         while(audioClip.isRunning())
         {
@@ -966,10 +891,9 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
     	try 
     	{
 			rs = st.executeQuery("SELECT nombre, autor from canciones WHERE nombre,autor like" + "'"+texto+"' _%");
-			System.out.println(rs);
 		} 
-    	catch (SQLException e) {
-			// TODO Auto-generated catch block
+    	catch (SQLException e) 
+    	{
 			e.printStackTrace();
 		}
     }
@@ -981,15 +905,12 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		try
 		{
 			logger.addHandler(new FileHandler(frmReproductor.class.getName() + ".log.xml", AÑADIR_FIC_LOG));
-		}catch(SecurityException | IOException e)
+		}
+		catch(SecurityException | IOException e)
 		{
 			logger.log(Level.SEVERE, "Error en la creación del fichero log");
 		}
 	}
-	
-	
-
-	
 }
 
 

@@ -63,7 +63,6 @@ public class frmInternalListas extends JFrame implements ActionListener
 	private Connection conection = null;
 	private Statement statement = null;
 	
-	
 	/**
 	 * Método en el que se meten los componentes que van a aparecer en el internal frame
 	 */
@@ -140,13 +139,9 @@ public class frmInternalListas extends JFrame implements ActionListener
 					String nombre = UsuarioActual.getListas().get(ListIndex).getNombre();
 					clsBD.añadirCanPlaylist(nombre, Cancion);
 					
-					frame.dispose();
-					
+					frame.dispose();			
 				}
-				
-			
 			}
-			
 		});
 		
 		btnCreayAñade = new JButton("Crear y añadir");
@@ -154,8 +149,6 @@ public class frmInternalListas extends JFrame implements ActionListener
 		
 		btnCreayAñade.addActionListener(new ActionListener()
 		{
-			
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
 			{
@@ -164,7 +157,6 @@ public class frmInternalListas extends JFrame implements ActionListener
 				if(txtLista.getText().isEmpty())
 				{
 					JOptionPane.showMessageDialog(null,"Debes insertar un nombre para la nueva Lista","LISTA NUEVA",JOptionPane.INFORMATION_MESSAGE);
-					
 				}
 				else
 				{	
@@ -182,7 +174,8 @@ public class frmInternalListas extends JFrame implements ActionListener
 					{
 						JOptionPane.showMessageDialog(null,"Ya existe una PlayList con este nombre","AÑADIR CANCION",JOptionPane.INFORMATION_MESSAGE);
 
-					}else
+					}
+					else
 					{
 						clsPlayList NewLista = new clsPlayList(nombre);
 						NewLista.añadirCancion(Cancion);
@@ -192,18 +185,11 @@ public class frmInternalListas extends JFrame implements ActionListener
 						clsBD.añadirCanPlaylist(nombre, Cancion);
 						
 						frame.dispose();
-						
 					}
-					
-					
-					
-					
-				}
-		
-				
+				}	
 			}
-			
 		});
+		
 		frame.add(btnCreayAñade);
 		
 		btnCancelar = new JButton("Cancelar");
@@ -211,11 +197,10 @@ public class frmInternalListas extends JFrame implements ActionListener
 		{
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0) 
+			{
 				
 				frame.dispose();
-		
-				
 			}
 			
 		});
@@ -232,21 +217,17 @@ public class frmInternalListas extends JFrame implements ActionListener
 		frame.setVisible(true);
 		botonera.setVisible(true);
 		
-		listas.addListSelectionListener(new ListSelectionListener() {
-
+		listas.addListSelectionListener(new ListSelectionListener() 
+		{
 	        @Override
-	        public void valueChanged(ListSelectionEvent arg0) {
+	        public void valueChanged(ListSelectionEvent arg0) 
+	        {
 	            if (!arg0.getValueIsAdjusting()) 
 	            {
-	            	
 	            	ListIndex = listas.getSelectedIndex();
-	            	
 	            }
-	            
-	  
 	        }
 	    });
-	
 	}
 	
 	public boolean Actividad()
@@ -255,9 +236,9 @@ public class frmInternalListas extends JFrame implements ActionListener
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent arg0) 
+	{
 		// TODO Auto-generated method stub
 		
 	}
-
 }

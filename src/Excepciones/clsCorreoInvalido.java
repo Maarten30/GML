@@ -1,7 +1,7 @@
 package Excepciones;
 
 /**
- * Clase que sirve para comprobar si existe un usuario en la aplicacion
+ * Clase que sirve para comprobar si el correo introducido es válido
  * @author Gabriela Garaizabal, Maarten Handels y Laura Llorente
  *
  */

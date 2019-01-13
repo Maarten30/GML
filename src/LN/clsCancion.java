@@ -17,11 +17,6 @@ import java.util.logging.Logger;
 public class clsCancion implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	
-	private static Logger logger = Logger.getLogger(clsUsuario.class.getName());
-	private static Connection connection = null;
-	private static Statement statement = null;
-	
 	private String nombre;
 	private String autor;
 	private File file; 

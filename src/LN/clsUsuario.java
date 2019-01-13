@@ -31,7 +31,6 @@ public class clsUsuario implements Serializable
 	String email;
 	ArrayList<clsPlayList> listas;
 	
-	 
 	/**
 	 * Atributos empleados para la cancion, constructor con parametros
 	 * @param nombre nombre del usuario

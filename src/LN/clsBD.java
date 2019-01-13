@@ -154,12 +154,6 @@ public class clsBD
 			PreparedStatement upd = connection.prepareStatement("SELECT nombreUsu FROM usuarios");
 			 ResultSet rs = upd.executeQuery();
 			
-//			statement = connection.prepareStatement("select nombreUsu from usuarios");
-//			
-//			ResultSet rs = statement.executeQuery("select nombreUsu from usuarios");
-//		
-//			statement.executeQuery("select nombreUsu from usuarios");
-			
 			while (rs.next())
 			{
 			String nomUsuDB = rs.getString("nombreUsu");
@@ -181,9 +175,7 @@ public class clsBD
 			e.printStackTrace();
 			 devolver = false;
 		}
-		return devolver;
-		
-		
+		return devolver;	
 	}
 	
 	
@@ -197,56 +189,48 @@ public class clsBD
 	{
 		boolean devolver = true;
 		
-try {
-			
+		try 
+		{	
 			PreparedStatement upd = connection.prepareStatement("SELECT nombreUsu FROM usuarios");
 			
-			 ResultSet rs = upd.executeQuery();
-			
-//			statement = connection.prepareStatement("select nombreUsu from usuarios");
-//			
-//			ResultSet rs = statement.executeQuery("select nombreUsu from usuarios");
-//		
-//			statement.executeQuery("select nombreUsu from usuarios");
+			ResultSet rs = upd.executeQuery();
 			
 			while (rs.next())
 			{
-			String nomUsuDB = rs.getString("nombreUsu");
-			
-			if (nomUsu.equals(nomUsuDB))
-					
-			{
-				PreparedStatement upd1 = connection.prepareStatement("SELECT contrasenya FROM usuarios WHERE nombreUsu ='" +nomUsu+"'");
-				ResultSet rs1 = upd1.executeQuery();
-			
-				String contraBD = rs1.getString("contrasenya");
-					
-					if (Contra.equals(contraBD))
-					{
-						devolver = true;
-						break;
-					}
-					else
-					{
-						devolver=false;
+				String nomUsuDB = rs.getString("nombreUsu");
+				
+				if (nomUsu.equals(nomUsuDB))
+						
+				{
+					PreparedStatement upd1 = connection.prepareStatement("SELECT contrasenya FROM usuarios WHERE nombreUsu ='" +nomUsu+"'");
+					ResultSet rs1 = upd1.executeQuery();
+				
+					String contraBD = rs1.getString("contrasenya");
+						
+						if (Contra.equals(contraBD))
+						{
+							devolver = true;
+							break;
+						}
+						else
+						{
+							devolver=false;
+						}
 					}
 				
+				else
+				{
+					 devolver = false;
 				}
-			
-			else
-			{
-				 devolver = false;
-			}
 			}
 		}
 		 catch (SQLException e) {
 		
 			e.printStackTrace();
-			 devolver = false;
+			devolver = false;
 		}
 		
 		return devolver;
-		
 	}
 		
 	/**
@@ -267,7 +251,6 @@ try {
 			e.printStackTrace();
 		}
 	}
-	
 	
 	/**
 	 * Añade una combinacion de playlis-cancion
@@ -334,7 +317,6 @@ try {
 			{
 			statement.executeUpdate(sentSQL);
 			}
-	
 		} 
 		catch (SQLException e)
 		{
@@ -360,6 +342,5 @@ try {
 			e.printStackTrace();
 		}
 	}
-	
 }
 	

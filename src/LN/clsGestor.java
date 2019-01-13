@@ -50,21 +50,22 @@ public class clsGestor
 		try 
 		{
 			rs = statement.executeQuery("SELECT count(nombre) FROM canciones");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (SQLException e)
+		{
 			e.printStackTrace();
 		}
 		
 		int numero = 0;
-		try {
+		try 
+		{
 			numero = (Integer) rs.getObject(1);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (SQLException e) 
+		{
 			e.printStackTrace();
 		}
-		
-		System.out.println("El número de canciones en BD es: " + numero);
-		
+				
 		if(numero == 0)
 		{
 			File file1 = new File("test/res/ACDC - Back in Black.wav");
@@ -209,12 +210,7 @@ public class clsGestor
 			clsBD.añadirCancion(cancion40);
 		}
 		
-		
-		System.out.println("HA LLEGADO AQUI");
-		
-		RecibirCanciones();
-		
-		
+		RecibirCanciones();	
 	}
 	
 	/**
@@ -226,8 +222,9 @@ public class clsGestor
 		try 
 		{
 			rs = statement.executeQuery("SELECT * FROM canciones");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		}
+		catch (SQLException e) 
+		{
 			e.printStackTrace();
 		}
 		
@@ -254,19 +251,11 @@ public class clsGestor
 				canciones.add(cancion);
 				
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (SQLException e) 
+		{
 			e.printStackTrace();
 		}
-		
-		System.out.println("HA LLEGADO A RECIBIR CANCIONES");
-		System.out.println("EL numero de canciones es en memoria" + canciones.size());
-		
-		for(clsCancion a:canciones)
-		{
-			System.out.println("PRUEBA" + a.getNombre());
-		}
-		
 	}
 	
 	/**
@@ -278,47 +267,33 @@ public class clsGestor
 		try 
 		{
 			rs = statement.executeQuery("SELECT count(nombre) FROM playlist");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (SQLException e) 
+		{
 			e.printStackTrace();
 		}
 		
 		int numero = 0;
-		try {
+		try 
+		{
 			numero = (Integer) rs.getObject(1);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (SQLException e) 
+		{
 			e.printStackTrace();
 		}
-			
-		System.out.println("El número de playlists en BD es: " + numero);
-			
+						
 		if(numero == 0)
-		{
-			
-			System.out.println("HA AÑADIDO LA PLAYLIST TODAS AL NUEVO USUARIO");
-				
+		{				
 			for(clsCancion a:canciones)
 			{
 				clsBD.añadirCanPlaylist("TODAS", a);
 			}
-
-				
-		}
-			
-			
-		System.out.println("HA LLEGADO A INSERTAR LA PLAYLIST DE TODAS");
-			
-//			RecibirCanciones();
-			
-			
+		}					
 	}
 		
 	public void RecibirPlayList(clsUsuario usuario)
 	{
-		
-		
-		
 		for(clsPlayList a:usuario.getListas())
 		{
 			String nombre = a.getNombre();
@@ -327,8 +302,9 @@ public class clsGestor
 			try 
 			{
 				rs = statement.executeQuery("SELECT * FROM playlist WHERE nombre ='" +nombre+"' ");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+			} 
+			catch (SQLException e)
+			{
 				e.printStackTrace();
 			}
 			
@@ -353,18 +329,12 @@ public class clsGestor
 						numero = numero +1;
 					}
 					
-					
-					
 					String cancion = rs.getString("cancion");
-					
-					
+
 					for(clsCancion b:canciones)
-					{
-						
+					{		
 						if(b.getNombre().equalsIgnoreCase(cancion))
-						{
-							System.out.println("CAAAAAAAAANCION: " + a.getNombre());
-							playnueva.añadirCancion(b);
+						{							playnueva.añadirCancion(b);
 						}
 					}
 					if(nombreplay.equalsIgnoreCase(aux))
@@ -377,139 +347,113 @@ public class clsGestor
 						aux=nombreplay;
 					}
 					
-					
 					if(primeravuelta == true)
 					{
 						aux = nombreplay;
 						primeravuelta = false;
-					}
-						
+					}	
 				}
 				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+			} 
+			catch (SQLException e) 
+			{
 				e.printStackTrace();
 			}
 		}
-		
-		
-		
 	}
 	
 	public void RecontruirUsuario(String usuario, String contraseña)
 	{
-		
 		ResultSet rs = null;
 		try 
 		{
 			rs = statement.executeQuery("SELECT * FROM usuarios WHERE nombreUsu ='" +usuario+"' AND contrasenya ='" +contraseña+"'");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		}
+		catch (SQLException e) 
+		{
 			e.printStackTrace();
 		}
 		
 		try 
 		{
 			usuarioActual = new clsUsuario(rs.getString("nombre"), rs.getString("apellido"), rs.getString("email"), rs.getString("nombreUsu"), rs.getString("contrasenya"));
-		
-		} catch (SQLException e) 
+		} 
+		catch (SQLException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 			
 		ResultSet rs2 = null;
 		
-		
 		try 
 		{
 			rs2 = statement.executeQuery("SELECT playlist FROM usuarios WHERE nombreUsu ='" +usuario+"'");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (SQLException e) 
+		{
 			e.printStackTrace();
 		}
 		
 		ArrayList <String> playlistsss = new ArrayList<String>();
 		
-		try {
+		try 
+		{
 			while(rs2.next())
 			{
 				System.out.println("Funcionaaaaa :" + rs2.getString("playlist"));
 				String añadir = rs2.getString("playlist");
 				playlistsss.add(añadir);
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (SQLException e) 
+		{
 			e.printStackTrace();
 		}
-		
-		for(String h:playlistsss)
-		{
-			System.out.println("El for tambien funciona: " + h);
-		}
-		
-		
-		
-		
+	
 		for(String h:playlistsss)
 		{
 			
 				String nombreplay = h;
-				System.out.println("NUEVA PLAYLIST CON NOMBRE: " + nombreplay);
 				clsPlayList listnueva = new clsPlayList(nombreplay);
 				
 				ResultSet rs3 = null;
 				try 
 				{
 					rs3 = statement.executeQuery("SELECT cancion FROM playlist WHERE nombre = '"+nombreplay+"'");
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
+				} 
+				catch (SQLException e) 
+				{
 					e.printStackTrace();
 				}
 				try
 				{
-				
 					while(rs3.next())
 					{
 						String cancion = rs3.getString("cancion");
 						
-						
 						for(clsCancion a:canciones)
 						{
-							
 							if(a.getNombre().equalsIgnoreCase(cancion))
 							{
 								listnueva.añadirCancion(a);
 							}
 						}
-						
 					}
-
-					usuarioActual.añadirPlaylist(listnueva);
 					
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
+					usuarioActual.añadirPlaylist(listnueva);	
+				} 
+				catch (SQLException e) 
+				{
 					e.printStackTrace();
 				}	
 			}
-		
-		
 	}
 	
 	public void AbrirMenu()
 	{
-		//RecibirPlayList(usuarioActual);
-		//usuarioActual.setListas(playlists);
-		
-		for(clsPlayList a:usuarioActual.getListas())
-		{
-			System.out.println(a.getNombre());
-		}
-		
 		frmReproductor Pantalla = new frmReproductor();
 		
 		Pantalla.GUI(usuarioActual);	
-		
 	}	
 }
 

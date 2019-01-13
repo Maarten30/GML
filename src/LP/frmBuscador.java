@@ -1,7 +1,5 @@
 package LP;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,13 +15,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import LN.clsBD;
 import LN.clsCancion;
@@ -103,7 +98,6 @@ public class frmBuscador extends JFrame implements ActionListener
 				{
 					buscarCancion();
 				}
-				
 			});
 			
 			UsuarioActual = usuario;
@@ -119,28 +113,23 @@ public class frmBuscador extends JFrame implements ActionListener
 					SongIndex = listaCanciones.getSelectedIndex();
 					intListas =  new frmInternalListas();
 					
-					
 					for(clsCancion c : UsuarioActual.getListas().get(0).getCanciones())
 					{
 						if(canciones.get(SongIndex).getNombre().equalsIgnoreCase(c.getNombre()))
 						{
 							intListas.frmInternalListas(UsuarioActual, c);
-							//AQUIIIIIIIIIIIIII
 						}
 					}
-					
 				}
-				
 			});
 			
 			listaCanciones.setSelectedIndex(0);
 		}
 
-	
 		@Override
-		public void actionPerformed(ActionEvent arg0) {
+		public void actionPerformed(ActionEvent arg0) 
+		{
 			// TODO Auto-generated method stub
-			
 		}
 		
 	    public void buscarCancion()
@@ -148,7 +137,6 @@ public class frmBuscador extends JFrame implements ActionListener
 	    	String texto = txtBuscar.getText().toUpperCase();
 	    	try 
 	    	{
-//				rs = statement.executeQuery("SELECT nombre from canciones WHERE nombre like'%" +texto+"%' or autor like '%"+texto+"%'");
 				rs = statement.executeQuery("SELECT nombre from canciones WHERE nombre like'" +texto+"' or autor like '"+texto+"'");
 				
 				while(rs.next())
@@ -164,7 +152,6 @@ public class frmBuscador extends JFrame implements ActionListener
 						}
 						else
 						{
-//							JOptionPane.showMessageDialog(null, "La canción que busca no existe","BUSCADOR",JOptionPane.INFORMATION_MESSAGE);
 							continue;
 
 						}
@@ -172,8 +159,8 @@ public class frmBuscador extends JFrame implements ActionListener
 				}
 				
 			} 
-	    	catch (SQLException e) {
-				// TODO Auto-generated catch block
+	    	catch (SQLException e) 
+	    	{
 				e.printStackTrace();
 			}
 	    }

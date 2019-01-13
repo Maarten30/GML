@@ -1,6 +1,5 @@
 package LN;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -10,8 +9,6 @@ import java.util.ArrayList;
  */
 public class clsPlayList 
 {
-
-	
 	private String nombre;
 	private ArrayList<clsCancion> canciones;
 	
@@ -59,6 +56,4 @@ public class clsPlayList
 	{
 		canciones.add(cancion);
 	}
-	
-	
 }

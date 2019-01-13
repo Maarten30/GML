@@ -100,12 +100,14 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	
 	private clsGestor gestor; 
 	
-	//Para el correo de recuerdo contraseña
+	//CORREO RECORDATORIO CONTRASEÑA
+	
 	String To = ""; 
 	String Subject = "Restableciendo contraseña"; 
 	String Mensaje = "Recuerde su contraseña es: "; 
 	
-	//Para el correo de confirmación de registro
+	//CORREO CONFIRMACIÓN REGISTRO
+	
 	String To2 = ""; 
 	String Subject2 = "Bienvenido a GML"; 
 	String Mensaje2 = "Bienvenido a GML"; 
@@ -495,6 +497,9 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		}
 	}
 	
+	/**
+	 * Método para enviar correo al usuario que se registre por primera vez
+	 */
 	public void CorreoRegistro() 
 	{
 		try
