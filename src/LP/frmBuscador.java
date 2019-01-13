@@ -11,14 +11,21 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Logger;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTextField;
-
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import LN.clsBD;
+import LN.clsCancion;
+import LN.clsUsuario;
 
 
 public class frmBuscador extends JFrame implements ActionListener
@@ -28,16 +35,25 @@ public class frmBuscador extends JFrame implements ActionListener
 		private static Logger logger = Logger.getLogger(frmInternalListas.class.getName());
 		
 		private JButton btnBuscar; 
+		private JButton btnAnadir;
 		private JTextField txtBuscar;
 		private JFrame frame;
 		private JPanel panel;
+		private JScrollPane panelCanciones;
+		private JSplitPane splitPanel;
 		private JLabel lblCancion;
+		
+		private DefaultListModel<String> model = new DefaultListModel<>();
+		private JList<String> listaCanciones= null;
+		private int SongIndex = 0;
+		
+		private clsUsuario UsuarioActual;
 		
 		private Connection conection = null;
 		private Statement statement = null;
 		private ResultSet rs = null;
 	
-		public void frmBuscador()
+		public void frmBuscador(clsUsuario usuario)
 		{	
 			conection = clsBD.getConnection();
 			statement = clsBD.getStatement();
@@ -46,25 +62,31 @@ public class frmBuscador extends JFrame implements ActionListener
 			
 			frame = new JFrame("Buscador");
 			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			frame.setSize(450, 150);
+			frame.setSize(600, 500);
 			frame.setVisible(true);
 			
 			panel = new JPanel();
 			panel.setLayout(null);
 			frame.add(panel);
 			
+			panelCanciones = new JScrollPane(listaCanciones);
+			
+			splitPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panel, panelCanciones);
+			splitPanel.setResizeWeight(0.5);
+			frame.add(splitPanel);
+			
 			txtBuscar = new JTextField(); 
-			txtBuscar.setBounds(10, 50, 240, 30);
+			txtBuscar.setBounds(20, 85, 300, 30);
 			txtBuscar.setFont(f2);
 			panel.add(txtBuscar);
 			
-			lblCancion = new JLabel("Introduzca el nombre de la canción o del artista que desee: ");
-			lblCancion.setBounds(5, 15, 500, 30);
+			lblCancion = new JLabel("Introduzca el nombre de la canción o del artista que desee buscar: ");
+			lblCancion.setBounds(20, 50, 550, 30);
 			lblCancion.setFont(f2);
 			panel.add(lblCancion);
 		
 			btnBuscar = new JButton("Buscar");
-			btnBuscar.setBounds(270, 50, 80, 30);
+			btnBuscar.setBounds(340, 85, 80, 30);
 			panel.add(btnBuscar);
 			btnBuscar.addActionListener(new ActionListener()
 			{
@@ -76,6 +98,28 @@ public class frmBuscador extends JFrame implements ActionListener
 				}
 				
 			});
+			
+			UsuarioActual = usuario;
+			
+			btnAnadir = new JButton("Añadir");
+			btnAnadir.setBounds(340, 130, 80, 30);
+			panel.add(btnAnadir);
+			
+			listaCanciones = new JList<>(model);
+//			listaCanciones.setSelectedIndex(0);
+//			
+//			listaCanciones.addListSelectionListener(new ListSelectionListener() {
+//
+//	            @Override
+//	            public void valueChanged(ListSelectionEvent arg0) {
+//	                if (!arg0.getValueIsAdjusting()) 
+//	                {
+//	                	SongIndex = listaCanciones.getSelectedIndex();
+//	                }
+//	      
+//	            }
+//	        });
+
 		}
 	
 		@Override
@@ -93,7 +137,8 @@ public class frmBuscador extends JFrame implements ActionListener
 				
 				while(rs.next())
 				{
-					System.out.println(rs.getString("nombre"));
+//					System.out.println(rs.getString("nombre"));
+
 				}
 				
 			} 

@@ -610,7 +610,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		else if(arg0.getSource() == btnBuscar)
 		{
 			buscador =  new frmBuscador();
-			buscador.frmBuscador();		
+			buscador.frmBuscador(UsuarioActual);		
 		}
 		else if(arg0.getSource() == btnRefrescar)
 		{
