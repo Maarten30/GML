@@ -353,7 +353,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 							
 					    	JOptionPane.showMessageDialog(null,"Su registro se ha realizado satisfactoriamente","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
 					    	
-							JOptionPane.showMessageDialog(null,"Se le ha enviado un correo de confirmación al correo","CONFIRMACIÓN REGISTRO",JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null,"Se le ha enviado un correo de confirmación","CONFIRMACIÓN REGISTRO",JOptionPane.INFORMATION_MESSAGE);
 					    	CorreoRegistro();
 					    	
 					    	JOptionPane.showMessageDialog(null, "Bienvenido a GML music","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
