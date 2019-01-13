@@ -4,7 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -16,8 +17,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Random;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,7 +34,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -47,8 +45,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.InternalFrameEvent;
-import javax.swing.event.InternalFrameListener;
+
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -56,6 +53,8 @@ import LN.clsBD;
 import LN.clsCancion;
 import LN.clsPlayList;
 import LN.clsUsuario;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 
 
@@ -67,42 +66,50 @@ import LN.clsUsuario;
  */
 public class frmReproductor extends JFrame implements LineListener, ActionListener
 { 
+	private static final long serialVersionUID = 1L;
+
 	private static Logger logger = Logger.getLogger(frmReproductor.class.getName());
 	
-	private JFrame ventanita;
+	private JFrame frmVentanita;
+	private frmInternalListas intListas;
+	
 	private JPanel panelBajo;
-	private JPanel Botonera;
+	private JPanel panelBotonera;
 	private JPanel panelSup;
-	private JPanel inicio;
-	private JPanel Buscador;
-	private JSplitPane splitpanel;
+	private JPanel panelInicio;
+	private JPanel panelBuscador;
+	
+	private JSplitPane splitPanel;
 	private JScrollPane panelListas;
 	private JScrollPane panelCanciones;
 
-	private JLabel inicio1;
-	private JLabel usuario1;
+	private JLabel lblInicio1;
+	private JLabel lblUsuario1;
 	private JLabel lblBuscar;
+	private JLabel lblFotoCan = new JLabel();
+	private JLabel lblVol;
 	
-	
-	private JButton play;
-	private JButton like;
-	private JButton stop;
-	private JButton pausar;
+	private JButton btnPlay;
+	private JButton btnLike;
+	private JButton btnStop;
+	private JButton btnPausar;
 //	private JButton anterior;
-	private JButton avance;
-	private JButton Fin;
-	private JButton principio;
-	private JButton rebobinar;
-	private JButton shuffle;
+	private JButton btnAvance;
+	private JButton btnFin;
+	private JButton btnPrincipio;
+	private JButton btnRebobinar;
+	private JButton btnShuffle;
 //	private JButton siguiente;
-	private JButton anadir;
+	private JButton btnAnadir;
 	private JButton btnBuscar;
 	
 	private JTextField txtBuscar;
 	private JTextField txtBuscar1;
-	
+	private JTextArea display;
 	
 	private JSlider barraSlid;
+	private JSlider slide;
+	private JProgressBar BarraProgreso;
 	
 	private JList<String> listas= null;
 	private JList<String> listaCanciones= null;
@@ -110,10 +117,9 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	private DefaultListModel<String> model = new DefaultListModel<>();
 	private DefaultListModel<String> model2 = new DefaultListModel<>();
 	
-	private JProgressBar BarraProgreso;
-	private JTextArea display;
 	private String newline = "\n";
-	private JLabel FotoCan = new JLabel();
+	
+	private GridBagConstraints g;
 	
 	boolean playCompleted;
 	boolean playing;
@@ -122,7 +128,6 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	private int SongIndex = 0;
 	private int aux = 0;
 	private int ListIndex = 0;
-	private frmInternalListas intListas;
 	
 	private File audioFile;
 	public Clip audioClip;
@@ -145,22 +150,22 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		UsuarioActual = usuario;
 	//	Canciones = playlist.getCanciones();
 		
-		ventanita = new JFrame("Music Player");
-		ventanita.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		ventanita.setSize(1350, 720);
+		frmVentanita = new JFrame("Music Player");
+		frmVentanita.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmVentanita.setSize(1350, 720);
 		//ventanita.pack();
-		ventanita.getContentPane().setBackground(new Color(240, 240, 240));
+		frmVentanita.getContentPane().setBackground(new Color(240, 240, 240));
 		
-		ImageIcon jungleBackground = new ImageIcon("C:/imagenSpoti.png");
-		JLabel backgroundImage = new JLabel(jungleBackground);
-		ventanita.add(backgroundImage);
+//		ImageIcon jungleBackground = new ImageIcon("C:/imagenSpoti.png");
+//		JLabel backgroundImage = new JLabel(jungleBackground);
+//		frmVentanita.add(backgroundImage);
 		
 		panelSup = new JPanel();
 		panelBajo = new JPanel();
-		Botonera = new JPanel();
-		inicio = new JPanel();
-		Buscador = new JPanel();
-		inicio.setLayout(null);
+		panelBotonera = new JPanel();
+		panelInicio = new JPanel();
+		panelBuscador = new JPanel();
+		panelInicio.setLayout(null);
 		
 		for(clsPlayList a:UsuarioActual.getListas())
 		{
@@ -179,20 +184,21 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		
 		listaCanciones.setSelectedIndex(0);
 		
-		
 		Font f1 = new Font("Century Gothic",Font.BOLD,18);
 		Font f2 = new Font("Century Gothic",Font.BOLD,25);
 		
 		listas.setFont(f1);
 		listaCanciones.setFont(f1);
 		
-		inicio1= new JLabel("¡BIENVENIDO " +  frmInicioSesion.txtUsu.getText() +" A GML MUSIC!");
-		inicio1.setFont(f2);
-		inicio.add(inicio1, BorderLayout.CENTER);
+		lblInicio1= new JLabel("¡BIENVENIDO " +  frmInicioSesion.txtUsu.getText() +" A GML MUSIC!");
+		lblInicio1.setFont(f2);
+		panelInicio.add(lblInicio1, BorderLayout.CENTER);
+		
+		//IMAGEN IZQUIERDA
 		
 		JButton musica = new JButton(new ImageIcon ("src/img/Imagen1.png"));
 		ImageIcon icon = new ImageIcon(UsuarioActual.getListas().get(0).getCanciones().get(0).getRutaImg());
-		FotoCan.setIcon(icon);
+		lblFotoCan.setIcon(icon);
 		musica.setOpaque(true);                
     	musica.setBorder(null);           
     	musica.setContentAreaFilled(false); 
@@ -200,185 +206,205 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
     	musica.setFocusPainted(false);
     	musica.setContentAreaFilled(false);
     	
-    	FotoCan.setOpaque(true);                
-    	FotoCan.setBorder(null);           
+    	lblFotoCan.setOpaque(true);                
+    	lblFotoCan.setBorder(null);           
     	
-    	inicio.add(FotoCan);
-		inicio.add(musica, FlowLayout.LEFT);
-		
+    	//PANELES
+    	
+    	panelInicio.add(lblFotoCan);
+		panelInicio.add(musica, FlowLayout.LEFT);
 		
 		panelListas = new JScrollPane(listas);
 		panelCanciones = new JScrollPane(listaCanciones);
 		
-		Botonera.setLayout( new FlowLayout( FlowLayout.CENTER ));
+		panelBotonera.setLayout( new FlowLayout( FlowLayout.CENTER ));
 		panelBajo.setLayout( new BorderLayout() );
 		
-		inicio.setLayout( new FlowLayout( FlowLayout.CENTER ));
+		panelInicio.setLayout( new FlowLayout( FlowLayout.CENTER ));
 		panelSup.setLayout(new BorderLayout());
 		
-		pausar = new JButton( new ImageIcon( "src/img/pausa.png") );
-		play = new JButton( new ImageIcon("src/img/Play.png") );
-		stop = new JButton( new ImageIcon("src/img/stop.png") );
-		anadir = new JButton (new ImageIcon ("src/img/añadir.png"));
-		Fin = new JButton( new ImageIcon("src/img/Fin.png") );
-		shuffle = new JButton( new ImageIcon("src/img/shuffle.png") );
-		principio = new JButton( new ImageIcon("src/img/principio.png") );
-		like = new JButton( new ImageIcon("src/img/like.png") );
-
+		//INSERCIÓN IMÁGENES BOTONES
+		
+		btnPausar = new JButton( new ImageIcon( "src/img/pausa.png") );
+		btnPlay = new JButton( new ImageIcon("src/img/Play.png") );
+		btnStop = new JButton( new ImageIcon("src/img/stop.png") );
+		btnAnadir = new JButton (new ImageIcon ("src/img/añadir.png"));
+		btnFin = new JButton( new ImageIcon("src/img/Fin.png") );
+		btnShuffle = new JButton( new ImageIcon("src/img/shuffle.png") );
+		btnPrincipio = new JButton( new ImageIcon("src/img/principio.png") );
+		btnLike = new JButton( new ImageIcon("src/img/like.png") );
+		
+		//BARRA DE PROGRESO CANCION
+		
 		BarraProgreso = new JProgressBar(0, 1000);
 		BarraProgreso.setStringPainted(true);
 		
-		pausar.setOpaque(false);            
-    	pausar.setContentAreaFilled(false); 
-    	pausar.setBorderPainted(false);     
-    	pausar.setBorder(null); 
-    	pausar.setFocusPainted(false);
-    	pausar.setContentAreaFilled(false);
-    	pausar.setPressedIcon(new ImageIcon(  "src/img/pausaN.png" ));
+		//BOTONES 
+		
+		btnPausar.setOpaque(false);            
+    	btnPausar.setContentAreaFilled(false); 
+    	btnPausar.setBorderPainted(false);     
+    	btnPausar.setBorder(null); 
+    	btnPausar.setFocusPainted(false);
+    	btnPausar.setContentAreaFilled(false);
+    	btnPausar.setPressedIcon(new ImageIcon(  "src/img/pausaN.png" ));
     	
-    	like.setOpaque(false);            
-    	like.setContentAreaFilled(false); 
-    	like.setBorderPainted(false);     
-    	like.setBorder(null); 
-    	like.setFocusPainted(false);
-    	like.setContentAreaFilled(false);
-    	like.setPressedIcon(new ImageIcon(  "src/img/likeN.png" ));
+    	btnLike.setOpaque(false);            
+    	btnLike.setContentAreaFilled(false); 
+    	btnLike.setBorderPainted(false);     
+    	btnLike.setBorder(null); 
+    	btnLike.setFocusPainted(false);
+    	btnLike.setContentAreaFilled(false);
+    	btnLike.setPressedIcon(new ImageIcon(  "src/img/likeN.png" ));
 //    	like.setRolloverIcon(new ImageIcon(  "src/img/likeN.png" ) );
 
-    	stop.setOpaque(false);            
-    	stop.setContentAreaFilled(false); 
-    	stop.setBorderPainted(false);    
-    	stop.setBorder(null); 
-    	stop.setFocusPainted(false);
-    	stop.setContentAreaFilled(false);
-    	stop.setPressedIcon(new ImageIcon(  "src/img/stopN.png" ));
+    	btnStop.setOpaque(false);            
+    	btnStop.setContentAreaFilled(false); 
+    	btnStop.setBorderPainted(false);    
+    	btnStop.setBorder(null); 
+    	btnStop.setFocusPainted(false);
+    	btnStop.setContentAreaFilled(false);
+    	btnStop.setPressedIcon(new ImageIcon(  "src/img/stopN.png" ));
 
-    	play.setOpaque(false);            
-    	play.setContentAreaFilled(false); 
-    	play.setBorderPainted(false);     
-    	play.setBorder(null); 
-    	play.setFocusPainted(false);
-    	play.setContentAreaFilled(false);
-    	play.setPressedIcon(new ImageIcon(  "src/img/PlayN.png" ));
+    	btnPlay.setOpaque(false);            
+    	btnPlay.setContentAreaFilled(false); 
+    	btnPlay.setBorderPainted(false);     
+    	btnPlay.setBorder(null); 
+    	btnPlay.setFocusPainted(false);
+    	btnPlay.setContentAreaFilled(false);
+    	btnPlay.setPressedIcon(new ImageIcon(  "src/img/PlayN.png" ));
     	
-    	anadir.setOpaque(false);            
-    	anadir.setContentAreaFilled(false); 
-    	anadir.setBorderPainted(false);     
-    	anadir.setBorder(null); 
-    	anadir.setFocusPainted(false);
-    	anadir.setContentAreaFilled(false);
-    	anadir.setPressedIcon(new ImageIcon(  "src/img/añadirN.png" ));
+    	btnAnadir.setOpaque(false);            
+    	btnAnadir.setContentAreaFilled(false); 
+    	btnAnadir.setBorderPainted(false);     
+    	btnAnadir.setBorder(null); 
+    	btnAnadir.setFocusPainted(false);
+    	btnAnadir.setContentAreaFilled(false);
+    	btnAnadir.setPressedIcon(new ImageIcon(  "src/img/añadirN.png" ));
     	
+    	btnFin.setOpaque(false);            
+    	btnFin.setContentAreaFilled(false); 
+    	btnFin.setBorderPainted(false);     
+    	btnFin.setBorder(null); 
+    	btnFin.setFocusPainted(false);
+    	btnFin.setContentAreaFilled(false);
+    	btnFin.setPressedIcon(new ImageIcon(  "src/img/FinN.png" ));
     	
-    	Fin.setOpaque(false);            
-    	Fin.setContentAreaFilled(false); 
-    	Fin.setBorderPainted(false);     
-    	Fin.setBorder(null); 
-    	Fin.setFocusPainted(false);
-    	Fin.setContentAreaFilled(false);
-    	Fin.setPressedIcon(new ImageIcon(  "src/img/FinN.png" ));
+    	btnShuffle.setOpaque(false);            
+    	btnShuffle.setContentAreaFilled(false); 
+    	btnShuffle.setBorderPainted(false);     
+    	btnShuffle.setBorder(null); 
+    	btnShuffle.setFocusPainted(false);
+    	btnShuffle.setContentAreaFilled(false);
+    	btnShuffle.setPressedIcon(new ImageIcon(  "src/img/shuffleN.png" ));
     	
-    	
-    	shuffle.setOpaque(false);            
-    	shuffle.setContentAreaFilled(false); 
-    	shuffle.setBorderPainted(false);     
-    	shuffle.setBorder(null); 
-    	shuffle.setFocusPainted(false);
-    	shuffle.setContentAreaFilled(false);
-    	shuffle.setPressedIcon(new ImageIcon(  "src/img/shuffleN.png" ));
-    	
-    	
-    	principio.setOpaque(false);            
-    	principio.setContentAreaFilled(false); 
-    	principio.setBorderPainted(false);     
-    	principio.setBorder(null); 
-    	principio.setFocusPainted(false);
-    	principio.setContentAreaFilled(false);
-    	principio.setPressedIcon(new ImageIcon(  "src/img/principioN.png" ));
+    	btnPrincipio.setOpaque(false);            
+    	btnPrincipio.setContentAreaFilled(false); 
+    	btnPrincipio.setBorderPainted(false);     
+    	btnPrincipio.setBorder(null); 
+    	btnPrincipio.setFocusPainted(false);
+    	btnPrincipio.setContentAreaFilled(false);
+    	btnPrincipio.setPressedIcon(new ImageIcon(  "src/img/principioN.png" ));
 		
+    	// LISTENERS BOTONES
     	
-		play.addActionListener(this);
-		stop.addActionListener(this);
-		pausar.addActionListener(this);
-		anadir.addActionListener(this);
-		shuffle.addActionListener(this);
-		principio.addActionListener(this);
-		Fin.addActionListener(this);
-		like.addActionListener(this);
+		btnPlay.addActionListener(this);
+		btnStop.addActionListener(this);
+		btnPausar.addActionListener(this);
+		btnAnadir.addActionListener(this);
+		btnShuffle.addActionListener(this);
+		btnPrincipio.addActionListener(this);
+		btnFin.addActionListener(this);
+		btnLike.addActionListener(this);
 
-
-		Botonera.add(anadir);
-		Botonera.add(shuffle);
-		Botonera.add(play);
-		Botonera.add(pausar);
-		Botonera.add(stop);
-		Botonera.add(principio);
-		Botonera.add(Fin);
-		Botonera.add(like);
-		Botonera.add(BarraProgreso);
+		//BOTONERA
 		
+		panelBotonera.add(btnAnadir);
+		panelBotonera.add(btnShuffle);
+		panelBotonera.add(btnPlay);
+		panelBotonera.add(btnPausar);
+		panelBotonera.add(btnStop);
+		panelBotonera.add(btnPrincipio);
+		panelBotonera.add(btnFin);
+		panelBotonera.add(btnLike);
+		panelBotonera.add(BarraProgreso);
 		
+		//SPLITPANE
 		
-		splitpanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelListas, panelCanciones);
-		splitpanel.setResizeWeight(0.5);
+		splitPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelListas, panelCanciones);
+		splitPanel.setResizeWeight(0.5);
 		
-		panelSup.add(inicio, BorderLayout.CENTER);
+		panelSup.add(panelInicio, BorderLayout.CENTER);
 		
-		panelBajo.add(Botonera, BorderLayout.NORTH );
+		panelBajo.add(panelBotonera, BorderLayout.NORTH );
 		panelBajo.add(BarraProgreso, BorderLayout.SOUTH );
 		
-		ventanita.getContentPane().add(panelSup, BorderLayout.NORTH);
-		ventanita.getContentPane().add(panelBajo, BorderLayout.SOUTH);
-		ventanita.getContentPane().add(splitpanel);
+		frmVentanita.getContentPane().add(panelSup, BorderLayout.NORTH);
+		frmVentanita.getContentPane().add(panelBajo, BorderLayout.SOUTH);
+		frmVentanita.getContentPane().add(splitPanel);
 		
-		ventanita.setVisible(true);
-		Botonera.setVisible(true);
+		frmVentanita.setVisible(true);
+		panelBotonera.setVisible(true);
 		
-		barraSlid = new JSlider( JSlider.HORIZONTAL,0,100,60 );
-		
-	    barraSlid.setValue( 0 );
-	    barraSlid.setPaintTicks( true );
-	    barraSlid.setMajorTickSpacing( 20 );
-	    barraSlid.setMinorTickSpacing( 5 );
-	    barraSlid.addChangeListener( new ChangeListener() 
-	    {
-	      public void stateChanged( ChangeEvent evt ) {
-	        BarraProgreso.setValue(barraSlid.getValue() );
-	      }
-	    } );
-	    Botonera.add( barraSlid );
-	    panelBajo.add(barraSlid, BorderLayout.SOUTH );
-		
-		//Componentes del buscador
-	    txtBuscar = new JTextField();
-	    txtBuscar1 = new JTextField();
-	    txtBuscar1.setBounds(100, 20, 100, 25);
-		//txtBuscar.setVisible(true);
-		btnBuscar = new JButton("Buscar");
-		btnBuscar.setBounds(getBounds());
-		Buscador.setBackground(Color.BLACK); //Lo pongo asi para distinguir el panel
-		System.out.println(Buscador.getLocation());
-		Buscador.add(btnBuscar);
-		Buscador.add(txtBuscar);
-		Buscador.setVisible(true);
-//		inicio.add(btnBuscar, FlowLayout.LEFT);
-//		inicio.add(txtBuscar, FlowLayout.LEFT);
-		inicio.add(txtBuscar1);
-		inicio.add(Buscador, FlowLayout.LEFT);
-		btnBuscar.addActionListener(new ActionListener()
-		{
-			
-			public void actionPerformed(ActionEvent arg0) 
-			{
-				buscarCancion();
-			}
-			
-		});
-		
-		
+		//BUSCADOR
+
+//	    txtBuscar = new JTextField();
+//	    txtBuscar1 = new JTextField();
+//	    txtBuscar1.setBounds(100, 20, 100, 25);
+//		//txtBuscar.setVisible(true);
+//		btnBuscar = new JButton("Buscar");
+//		btnBuscar.setBounds(getBounds());
+//		panelBuscador.setBackground(Color.BLACK); //Lo pongo asi para distinguir el panel
+//		System.out.println(panelBuscador.getLocation());
+//		panelBuscador.add(btnBuscar);
+//		panelBuscador.add(txtBuscar);
+//		panelBuscador.setVisible(true);
+////		inicio.add(btnBuscar, FlowLayout.LEFT);
+////		inicio.add(txtBuscar, FlowLayout.LEFT);
+//		panelInicio.add(txtBuscar1);
+//		panelInicio.add(panelBuscador, FlowLayout.LEFT);
+//		btnBuscar.addActionListener(new ActionListener()
+//		{
+//			
+//			public void actionPerformed(ActionEvent arg0) 
+//			{
+//				buscarCancion();
+//			}
+//			
+//		});
 		//txtBuscar.setSize(300, 20);
 		//inicio.add(txtBuscar, BorderLayout.EAST);
-	   	    
+	    
+	    //VOLUMEN
+		
+		g = new GridBagConstraints();
+		panelBotonera.setLayout(new GridBagLayout());
+		g.gridx = 1;
+		g.gridy = 0;
+		
+		lblVol = new JLabel("Volumen 20 %");
+		g.gridx=0;
+		g.gridy=1;
+		panelBotonera.add(lblVol, g.gridx);
+		
+		slide = new JSlider(JSlider.HORIZONTAL,0,100,30);
+		slide.setMajorTickSpacing(50);
+		slide.setPaintTicks(true);
+		panelBotonera.add(slide,g.gridy);
+		
+		slide.addChangeListener(new ChangeListener()
+				{
+					public void stateChanged(ChangeEvent event)
+					{
+						lblVol.setText("Volumen "+slide.getValue()+" %");
+//						slide.setValue(auidoClip);
+						
+
+					}
+				});
+
+		//MOUSE LISTENER BARRA PROGRESO
+		
 		BarraProgreso.addMouseListener( new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -402,11 +428,12 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 					// long milisegsSalto = mediaPlayer.getLength();
 					// milisegsSalto = Math.round( milisegsSalto * porcentajeSalto );
 					// mediaPlayer.setTime( milisegsSalto );
-					
-					
 				}
 			}
 		});
+		
+		//SELECTION LISTENER CANCIONES
+		
 		listaCanciones.addListSelectionListener(new ListSelectionListener() {
 
             @Override
@@ -418,6 +445,8 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
       
             }
         });
+		
+		//SELECTION LISTENER LISTAS
 		
 		listas.addListSelectionListener(new ListSelectionListener() {
 
@@ -431,12 +460,12 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
                 }
             }
         });
-		
-	
 	}
 	
+	//MÉTODOS PARA EL FUNCIONAMIENTO DE LA MÚSICA
+	
 	public void actionPerformed(ActionEvent arg0) {
-		if(arg0.getSource() == play)
+		if(arg0.getSource() == btnPlay)
 		{
 			System.out.println("PEooooooo" + SongIndex);
 			if(SongIndex!=aux)
@@ -459,13 +488,13 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			AvanceBP();
 			
 		}
-		else if(arg0.getSource() == pausar)
+		else if(arg0.getSource() == btnPausar)
 		{
 			clipTime= audioClip.getMicrosecondPosition();
 			playing = false;
 			audioClip.stop();	
 		}
-		else if(arg0.getSource() == stop)
+		else if(arg0.getSource() == btnStop)
 		{
 			playing = false;
 			audioClip.stop();
@@ -474,7 +503,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			audioClip.close();
 			
 		}
-		else if(arg0.getSource() == Fin)
+		else if(arg0.getSource() == btnFin)
 		{
 			if(model2.size()==SongIndex+1)
 			{
@@ -485,7 +514,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 				SongIndex = SongIndex+1;
 			}
 			ImageIcon icon = new ImageIcon(UsuarioActual.getListas().get(0).getCanciones().get(SongIndex).getRutaImg());
-			FotoCan.setIcon(icon);
+			lblFotoCan.setIcon(icon);
 			System.out.println("EL PRIMER NUMERO ES " + SongIndex);
 			System.out.println("EL SEGUNDO NUMERO ES " + aux);
 			if(SongIndex!=aux)
@@ -501,7 +530,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			System.out.println(audioClip.getLongFramePosition());
 			AvanceBP();
 		}
-		else if(arg0.getSource() == principio)
+		else if(arg0.getSource() == btnPrincipio)
 		{
 			boolean primeraPos = false;
 			
@@ -515,7 +544,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			}
 			
 			ImageIcon icon = new ImageIcon(UsuarioActual.getListas().get(0).getCanciones().get(SongIndex).getRutaImg());
-			FotoCan.setIcon(icon);
+			lblFotoCan.setIcon(icon);
 			
 			System.out.println("EL PRIMER NUMERO ES " + SongIndex);
 			System.out.println("EL SEGUNDO NUMERO ES " + aux);
@@ -533,7 +562,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			System.out.println(audioClip.getLongFramePosition());
 			AvanceBP();
 		}
-		else if(arg0.getSource() == anadir)
+		else if(arg0.getSource() == btnAnadir)
 		{
 			intListas =  new frmInternalListas();
 			clsCancion cancion = UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex);
