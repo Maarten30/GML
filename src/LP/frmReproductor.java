@@ -98,6 +98,8 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	private JButton btnBuscar;
 	
 	private JTextField txtBuscar;
+	private JTextField txtBuscar1;
+	
 	
 	private JSlider barraSlid;
 	
@@ -203,11 +205,6 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
     	inicio.add(FotoCan);
 		inicio.add(musica, FlowLayout.LEFT);
 		
-//		usuario1 = new JLabel(frmInicioSesion.txtUsu.getText());
-//		usuario1.setFont(f1);
-//		inicio.add(usuario1);
-		
-    	
 		
 		panelListas = new JScrollPane(listas);
 		panelCanciones = new JScrollPane(listaCanciones);
@@ -271,21 +268,6 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
     	anadir.setContentAreaFilled(false);
     	anadir.setPressedIcon(new ImageIcon(  "src/img/añadirN.png" ));
     	
-//    	anterior.setOpaque(false);            
-//    	anterior.setContentAreaFilled(false); 
-//    	anterior.setBorderPainted(false);     
-//    	anterior.setBorder(null); 
-//    	anterior.setFocusPainted(false);
-//    	anterior.setContentAreaFilled(false);
-//    	anterior.setPressedIcon(new ImageIcon(  "src/img/anteriorN.png" ));
-    	
-//    	avance.setOpaque(false);            
-//    	avance.setContentAreaFilled(false); 
-//    	avance.setBorderPainted(false);     
-//    	avance.setBorder(null); 
-//    	avance.setFocusPainted(false);
-//    	avance.setContentAreaFilled(false);
-//    	avance.setPressedIcon(new ImageIcon(  "src/img/avanceN.png" ));
     	
     	Fin.setOpaque(false);            
     	Fin.setContentAreaFilled(false); 
@@ -295,13 +277,6 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
     	Fin.setContentAreaFilled(false);
     	Fin.setPressedIcon(new ImageIcon(  "src/img/FinN.png" ));
     	
-//    	rebobinar.setOpaque(false);            
-//    	rebobinar.setContentAreaFilled(false); 
-//    	rebobinar.setBorderPainted(false);     
-//    	rebobinar.setBorder(null); 
-//    	rebobinar.setFocusPainted(false);
-//    	rebobinar.setContentAreaFilled(false);
-//    	rebobinar.setPressedIcon(new ImageIcon(  "src/img/rebobinarN.png" ));
     	
     	shuffle.setOpaque(false);            
     	shuffle.setContentAreaFilled(false); 
@@ -311,13 +286,6 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
     	shuffle.setContentAreaFilled(false);
     	shuffle.setPressedIcon(new ImageIcon(  "src/img/shuffleN.png" ));
     	
-//    	siguiente.setOpaque(false);            
-//    	siguiente.setContentAreaFilled(false); 
-//    	siguiente.setBorderPainted(false);     
-//    	siguiente.setBorder(null); 
-//    	siguiente.setFocusPainted(false);
-//    	siguiente.setContentAreaFilled(false);
-//    	siguiente.setPressedIcon(new ImageIcon(  "src/img/SiguienteN.png" ));
     	
     	principio.setOpaque(false);            
     	principio.setContentAreaFilled(false); 
@@ -331,33 +299,24 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		play.addActionListener(this);
 		stop.addActionListener(this);
 		pausar.addActionListener(this);
-//		anterior.addActionListener(this);
-//		siguiente.addActionListener(this);
 		anadir.addActionListener(this);
 		shuffle.addActionListener(this);
 		principio.addActionListener(this);
-//		rebobinar.addActionListener(this);
-//		avance.addActionListener(this);
 		Fin.addActionListener(this);
 		like.addActionListener(this);
-		
-		txtBuscar = new JTextField();
-		txtBuscar.setVisible(true);
-		
-//		Botonera.add(anterior);
-//		Botonera.add(siguiente);
+
+
 		Botonera.add(anadir);
 		Botonera.add(shuffle);
 		Botonera.add(play);
 		Botonera.add(pausar);
 		Botonera.add(stop);
 		Botonera.add(principio);
-//		Botonera.add(rebobinar);
-//		Botonera.add(avance);
 		Botonera.add(Fin);
 		Botonera.add(like);
 		Botonera.add(BarraProgreso);
-		Botonera.add(txtBuscar);
+		
+		
 		
 		splitpanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelListas, panelCanciones);
 		splitpanel.setResizeWeight(0.5);
@@ -390,10 +349,20 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	    panelBajo.add(barraSlid, BorderLayout.SOUTH );
 		
 		//Componentes del buscador
+	    txtBuscar = new JTextField();
+	    txtBuscar1 = new JTextField();
+	    txtBuscar1.setBounds(100, 20, 100, 25);
+		//txtBuscar.setVisible(true);
 		btnBuscar = new JButton("Buscar");
+		btnBuscar.setBounds(getBounds());
+		Buscador.setBackground(Color.BLACK);
+		System.out.println(Buscador.getLocation());
 		Buscador.add(btnBuscar);
-		//Buscador.add(txtBuscar);
+		Buscador.add(txtBuscar);
 		Buscador.setVisible(true);
+//		inicio.add(btnBuscar, FlowLayout.LEFT);
+//		inicio.add(txtBuscar, FlowLayout.LEFT);
+		inicio.add(txtBuscar1);
 		inicio.add(Buscador, FlowLayout.LEFT);
 		btnBuscar.addActionListener(new ActionListener()
 		{
@@ -704,7 +673,8 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
     	String texto = txtBuscar.getText();
     	try 
     	{
-			rs = st.executeQuery("SELECT * from playlist WHERE cancion = '"+texto+"'");
+			rs = st.executeQuery("SELECT nombre, autor from canciones WHERE nombre,autor like" + "'"+texto+"' _%");
+			System.out.println(rs);
 		} 
     	catch (SQLException e) {
 			// TODO Auto-generated catch block
