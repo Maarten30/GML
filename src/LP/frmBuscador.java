@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -38,6 +39,7 @@ public class frmBuscador extends JFrame implements ActionListener
 		private JButton btnAnadir;
 		private JTextField txtBuscar;
 		private JFrame frame;
+		private frmInternalListas intListas;
 		private JPanel panel;
 		private JScrollPane panelCanciones;
 		private JSplitPane splitPanel;
@@ -45,7 +47,9 @@ public class frmBuscador extends JFrame implements ActionListener
 		
 		private DefaultListModel<String> model = new DefaultListModel<>();
 		private JList<String> listaCanciones= null;
+		
 		private int SongIndex = 0;
+		private int ListIndex = 0;
 		
 		private clsUsuario UsuarioActual;
 		
@@ -62,13 +66,15 @@ public class frmBuscador extends JFrame implements ActionListener
 			
 			frame = new JFrame("Buscador");
 			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			frame.setSize(600, 500);
+			frame.setSize(500, 400);
 			frame.setVisible(true);
 			
 			panel = new JPanel();
 			panel.setLayout(null);
 			frame.add(panel);
 			
+			listaCanciones = new JList<>(model);
+
 			panelCanciones = new JScrollPane(listaCanciones);
 			
 			splitPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panel, panelCanciones);
@@ -76,17 +82,17 @@ public class frmBuscador extends JFrame implements ActionListener
 			frame.add(splitPanel);
 			
 			txtBuscar = new JTextField(); 
-			txtBuscar.setBounds(20, 85, 300, 30);
+			txtBuscar.setBounds(20, 35, 300, 30);
 			txtBuscar.setFont(f2);
 			panel.add(txtBuscar);
 			
 			lblCancion = new JLabel("Introduzca el nombre de la canción o del artista que desee buscar: ");
-			lblCancion.setBounds(20, 50, 550, 30);
+			lblCancion.setBounds(20, 5, 550, 30);
 			lblCancion.setFont(f2);
 			panel.add(lblCancion);
 		
 			btnBuscar = new JButton("Buscar");
-			btnBuscar.setBounds(340, 85, 80, 30);
+			btnBuscar.setBounds(340, 35, 80, 30);
 			panel.add(btnBuscar);
 			btnBuscar.addActionListener(new ActionListener()
 			{
@@ -94,7 +100,6 @@ public class frmBuscador extends JFrame implements ActionListener
 				public void actionPerformed(ActionEvent arg0) 
 				{
 					buscarCancion();
-					frame.dispose();
 				}
 				
 			});
@@ -102,25 +107,25 @@ public class frmBuscador extends JFrame implements ActionListener
 			UsuarioActual = usuario;
 			
 			btnAnadir = new JButton("Añadir");
-			btnAnadir.setBounds(340, 130, 80, 30);
+			btnAnadir.setBounds(340, 70, 80, 30);
 			panel.add(btnAnadir);
+			btnAnadir.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent arg0) 
+				{
+					intListas =  new frmInternalListas();
+					clsCancion cancion = UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex);
+					intListas.frmInternalListas(UsuarioActual, cancion);
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
 			
-			listaCanciones = new JList<>(model);
-//			listaCanciones.setSelectedIndex(0);
-//			
-//			listaCanciones.addListSelectionListener(new ListSelectionListener() {
-//
-//	            @Override
-//	            public void valueChanged(ListSelectionEvent arg0) {
-//	                if (!arg0.getValueIsAdjusting()) 
-//	                {
-//	                	SongIndex = listaCanciones.getSelectedIndex();
-//	                }
-//	      
-//	            }
-//	        });
-
+			listaCanciones.setSelectedIndex(0);
 		}
+
 	
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
@@ -133,12 +138,26 @@ public class frmBuscador extends JFrame implements ActionListener
 	    	String texto = txtBuscar.getText().toUpperCase();
 	    	try 
 	    	{
+//				rs = statement.executeQuery("SELECT nombre from canciones WHERE nombre like'%" +texto+"%' or autor like '%"+texto+"%'");
 				rs = statement.executeQuery("SELECT nombre from canciones WHERE nombre like'" +texto+"' or autor like '"+texto+"'");
 				
 				while(rs.next())
-				{
-//					System.out.println(rs.getString("nombre"));
+				{			
+					model.removeAllElements();
 
+					for(clsCancion c : UsuarioActual.getListas().get(0).getCanciones())
+					{
+						if(c.getNombre().equalsIgnoreCase(texto)|| c.getAutor().equalsIgnoreCase(texto))
+						{
+							model.addElement(c.getNombre()+ " - "+ c.getAutor());
+						}
+						else
+						{
+//							JOptionPane.showMessageDialog(null, "La canción que busca no existe","BUSCADOR",JOptionPane.INFORMATION_MESSAGE);
+							continue;
+
+						}
+					}
 				}
 				
 			} 
