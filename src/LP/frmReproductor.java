@@ -528,8 +528,9 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			{
 				SongIndex = SongIndex+1;
 			}
-			ImageIcon icon = new ImageIcon(UsuarioActual.getListas().get(0).getCanciones().get(SongIndex).getRutaImg());
+			ImageIcon icon = new ImageIcon(UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex).getRutaImg());
 			lblFotoCan.setIcon(icon);
+			
 			System.out.println("EL PRIMER NUMERO ES " + SongIndex);
 			System.out.println("EL SEGUNDO NUMERO ES " + aux);
 			if(SongIndex!=aux)
@@ -558,7 +559,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 				primeraPos = true;
 			}
 			
-			ImageIcon icon = new ImageIcon(UsuarioActual.getListas().get(0).getCanciones().get(SongIndex).getRutaImg());
+			ImageIcon icon = new ImageIcon(UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex).getRutaImg());
 			lblFotoCan.setIcon(icon);
 			
 			System.out.println("EL PRIMER NUMERO ES " + SongIndex);
