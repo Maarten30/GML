@@ -120,7 +120,7 @@ public class frmBuscador extends JFrame implements ActionListener
 							intListas.frmInternalListas(UsuarioActual, c);
 						}
 					}
-					//AQUIIIII
+					frame.dispose();
 				}
 			});
 			
