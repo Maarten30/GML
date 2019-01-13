@@ -120,12 +120,30 @@ public class frmInternalListas extends JFrame implements ActionListener
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
 			{
+				boolean repetido = false;
 				
-				UsuarioActual.getListas().get(ListIndex).añadirCancion(Cancion);
-				String nombre = UsuarioActual.getListas().get(ListIndex).getNombre();
-				clsBD.añadirCanPlaylist(nombre, Cancion);
+				for(clsCancion a:UsuarioActual.getListas().get(ListIndex).getCanciones())
+				{
+					if(Cancion.getNombre().equalsIgnoreCase(a.getNombre()))
+					{
+						repetido = true;
+					}
+				}
 				
-				frame.dispose();
+				if(repetido == true)
+				{
+					JOptionPane.showMessageDialog(null,"Esta canción ya se encuentra en la lista seleccionada","AÑADIR CANCION",JOptionPane.INFORMATION_MESSAGE);
+
+				}else
+				{
+					UsuarioActual.getListas().get(ListIndex).añadirCancion(Cancion);
+					String nombre = UsuarioActual.getListas().get(ListIndex).getNombre();
+					clsBD.añadirCanPlaylist(nombre, Cancion);
+					
+					frame.dispose();
+					
+				}
+				
 			
 			}
 			
@@ -136,10 +154,12 @@ public class frmInternalListas extends JFrame implements ActionListener
 		
 		btnCreayAñade.addActionListener(new ActionListener()
 		{
+			
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
 			{
+				boolean repetido = false;
 				
 				if(txtLista.getText().isEmpty())
 				{
@@ -147,21 +167,37 @@ public class frmInternalListas extends JFrame implements ActionListener
 					
 				}
 				else
-				{					
+				{	
 					String nombre = txtLista.getText();
-					clsPlayList NewLista = new clsPlayList(nombre);
-					NewLista.añadirCancion(Cancion);
-					UsuarioActual.añadirPlaylist(NewLista);
-					clsBD.añadirUsuario(UsuarioActual.getNombre(), UsuarioActual.getApellido(), UsuarioActual.getEmail(),
-							UsuarioActual.getNombreUs(), UsuarioActual.getContrasena(), nombre);
-					clsBD.añadirCanPlaylist(nombre, Cancion);
-					
 					
 					for(clsPlayList a:UsuarioActual.getListas())
 					{
-						System.out.println(a.getNombre());
+						if(nombre.equalsIgnoreCase(a.getNombre()))
+						{
+							repetido = true;
+						}
 					}
-					frame.dispose();
+					
+					if(repetido == true)
+					{
+						JOptionPane.showMessageDialog(null,"Ya existe una PlayList con este nombre","AÑADIR CANCION",JOptionPane.INFORMATION_MESSAGE);
+
+					}else
+					{
+						clsPlayList NewLista = new clsPlayList(nombre);
+						NewLista.añadirCancion(Cancion);
+						UsuarioActual.añadirPlaylist(NewLista);
+						clsBD.añadirUsuario(UsuarioActual.getNombre(), UsuarioActual.getApellido(), UsuarioActual.getEmail(),
+								UsuarioActual.getNombreUs(), UsuarioActual.getContrasena(), nombre);
+						clsBD.añadirCanPlaylist(nombre, Cancion);
+						
+						frame.dispose();
+						
+					}
+					
+					
+					
+					
 				}
 		
 				

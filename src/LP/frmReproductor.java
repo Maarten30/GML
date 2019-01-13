@@ -37,6 +37,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -627,6 +628,60 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			{
 				aleatorio = false;
 				System.out.println("Se ha puesto en orden normal");
+			}
+			
+		}
+		else if(arg0.getSource() == btnLike)
+		{
+			boolean existe = false;
+			boolean cancionRep = false;
+			String favoritos = "FAVORITOS";
+			
+			for(clsPlayList a:UsuarioActual.getListas())
+			{
+				if(a.getNombre().equals(favoritos))
+				{
+					existe = true;
+				}
+			}
+			
+			if(existe == true)
+			{
+				for(clsPlayList a:UsuarioActual.getListas())
+				{
+					if(a.getNombre().equals(favoritos))
+					{
+						for(clsCancion d:a.getCanciones())
+						{
+							if(d.getNombre().equalsIgnoreCase(UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex).getNombre()))
+							{
+								cancionRep = true;
+							}
+						}
+						if(cancionRep==false)
+						{
+							a.añadirCancion(UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex));
+							clsBD.añadirCanPlaylist(favoritos, UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex));
+
+						}
+						else
+						{
+							JOptionPane.showMessageDialog(null,"Esta canción ya se encuentra en la lista de FAVORITOS","AÑADIR A FAVORITOS",JOptionPane.INFORMATION_MESSAGE);
+
+						}
+					}
+					
+				}
+			}else
+			{
+				clsPlayList fav = new clsPlayList(favoritos);
+				fav.añadirCancion(UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex));
+				UsuarioActual.añadirPlaylist(fav);
+				clsBD.añadirUsuario(UsuarioActual.getNombre(), UsuarioActual.getApellido(), UsuarioActual.getEmail(),
+						UsuarioActual.getNombreUs(), UsuarioActual.getContrasena(), fav.getNombre());
+				clsBD.añadirCanPlaylist(fav.getNombre(), UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex));
+				
+				
 			}
 			
 		}
