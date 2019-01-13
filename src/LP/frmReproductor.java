@@ -126,6 +126,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	boolean playing;
 	boolean PrimeraVez = true;
 	boolean aleatorio = false;
+	boolean refrescado = false;
 	
 	private int SongIndex = 0;
 	private int aux = 0;
@@ -477,7 +478,19 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
                 if (!arg0.getValueIsAdjusting()) 
                 {
                 	ListIndex = listas.getSelectedIndex();
-                	Canciones = UsuarioActual.getListas().get(ListIndex).getCanciones();
+                	System.out.println(ListIndex);
+                	try
+                	{
+                		Canciones = UsuarioActual.getListas().get(ListIndex).getCanciones();
+                	}catch(Exception e)
+                	{
+                	
+                		Canciones = UsuarioActual.getListas().get(0).getCanciones();
+                		ListIndex = 0;
+                		listas.setSelectedIndex(0);
+                	}
+                	
+                	
                 	CargarCanciones(ListIndex);
                 }
             }
@@ -614,6 +627,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		else if(arg0.getSource() == btnRefrescar)
 		{
 			CargarListas();
+			
 		}
 		else if(arg0.getSource() == btnShuffle)
 		{

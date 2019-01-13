@@ -417,22 +417,45 @@ public class clsGestor
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		
+			
 		ResultSet rs2 = null;
+		
 		
 		try 
 		{
-			rs2 = statement.executeQuery("SELECT DISTINCT playlist FROM usuarios WHERE nombreUsu ='" +usuario+"' AND contrasenya ='" +contraseña+"'");
+			rs2 = statement.executeQuery("SELECT playlist FROM usuarios WHERE nombreUsu ='" +usuario+"'");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		try 
-		{
+		ArrayList <String> playlistsss = new ArrayList<String>();
+		
+		try {
 			while(rs2.next())
 			{
-				String nombreplay = rs2.getString("playlist");
+				System.out.println("Funcionaaaaa :" + rs2.getString("playlist"));
+				String añadir = rs2.getString("playlist");
+				playlistsss.add(añadir);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		for(String h:playlistsss)
+		{
+			System.out.println("El for tambien funciona: " + h);
+		}
+		
+		
+		
+		
+		for(String h:playlistsss)
+		{
+			
+				String nombreplay = h;
+				System.out.println("NUEVA PLAYLIST CON NOMBRE: " + nombreplay);
 				clsPlayList listnueva = new clsPlayList(nombreplay);
 				
 				ResultSet rs3 = null;
@@ -469,17 +492,19 @@ public class clsGestor
 					e.printStackTrace();
 				}	
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		
 	}
 	
 	public void AbrirMenu()
 	{
-		RecibirPlayList(usuarioActual);
-		usuarioActual.setListas(playlists);
+		//RecibirPlayList(usuarioActual);
+		//usuarioActual.setListas(playlists);
+		
+		for(clsPlayList a:usuarioActual.getListas())
+		{
+			System.out.println(a.getNombre());
+		}
 		
 		frmReproductor Pantalla = new frmReproductor();
 		
