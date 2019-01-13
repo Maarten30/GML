@@ -421,6 +421,15 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		slide.setValue(100);
 		panelBotonera.add(slide,g.gridy);
 		
+		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable()
+		{
+			public void run()
+			{
+				clsBD.close();
+			}
+			
+		}));
+			
 		
 		
 		slide.addChangeListener(new ChangeListener()
@@ -977,6 +986,8 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			logger.log(Level.SEVERE, "Error en la creación del fichero log");
 		}
 	}
+	
+	
 
 	
 }

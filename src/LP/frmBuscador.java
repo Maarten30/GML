@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javax.swing.DefaultListModel;
@@ -48,8 +49,9 @@ public class frmBuscador extends JFrame implements ActionListener
 		private DefaultListModel<String> model = new DefaultListModel<>();
 		private JList<String> listaCanciones= null;
 		
+		private ArrayList<clsCancion> canciones = new ArrayList<clsCancion>();
+		
 		private int SongIndex = 0;
-		private int ListIndex = 0;
 		
 		private clsUsuario UsuarioActual;
 		
@@ -117,15 +119,15 @@ public class frmBuscador extends JFrame implements ActionListener
 					SongIndex = listaCanciones.getSelectedIndex();
 					intListas =  new frmInternalListas();
 					
+					
 					for(clsCancion c : UsuarioActual.getListas().get(0).getCanciones())
 					{
-						if(model.getElementAt(SongIndex).equals(listaCanciones.getName()))
+						if(canciones.get(SongIndex).getNombre().equalsIgnoreCase(c.getNombre()))
 						{
 							intListas.frmInternalListas(UsuarioActual, c);
+							//AQUIIIIIIIIIIIIII
 						}
 					}
-//					System.out.println("FADJFOADSFJKAFD " + cancion.getNombre());
-					// TODO Auto-generated method stub
 					
 				}
 				
@@ -157,7 +159,8 @@ public class frmBuscador extends JFrame implements ActionListener
 					{
 						if(c.getNombre().equalsIgnoreCase(texto)|| c.getAutor().equalsIgnoreCase(texto))
 						{
-							model.addElement(c.getNombre()+ " - "+ c.getAutor());
+							canciones.add(c);
+							model.addElement(c.getNombre() + " - " + c.getAutor());
 						}
 						else
 						{
