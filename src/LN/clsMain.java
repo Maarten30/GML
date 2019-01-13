@@ -1,5 +1,7 @@
 package LN;
 
+import java.awt.EventQueue;
+
 import LP.frmInicioSesion;
 
 /**
@@ -12,12 +14,18 @@ public class clsMain
 
 	public static void main(String[] args)
 	{
-		
 		clsGestor gestor = new clsGestor();
 		gestor.InicializarBD();
-		
-		frmInicioSesion frame = new frmInicioSesion(gestor);
-		frame.setVisible(true);
-	}
+				
+		EventQueue.invokeLater( new Runnable() 
+		{
+			@Override
+			public void run()
+			{
+				frmInicioSesion frame = new frmInicioSesion(gestor);
+				frame.setVisible(true);
+			}
+		});
 
+	}
 }
