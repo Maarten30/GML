@@ -39,7 +39,6 @@ public class clsGestor
 		
 		InsertarCanciones();
 		InsertarListasIniciales();	
-		RecibirPlayList();
 	}
 	
 /**
@@ -296,6 +295,8 @@ public class clsGestor
 			
 		if(numero == 0)
 		{
+			
+			System.out.println("HA AÑADIDO LA PLAYLIST TODAS AL NUEVO USUARIO");
 				
 			for(clsCancion a:canciones)
 			{
@@ -313,76 +314,85 @@ public class clsGestor
 			
 	}
 		
-	public void RecibirPlayList()
+	public void RecibirPlayList(clsUsuario usuario)
 	{
 		
-		ResultSet rs = null;
-		try 
-		{
-			rs = statement.executeQuery("SELECT * FROM playlist");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
-		String aux = "";
-		boolean primeravuelta = true;
-		int numero = 0;
 		
-		try 
+		for(clsPlayList a:usuario.getListas())
 		{
-			while(rs.next())
+			String nombre = a.getNombre();
+			
+			ResultSet rs = null;
+			try 
 			{
-				String nombreplay = rs.getString("nombre");
-				
-				if(nombreplay.equalsIgnoreCase(aux))
-				{
-					
-				}
-				else
-				{
-					playnueva = new clsPlayList();
-					playnueva.setNombre(nombreplay);
-					numero = numero +1;
-				}
-				
-				
-				
-				String cancion = rs.getString("cancion");
-				
-				
-				for(clsCancion a:canciones)
-				{
-					
-					if(a.getNombre().equalsIgnoreCase(cancion))
-					{
-						System.out.println("CAAAAAAAAANCION: " + a.getNombre());
-						playnueva.añadirCancion(a);
-					}
-				}
-				if(nombreplay.equalsIgnoreCase(aux))
-				{
-					
-				}
-				else
-				{
-					playlists.add(playnueva);
-					aux=nombreplay;
-				}
-				
-				
-				if(primeravuelta == true)
-				{
-					aux = nombreplay;
-					primeravuelta = false;
-				}
-					
+				rs = statement.executeQuery("SELECT * FROM playlist WHERE nombre ='" +nombre+"' ");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			String aux = "";
+			boolean primeravuelta = true;
+			int numero = 0;
+			
+			try 
+			{
+				while(rs.next())
+				{
+					String nombreplay = rs.getString("nombre");
+					
+					if(nombreplay.equalsIgnoreCase(aux))
+					{
+						
+					}
+					else
+					{
+						playnueva = new clsPlayList();
+						playnueva.setNombre(nombreplay);
+						numero = numero +1;
+					}
+					
+					
+					
+					String cancion = rs.getString("cancion");
+					
+					
+					for(clsCancion b:canciones)
+					{
+						
+						if(b.getNombre().equalsIgnoreCase(cancion))
+						{
+							System.out.println("CAAAAAAAAANCION: " + a.getNombre());
+							playnueva.añadirCancion(b);
+						}
+					}
+					if(nombreplay.equalsIgnoreCase(aux))
+					{
+						
+					}
+					else
+					{
+						playlists.add(playnueva);
+						aux=nombreplay;
+					}
+					
+					
+					if(primeravuelta == true)
+					{
+						aux = nombreplay;
+						primeravuelta = false;
+					}
+						
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		
+		
 		
 	}
 	
@@ -468,7 +478,7 @@ public class clsGestor
 	
 	public void AbrirMenu()
 	{
-		
+		RecibirPlayList(usuarioActual);
 		usuarioActual.setListas(playlists);
 		
 		frmReproductor Pantalla = new frmReproductor();

@@ -200,6 +200,11 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		//IMAGEN IZQUIERDA
 		
 		JButton musica = new JButton(new ImageIcon ("src/img/Imagen1.png"));
+		for(clsCancion a:UsuarioActual.getListas().get(0).getCanciones())
+		{
+			System.out.println(a.getNombre());
+		}
+			
 		ImageIcon icon = new ImageIcon(UsuarioActual.getListas().get(0).getCanciones().get(0).getRutaImg());
 		lblFotoCan.setIcon(icon);
 		musica.setOpaque(true);                
