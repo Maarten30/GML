@@ -6,6 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.Statement;
 import java.util.logging.Logger;
 
 import javax.swing.DefaultListModel;
@@ -14,12 +16,14 @@ import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import LN.clsBD;
 import LN.clsCancion;
 import LN.clsPlayList;
 import LN.clsUsuario;
@@ -54,6 +58,9 @@ public class frmInternalListas extends JFrame implements ActionListener
 	
 	private boolean actividad = true;
 	
+	private Connection conection = null;
+	private Statement statement = null;
+	
 	
 	/**
 	 * Método en el que se meten los componentes que van a aparecer en el internal frame
@@ -62,6 +69,9 @@ public class frmInternalListas extends JFrame implements ActionListener
 	{
 		UsuarioActual = usuario;
 		Cancion = cancion;
+		
+		conection = clsBD.getConnection();
+		statement = clsBD.getStatement();
 		
 		Font f1 = new Font("Century Gothic",Font.BOLD,18);
 		Font f2 = new Font("Century Gothic",Font.BOLD,14);
@@ -98,34 +108,58 @@ public class frmInternalListas extends JFrame implements ActionListener
 		
 		listas.setFont(f1);
 		
+		listas.setSelectedIndex(ListIndex);
+		
 		btnAñadir = new JButton("Añadir");
 		btnAñadir.addActionListener(new ActionListener()
 		{
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				
+				UsuarioActual.getListas().get(ListIndex).añadirCancion(Cancion);
+				String nombre = UsuarioActual.getListas().get(ListIndex).getNombre();
+				clsBD.añadirCanPlaylist(nombre, Cancion);
 				
 				frame.dispose();
-				UsuarioActual.getListas().get(ListIndex).añadirCancion(Cancion);
-		
-				
+			
 			}
 			
 		});
 		
 		btnCreayAñade = new JButton("Crear y añadir");
 		btnCreayAñade.setBounds(325, 190, 150, 30);
+		
 		btnCreayAñade.addActionListener(new ActionListener()
 		{
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0) 
+			{
 				
-				frame.dispose();
-				String nombre = txtLista.getText();
-				clsPlayList NewLista = new clsPlayList(nombre);
-				NewLista.añadirCancion(Cancion);
-				UsuarioActual.añadirPlaylist(NewLista);
+				if(txtLista.getText().isEmpty())
+				{
+					JOptionPane.showMessageDialog(null,"Debes insertar un nombre para la nueva Lista","LISTA NUEVA",JOptionPane.INFORMATION_MESSAGE);
+					
+				}
+				else
+				{					
+					String nombre = txtLista.getText();
+					clsPlayList NewLista = new clsPlayList(nombre);
+					NewLista.añadirCancion(Cancion);
+					UsuarioActual.añadirPlaylist(NewLista);
+					clsBD.añadirUsuario(UsuarioActual.getNombre(), UsuarioActual.getApellido(), UsuarioActual.getEmail(),
+							UsuarioActual.getNombreUs(), UsuarioActual.getContrasena(), nombre);
+					clsBD.añadirCanPlaylist(nombre, Cancion);
+					
+					
+					for(clsPlayList a:UsuarioActual.getListas())
+					{
+						System.out.println(a.getNombre());
+					}
+					frame.dispose();
+				}
 		
 				
 			}
@@ -176,37 +210,15 @@ public class frmInternalListas extends JFrame implements ActionListener
 	
 	}
 	
-	
-	
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) 
-	{
-//		if(arg0.getSource() == btnAñadir)
-//		{
-//			System.out.println("Entra en el añadir");
-//			this.dispose();
-//			UsuarioActual.getListas().get(ListIndex).añadirCancion(Cancion);
-//			this.dispose();
-//		}
-//		else if(arg0.getSource() == btnCreayAñade)
-//		{
-//			System.out.println("Boton crea y añade");
-//			this.dispose();
-//			String nombre = txtLista.getText();
-//			clsPlayList NewLista = new clsPlayList(nombre);
-//			NewLista.añadirCancion(Cancion);
-//			UsuarioActual.añadirPlaylist(NewLista);
-//			this.dispose();
-//			
-//			
-//		}
-		
-	}
-	
 	public boolean Actividad()
 	{
 		return actividad;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

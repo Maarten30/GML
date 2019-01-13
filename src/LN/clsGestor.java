@@ -19,8 +19,10 @@ public class clsGestor
 	private Connection conection = null;
 	private Statement statement = null;
 	private ArrayList<clsCancion> canciones = new ArrayList<clsCancion>();
-	private clsPlayList playlist = new clsPlayList();
+	private ArrayList <clsPlayList> playlists = new ArrayList <clsPlayList>();
 	private clsUsuario usuarioActual;
+	
+	private clsPlayList playnueva;
 	
 	/**
 	 * Metodo a traves del cual se inicializa la base de datos
@@ -343,12 +345,28 @@ public class clsGestor
 			e.printStackTrace();
 		}
 		
+		String aux = "";
+		boolean primeravuelta = true;
+		int numero = 0;
+		
 		try 
 		{
 			while(rs.next())
 			{
 				String nombreplay = rs.getString("nombre");
-				playlist.setNombre(nombreplay);
+				
+				if(nombreplay.equalsIgnoreCase(aux))
+				{
+					
+				}
+				else
+				{
+					playnueva = new clsPlayList();
+					playnueva.setNombre(nombreplay);
+					numero = numero +1;
+				}
+				
+				
 				
 				String cancion = rs.getString("cancion");
 				
@@ -359,23 +377,33 @@ public class clsGestor
 					if(a.getNombre().equalsIgnoreCase(cancion))
 					{
 						System.out.println("CAAAAAAAAANCION: " + a.getNombre());
-						playlist.añadirCancion(a);
+						playnueva.añadirCancion(a);
 					}
+				}
+				if(nombreplay.equalsIgnoreCase(aux))
+				{
+					
+				}
+				else
+				{
+					playlists.add(playnueva);
+					aux=nombreplay;
+				}
+				
+				
+				if(primeravuelta == true)
+				{
+					aux = nombreplay;
+					primeravuelta = false;
 				}
 					
 			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			
-		System.out.println("HA LLEGADO A RECIBIR CANCIONES");
-		System.out.println("EL numero de canciones en la playlist es: " + playlist.getCanciones().size());
-			
-		for(clsCancion a:playlist.getCanciones())
-		{
-			System.out.println("CANCIONES EN LA PLAYLIST" + a.getNombre());
-		}	
+		
 	}
 	
 	public void RecontruirUsuario(String usuario, String contraseña)
@@ -461,10 +489,8 @@ public class clsGestor
 	public void AbrirMenu()
 	{
 		
-		for(clsCancion a:canciones)
-		{
-			System.out.println(a.getNombre());
-		}
+		usuarioActual.setListas(playlists);
+		
 		frmReproductor Pantalla = new frmReproductor();
 		
 		Pantalla.GUI(usuarioActual);	

@@ -102,6 +102,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 //	private JButton siguiente;
 	private JButton btnAnadir;
 	private JButton btnBuscar;
+	private JButton btnRefrescar;
 	
 	private JTextField txtBuscar;
 	private JTextField txtBuscar1;
@@ -233,6 +234,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		btnShuffle = new JButton( new ImageIcon("src/img/shuffle.png") );
 		btnPrincipio = new JButton( new ImageIcon("src/img/principio.png") );
 		btnLike = new JButton( new ImageIcon("src/img/like.png") );
+		btnRefrescar = new JButton("Refrescar");
 		
 		//BARRA DE PROGRESO CANCION
 		
@@ -316,6 +318,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		btnPrincipio.addActionListener(this);
 		btnFin.addActionListener(this);
 		btnLike.addActionListener(this);
+		btnRefrescar.addActionListener(this);
 
 		//BOTONERA
 		
@@ -328,6 +331,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		panelBotonera.add(btnFin);
 		panelBotonera.add(btnLike);
 		panelBotonera.add(BarraProgreso);
+		panelBotonera.add(btnRefrescar);
 		
 		//SPLITPANE
 		
@@ -568,8 +572,10 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			clsCancion cancion = UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex);
 			intListas.frmInternalListas(UsuarioActual, cancion);
 			
-			System.out.println("Esto sigueee");
-			
+		}
+		else if(arg0.getSource() == btnRefrescar)
+		{
+			CargarListas();
 		}
 //		else if (arg0.getSource() == shuffle)
 //		{
@@ -611,6 +617,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	
 	public void CargarListas()
 	{
+		model.removeAllElements();
 		for(clsPlayList a:UsuarioActual.getListas())
 		{
 			model.addElement(a.getNombre());
