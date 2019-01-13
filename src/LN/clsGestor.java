@@ -101,23 +101,8 @@ public class clsGestor
 			File file11= new File("test/res/ACDC - Whole Lotta Rosie.wav");
 			clsCancion cancion11 = new clsCancion(file11,  "Whole Lotta Rosie", "ACDC", "src/img/acdc.png");
 			
-			File file12= new File("test/res/ACDC - Thunderstruck.wav");
-			clsCancion cancion12 = new clsCancion(file12,  "Thunderstruck", "ACDC", "src/img/acdc.png");
-			
 			File file13= new File("test/res/ACDC - You Shook Me All Night Long.wav");
 			clsCancion cancion13 = new clsCancion(file13,  "You Shook Me All Night Long", "ACDC", "src/img/acdc.png");
-			
-			File file14= new File("test/res/Macklemore  Ryan Lewis - Cant Hold Us feat. Ray Dalton (live on triple j).wav");
-			clsCancion cancion14 = new clsCancion(file14,  "Cant Hold Us", "Macklemore  Ryan Lewis", "src/img/macklemore.png");
-			
-			File file15= new File("test/res/Macklemore  Ryan Lewis - Same Love Feat. Tegan and Sara [HD VERSION LIVE FROM OSHEAGA 2013].wav");
-			clsCancion cancion15= new clsCancion(file15,  "Same Love", "Macklemore  Ryan Lewis", "src/img/macklemore.png");
-			
-			File file16= new File("test/res/MACKLEMORE FEAT DAVE B  TRAVIS THOMPSON - CORNER STORE (Official Music Video).wav");
-			clsCancion cancion16 = new clsCancion(file16,  "CORNER STORE", "MACKLEMORE FEAT DAVE B  TRAVIS THOMPSON", "src/img/macklemore.png");
-			
-			File file17= new File("test/res/MACKLEMORE FEAT KESHA - GOOD OLD DAYS (OFFICIAL MUSIC VIDEO).wav");
-			clsCancion cancion17= new clsCancion(file17,  "GOOD OLD DAYS", "MACKLEMORE FEAT KESHA ", "src/img/macklemore.png");
 			
 			File file18= new File("test/res/MACKLEMORE FEAT LIL YACHTY - MARMALADE (OFFICIAL MUSIC VIDEO).wav");
 			clsCancion cancion18= new clsCancion(file18,  "MARMALADE", "MACKLEMORE FEAT LIL YACHTY", "src/img/macklemore.png");
@@ -199,12 +184,7 @@ public class clsGestor
 			clsBD.añadirCancion(cancion9);
 			clsBD.añadirCancion(cancion10);
 			clsBD.añadirCancion(cancion11);
-			clsBD.añadirCancion(cancion12);
 			clsBD.añadirCancion(cancion13);
-			clsBD.añadirCancion(cancion14);
-			clsBD.añadirCancion(cancion15);
-			clsBD.añadirCancion(cancion16);
-			clsBD.añadirCancion(cancion17);
 			clsBD.añadirCancion(cancion18);
 			clsBD.añadirCancion(cancion19);
 			clsBD.añadirCancion(cancion20);

@@ -17,6 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,7 +46,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -125,10 +125,12 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	boolean playCompleted;
 	boolean playing;
 	boolean PrimeraVez = true;
+	boolean aleatorio = false;
 	
 	private int SongIndex = 0;
 	private int aux = 0;
 	private int ListIndex = 0;
+	private int CancionAnterior = 0;
 	
 	private File audioFile;
 	public Clip audioClip;
@@ -520,14 +522,25 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		}
 		else if(arg0.getSource() == btnFin)
 		{
-			if(model2.size()==SongIndex+1)
+			if(aleatorio==true)
 			{
-				SongIndex = 0;
-			}
-			else
+				System.out.println("Se ha metido en siguiente aleatorio");
+				int randomNum = ThreadLocalRandom.current().nextInt(0, model2.getSize() + 1);
+				System.out.println(randomNum);
+				CancionAnterior = SongIndex;
+				SongIndex = randomNum;
+			}else
 			{
-				SongIndex = SongIndex+1;
+				if(model2.size()==SongIndex+1)
+				{
+					SongIndex = 0;
+				}
+				else
+				{
+					SongIndex = SongIndex+1;
+				}	
 			}
+			
 			ImageIcon icon = new ImageIcon(UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex).getRutaImg());
 			lblFotoCan.setIcon(icon);
 			
@@ -550,14 +563,22 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		{
 			boolean primeraPos = false;
 			
-			if(SongIndex!=0)
+			if(aleatorio == true)
 			{
-				SongIndex = SongIndex -1;
+				SongIndex = CancionAnterior;
 			}
 			else
 			{
-				primeraPos = true;
+				if(SongIndex!=0)
+				{
+					SongIndex = SongIndex -1;
+				}
+				else
+				{
+					primeraPos = true;
+				}
 			}
+			
 			
 			ImageIcon icon = new ImageIcon(UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex).getRutaImg());
 			lblFotoCan.setIcon(icon);
@@ -588,6 +609,20 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		else if(arg0.getSource() == btnRefrescar)
 		{
 			CargarListas();
+		}
+		else if(arg0.getSource() == btnShuffle)
+		{
+			if(aleatorio == false)
+			{
+				aleatorio = true;
+				System.out.println("Se ha puesto en aleatorio");
+			}
+			else
+			{
+				aleatorio = false;
+				System.out.println("Se ha puesto en orden normal");
+			}
+			
 		}
 //		else if (arg0.getSource() == shuffle)
 //		{
@@ -642,10 +677,9 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	
 	public void play(int numero)//String audioFilePath
     {
-    	for(clsCancion a:Canciones)
-    	{
-    		System.out.println(a.getNombre());
-    	}
+		
+		System.out.println("Empieza cancion");
+		
         audioFile = new File(Canciones.get(numero).getFile().getPath());
  
         try 
@@ -712,7 +746,41 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
         {
             playCompleted = true;
             System.out.println("Song paused.");
+            
+            Long numero = audioClip.getMicrosecondLength();
+            Long numero2 = audioClip.getMicrosecondPosition();
+  
+            
+            if(numero.equals(numero2))
+            {
+            	
+            	System.out.println("Ha llegado al final");
+            	playing = false;
+    			audioClip.stop();
+    			clipTime = 0;
+    			System.out.println(clipTime);
+    			audioClip.close();
+    			
+    			
+    			if(aleatorio==true)
+    			{
+    				System.out.println("Se ha metido en siguiente aleatorio");
+    				int randomNum = ThreadLocalRandom.current().nextInt(0, model2.getSize() + 1);
+    				System.out.println(randomNum);
+    				SongIndex = randomNum;
+    			}else
+    			{
+    				SongIndex = SongIndex + 1;	
+    			}
+    			
+    			
+    			
+    			play(SongIndex);
+    			playing = true;
+    			AvanceBP();
+            }
         }
+        
         
         while(audioClip.isRunning())
         {
