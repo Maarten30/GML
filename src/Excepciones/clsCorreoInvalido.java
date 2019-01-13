@@ -5,14 +5,14 @@ package Excepciones;
  * @author Gabriela Garaizabal, Maarten Handels y Laura Llorente
  *
  */
-public class clsExistente extends Exception
+public class clsCorreoInvalido extends Exception
 {
 	/**
-	 *Método que contiene el mensaje que se muestra por pantalla en el caso de que se introduzca un nombre de usuario repetido
+	 *Método que contiene el mensaje que se muestra por pantalla en el caso de que se introduzca un correo invalido
 	 */
 	public String getMessage()
 	{
-		return "Su nombre de usuario ya está ocupado";
+		return "El correo ingresado no es válido";
 		
 	}
 }

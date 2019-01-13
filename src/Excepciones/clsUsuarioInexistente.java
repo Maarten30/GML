@@ -5,21 +5,14 @@ package Excepciones;
  * @author Gabriela Garaizabal, Maarten Handels y Laura Llorente
  *
  */
-public class clsNoExistente extends Exception 
+public class clsUsuarioInexistente extends Exception 
 {
-	private String usuario; 
-	
-	public clsNoExistente() 
-	{
-		this.usuario = usuario; 
-	}
-
 	/**
 	 *Método que contiene el mensaje que se muestra por pantalla en el caso de que se introduzca un nombre de usuario no existente 
 	 */
 	public String getMessage()
 	{
-		return "No existe un usuario con ese nombre";
+		return "Ese nombre de usuario no esta registrado en la aplicacion";
 		
 	}
 }

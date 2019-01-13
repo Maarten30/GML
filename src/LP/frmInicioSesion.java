@@ -36,6 +36,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
+import Excepciones.clsCorreoInvalido;
+import Excepciones.clsExistente;
+import Excepciones.clsUsuarioInexistente;
+
 import java.util.Date;
 import java.util.Properties;
 import java.util.regex.Matcher;
@@ -73,7 +77,6 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	public static JTextField txtCorreo;
 	public static JTextField txtUsu2;
 	
-	
 	private JPasswordField contraField; 
 	private  JPasswordField contraField2; 
 	
@@ -107,7 +110,6 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	String Subject2 = "Bienvenido a GML"; 
 	String Mensaje2 = "Bienvenido a GML"; 
 	
-
 	/**
 	 * En este metodo se encuentran todos los elementos necesarios para crear la pantalla de inicio de sesion. 
 	 */
@@ -121,14 +123,16 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	    
-		//Inserción de la imagen del fondo en el panel 
+		//INSERCIÓN IMAGEN FONDO
+		
 	    fondo = this.getClass().getResource("/img/Logo_Pantalla.png");
 	    imagenFondo = new ImageIcon(fondo).getImage();
 	    Container contenedor = getContentPane();
 	    contenedor.add(panel);
 	    panel.setLayout(null);
 	    
-	    //Atributos para insertar la hora y la fecha 
+	    //FECHA
+	    
 	    SimpleDateFormat fecha = new SimpleDateFormat( "dd/MM/yyyy" );
 	    Date d1 = new Date();
 	    Font font = new Font("Century Gothic",Font.BOLD,13); 
@@ -140,13 +144,15 @@ public class frmInicioSesion extends JFrame implements ActionListener
 		lblFecha.setForeground(Color.WHITE);
 		panel.add(lblFecha);
 	    		
-		//Fuentes de letra para la pantalla 
+		//FUENTES LETRA
+		
 		Font f1 = new Font("Century Gothic",Font.BOLD,22);
 		Font f2 = new Font("Century Gothic",Font.BOLD,15); 
 		Font f3 = new Font("Century Gothic",Font.BOLD,13); 
 		Font f4 = new Font("Century Gothic",Font.BOLD,11); 
 		
-		//Creación de la pantalla 
+		//CREACIÓN PANTALLA
+		
 		lblInicio = new JLabel("INICIAR SESIÓN"); 
 		lblInicio.setFont(f1);
 		lblInicio.setBounds(160,10,220,40);
@@ -182,7 +188,6 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					{
 						RestablecerContraseña();
 					    logger.log(Level.INFO, "Recordando contraseña.");
-
 					}
 				});
 	
@@ -205,7 +210,7 @@ public class frmInicioSesion extends JFrame implements ActionListener
 				{
 					public void actionPerformed(ActionEvent arg0)
 					{				
-//						logger.log(Level.INFO, "Comienzo inicio sesión");
+						logger.log(Level.INFO, "Comienzo inicio sesión");
 						
 						if(txtUsu.getText().isEmpty() || contraField.getPassword()==null)
 						{
@@ -213,7 +218,6 @@ public class frmInicioSesion extends JFrame implements ActionListener
 						}
 						else
 						{
-							
 							if (clsBD.comprUsuario(txtUsu.getText()) == true)
 							{
 								usuario = txtUsu.getText();
@@ -226,8 +230,6 @@ public class frmInicioSesion extends JFrame implements ActionListener
 									logger.log(Level.INFO, "La contraseña es correcta y entra en la pantalla principal.");
 									gestor.RecontruirUsuario(usuario, contra);
 									gestor.AbrirMenu();
-									
-									
 								}
 								else
 								{
@@ -237,9 +239,15 @@ public class frmInicioSesion extends JFrame implements ActionListener
 							}
 							else
 							{
-								JOptionPane.showMessageDialog(null,"Ese nombre de usuario no esta registrado en la aplicacion","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+								try 
+								{
+									throw new clsUsuarioInexistente();
+								} 
+								catch (clsUsuarioInexistente e) 
+								{
+									JOptionPane.showMessageDialog(null,"Ese nombre de usuario no esta registrado en la aplicacion","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+								}
 								logger.log(Level.INFO, "El nombre de usuario introducido no existe.");
-
 							}
 					}
 				}});	
@@ -350,29 +358,41 @@ public class frmInicioSesion extends JFrame implements ActionListener
 					    	
 					    	JOptionPane.showMessageDialog(null, "Bienvenido a GML music","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
 					    	
-					    	//Llama a la pantalla frmReproductor
 					    	gestor.RecontruirUsuario(nombreUsu, contrasenya);
 					        gestor.AbrirMenu();
 					        dispose();
 					    } 
 					    else 
 					    {
-							JOptionPane.showMessageDialog(null,"El correo ingresado no es válido","INICIO SESIÓN",JOptionPane.ERROR_MESSAGE);
+					    	try 
+							{
+								throw new clsCorreoInvalido();
+							} 
+							catch (clsCorreoInvalido e) 
+							{
+								JOptionPane.showMessageDialog(null,"El correo ingresado no es válido","INICIO SESIÓN",JOptionPane.ERROR_MESSAGE);
+							}
 								
 							txtCorreo.setText(null);
 							txtCorreo.requestFocus();
 							logger.log(Level.INFO, "El correo ingresado no es válido.");
-
 					    }
 					}
 					else
 					{
-						JOptionPane.showMessageDialog(null,"Su nombre de usuario ya está ocupado","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+						try 
+						{
+							throw new clsExistente();
+						} 
+						catch (clsExistente e) 
+						{
+							JOptionPane.showMessageDialog(null,"Su nombre de usuario ya está ocupado","INICIO SESIÓN",JOptionPane.INFORMATION_MESSAGE);
+
+						}
 						
 						txtUsu2.setText(null);
 						txtUsu2.requestFocus();
 						logger.log(Level.INFO, "Nombre de usuario ocupado.");
-
 					}
 				}
 			}
@@ -390,7 +410,6 @@ public class frmInicioSesion extends JFrame implements ActionListener
 	    {
 	    	g.drawImage(imagenFondo, 0, 0, getWidth(),getHeight(),this);
 			logger.log(Level.INFO, "Añadido de la imagen al panel principal.");
-
 	    }
 	};
 	
