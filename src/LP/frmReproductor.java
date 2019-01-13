@@ -27,6 +27,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
@@ -137,7 +138,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	
 	private File audioFile;
 	public Clip audioClip;
-	private String audioFilePath = "test/res/Demi Lovato - Stone Cold (Official Video).wav";
+	private FloatControl gainControl;
 	long clipTime = 0;
 	
 	private ArrayList<clsCancion> Canciones;
@@ -390,7 +391,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		g.gridx = 1;
 		g.gridy = 0;
 		
-		lblVol = new JLabel("Volumen 20 %");
+		lblVol = new JLabel("Volumen 100%");
 		g.gridx=0;
 		g.gridy=1;
 		panelBotonera.add(lblVol, g.gridx);
@@ -398,13 +399,55 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		slide = new JSlider(JSlider.HORIZONTAL,0,100,30);
 		slide.setMajorTickSpacing(50);
 		slide.setPaintTicks(true);
+		slide.setValue(100);
 		panelBotonera.add(slide,g.gridy);
+		
+		
 		
 		slide.addChangeListener(new ChangeListener()
 				{
 					public void stateChanged(ChangeEvent event)
 					{
-						lblVol.setText("Volumen "+slide.getValue()+" %");
+						
+						lblVol.setText("Volumen " + slide.getValue() + "%");
+						try{
+						if(slide.getValue() == 0 || slide.getValue()<5)
+						{
+							gainControl.setValue((float)-(80-((slide.getValue()/100)*80)));
+						}
+						else if(slide.getValue() == 5 || slide.getValue()<10)
+						{
+							gainControl.setValue((float)-(65-((slide.getValue()/100)*65)));
+						}
+						else if(slide.getValue() == 10 || slide.getValue()<20)
+						{
+							gainControl.setValue((float)-(50-((slide.getValue()/100)*50)));
+						}
+						else if(slide.getValue() == 20 || slide.getValue()<40)
+						{
+							gainControl.setValue((float)-(30-((slide.getValue()/100)*30)));
+						}
+						else if(slide.getValue() == 40 || slide.getValue()<50)
+						{
+							gainControl.setValue((float)-(20-((slide.getValue()/100)*20)));
+						}
+						else if(slide.getValue() == 50 || slide.getValue()<75)
+						{
+							gainControl.setValue((float)-(10-((slide.getValue()/100)*10)));
+						}
+						else if(slide.getValue() == 75 || slide.getValue()<100)
+						{
+							gainControl.setValue((float)-(2.5-((slide.getValue()/100)*2.5)));
+						}
+						}catch(Exception e)
+	                	{
+							
+	                	}
+						
+						
+
+						//gainControl.setValue(-20.0f);
+						//lblVol.setText("Volumen "+slide.getValue()+" %");
 //						slide.setValue(auidoClip);
 					}
 				});
@@ -452,6 +495,33 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
             }
         });
 		
+		listaCanciones.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		        if (evt.getClickCount() == 2) 
+		        {
+					if(SongIndex!=aux)
+					{
+						if(PrimeraVez==false)
+						{
+							playing = false;
+							audioClip.stop();
+							clipTime = 0;
+							audioClip.close();
+						}
+					}
+					
+					PrimeraVez = false;
+					play(SongIndex);
+					ImageIcon icon = new ImageIcon(UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex).getRutaImg());
+					lblFotoCan.setIcon(icon);
+					playing = true;
+					
+					aux = SongIndex;
+					AvanceBP();
+		        } 
+		    }
+		});
+		
 		//SELECTION LISTENER LISTAS
 		
 		listas.addListSelectionListener(new ListSelectionListener() {
@@ -461,7 +531,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
                 if (!arg0.getValueIsAdjusting()) 
                 {
                 	ListIndex = listas.getSelectedIndex();
-                	System.out.println(ListIndex);
+                	
                 	try
                 	{
                 		Canciones = UsuarioActual.getListas().get(ListIndex).getCanciones();
@@ -485,7 +555,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 	public void actionPerformed(ActionEvent arg0) {
 		if(arg0.getSource() == btnPlay)
 		{
-			System.out.println("PEooooooo" + SongIndex);
+			
 			if(SongIndex!=aux)
 			{
 				if(PrimeraVez==false)
@@ -499,10 +569,11 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			
 			PrimeraVez = false;
 			play(SongIndex);
+			ImageIcon icon = new ImageIcon(UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex).getRutaImg());
+			lblFotoCan.setIcon(icon);
 			playing = true;
 			
 			aux = SongIndex;
-			System.out.println(audioClip.getLongFramePosition());
 			AvanceBP();
 			
 		}
@@ -525,9 +596,8 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 		{
 			if(aleatorio==true)
 			{
-				System.out.println("Se ha metido en siguiente aleatorio");
+				
 				int randomNum = ThreadLocalRandom.current().nextInt(0, model2.getSize() + 1);
-				System.out.println(randomNum);
 				CancionAnterior = SongIndex;
 				SongIndex = randomNum;
 			}else
@@ -685,21 +755,7 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
 			}
 			
 		}
-//		else if (arg0.getSource() == shuffle)
-//		{
-//			
-//		 int r = (int) Math.random()*41; //Porque hay 40 canciones, asique por uno mas
-//		 SongIndex = r;
-//			
-//		}
-//		else if (arg0.getSource() == like)
-//		{
-//			
-//		 
-//			
-//		}
-		
-		
+
 	}
 	
 	
@@ -760,6 +816,8 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
             audioClip.setMicrosecondPosition(clipTime);
 			
             audioClip.start();
+            
+            gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);
             
             
              
@@ -831,12 +889,22 @@ public class frmReproductor extends JFrame implements LineListener, ActionListen
     				SongIndex = randomNum;
     			}else
     			{
-    				SongIndex = SongIndex + 1;	
+    				if(model2.size()==SongIndex+1)
+    				{
+    					SongIndex = 0;
+    				}
+    				else
+    				{
+    					SongIndex = SongIndex+1;
+    				}	
+    				
     			}
     			
     			
     			
     			play(SongIndex);
+    			ImageIcon icon = new ImageIcon(UsuarioActual.getListas().get(ListIndex).getCanciones().get(SongIndex).getRutaImg());
+    			lblFotoCan.setIcon(icon);
     			playing = true;
     			AvanceBP();
             }
